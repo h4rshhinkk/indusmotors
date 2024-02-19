@@ -1,0 +1,36 @@
+<script>
+    var get_state_url = "{% url 'crm:get_state' %}";
+    var stateSelect = $("#id_state");
+
+
+    function updateSelectOptions(selectId, data, valueKey, textKey) {
+        const select = $(selectId);
+        select.empty().append('<option value="" selected="selected">---------</option>');
+        if (data) {
+            const options = data.map(item => `<option value="${item[valueKey]}">${item[textKey]}</option>`);
+            select.append(options.join(''));
+        }
+    }
+
+    function makeAjaxCall(get_state_url,data,successCallback) {
+        
+        $.ajax({
+            url: get_state_url,
+            data: data,
+            dataType: 'json',
+            success: successCallback
+        });
+    }
+
+    stateSelect.change(function () {
+        let state = stateSelect.val();
+        let data = { state: state };
+        console.log(get_state_url)
+
+        makeAjaxCall(data, function (data) {
+            updateSelectOptions("#id_district", data.district, "id", "name");
+        });
+    });
+
+
+</script>

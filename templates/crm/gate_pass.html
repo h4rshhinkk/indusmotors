@@ -1,0 +1,111 @@
+{% load static %}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+    <body style="font-family:Arial Unicode MS, Helvetica , Sans-Serif;">
+        
+        
+        <table style="table-layout: fixed; width: 100%;">
+            <tbody>
+                <tr>
+                    <td class="">
+                        <div style="width: 160px;  margin-top: 20px;">
+                            <img src="https://rotanatata.geany.website/static/app/config/rotanatatalogo.png" alt="Company Logo" style="max-width: 100%;">
+                        </div>
+                    </td>
+                    <td width="15%" >
+                        <caption style=" text-transform: uppercase; text-align: center; font-size: 30px;">
+                                <strong>
+                                    Gate Pass
+                                </strong>
+                        </caption> 
+                            <tr>
+                                <td style="padding:5px; text-align: right;">
+                                    <strong >Invoice No:</strong>
+                                </td>
+                                <td style="padding:5px;">
+                                    <div>
+                                        {{ object.invoice_no }}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding:5px; text-align: right;">
+                                    <strong >Invoiced Date:</strong>                            
+                                </td>
+                                <td style="padding:5px;">
+                                   {{ object.invoice_date }}
+                                </td>
+                            </tr>
+
+                        </td>
+                </tr>
+            </tbody>
+        </table>
+        
+        
+        <div>
+            <h2 style="text-align: center; margin-top:50px; margin-bottom: 30px;">Customer Information</h2>
+            <table style="table-layout: fixed; width: 100%;  border-collapse: collapse;">
+                <tbody>
+                    <tr>
+                        <th style="border: 1px solid #ddd; padding: 8px;">Customer Name</th>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{object.customer_salutation}}.{{object.customer_name}}</td>
+                    </tr>
+                    <tr>
+                        <th style="border: 1px solid #ddd; padding: 8px;">DSE</th>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{object.dse}}</td>
+                    </tr>
+                    <tr>
+                        <th style="border: 1px solid #ddd; padding: 8px;">Vehicle</th>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{object.chassis.variant.car_model}}</td>
+                    </tr>
+                    <tr>
+                        <th style="border: 1px solid #ddd; padding: 8px;">Variant</th>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{object.chassis.variant}}</td>
+                    </tr>
+                    <tr>
+                        <th style="border: 1px solid #ddd; padding: 8px;">Color</th>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{object.chassis.variant.color}}</td>
+                    </tr>
+                    <tr>
+                        <th style="border: 1px solid #ddd; padding: 8px;">Chassis</th>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{object.chassis.chassis_number}}</td>
+                    </tr>
+                    <tr>
+                        <th style="border: 1px solid #ddd; padding: 8px;">Phone 1</th>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{object.mobile}}</td>
+                    </tr>
+                    <tr>
+                        <th style="border: 1px solid #ddd; padding: 8px;">Phone 2</th>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{object.phone}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        
+       
+        <div style="border-top: 1px solid #eee;padding-top: 20px;">
+            <table style="table-layout: fixed; width: 100%; border-collapse: collapse;">
+                <tbody>
+                    <tr>
+                        <td align="right" style=" padding: 8px;">
+                            <span style="font-size: 16pt;">
+                                For {{object.customer_salutation}}.{{object.customer_name}}
+                            </span>
+                        </td>
+                        
+                    </tr>
+                    <tr>
+                        <td align="right" width="20%" style=" padding-top: 48px;">
+                            <strong style="font-size: 16pt;">
+                                Signatory
+                            </strong>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+</body>
+
+</html>

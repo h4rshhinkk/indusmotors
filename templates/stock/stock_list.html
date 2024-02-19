@@ -1,0 +1,214 @@
+{% extends 'app/base.html' %}
+{% load static i18n crispy_forms_tags django_tables2 %}
+{% block title %}{{title|title}} : {{app_settings.site_title}}{% endblock %}
+
+{% block content %}
+
+<div class="side-app main-container">
+
+    <!--Page header-->
+    <div class="page-header d-flex">
+        <div class="page-leftheader">
+            <div class="page-title">{{title|title}}</div>
+        </div>
+        <div class="page-rightheader ms-md-auto">
+            <div class="btn-list">
+                
+                {% if can_add %}
+                <a href="{{new_link}}" class="btn btn-sm btn-white" data-bs-placement="top" data-bs-toggle="tooltip"
+                    title="New"> <i class="feather feather-plus"></i> New</a>
+                {% endif %}
+                {% if table.paginated_rows %}
+                <a href="{% export_url 'xlsx' %}" class="btn btn-sm btn-white" data-bs-placement="top"
+                    data-bs-toggle="tooltip" title="Export"> <i class="feather feather-download-cloud"></i> </a>
+                {% endif %}
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- Row-->
+  <div class="row mt-5 mb-3">
+
+    {% block filter_new %}
+    {% include 'app/partials/filter_new.html' %}
+    {% endblock %}
+
+  </div>
+  <!-- End Row-->
+
+
+    <!--End Page header-->
+    <div class="row row-sm">
+        <div class="col-lg-12">
+
+            <div class="card">
+                {% if table.paginated_rows %}
+                <div class="card-body p-0">
+                  <div class="table-responsive stocktable-container" >
+                    <table class="table key-buttons border-bottom table-hover stocktable">
+                      <thead>
+                        <tr>
+                          {% for column in table.columns %}
+                            <th{% if column.attrs %} {% for key, value in column.attrs.items %} {{ key }}="{{ value }}"{% endfor %}{% endif %}>{{ column.header }}</th>
+                          {% endfor %}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for record in table.page.object_list %}
+                          <tr>
+                            {% for column, value in record.items %}
+                              <td{% if column.attrs %} {% for key, value in column.attrs.items %} {{ key }}="{{ value }}"{% endfor %}{% endif %}>{{ value }}</td>
+                            {% endfor %}
+                          </tr>
+                        {% endfor %}
+                      </tbody>
+                      <tfoot>
+                        <tr>
+                          <td class="font-weight-bold" colspan="4" class="text-end">Total: </td>
+                          <td class="font-weight-bold bg-gray-lightest" colspan="">{{ physical_count }}</td>
+                          <td class="font-weight-bold bg-gray-lightest" colspan="">{{ transit_count }}</td>
+                          <td class="font-weight-bold bg-gray-lightest" colspan="">{{ total_back_order }}</td>
+                        </tr>
+                      </tfoot>
+                    </table>
+                  </div>
+                 
+              </div>
+              
+                {% else %}
+                <div class="card-body">
+                    {{title|title}} {% translate "list is empty." %}
+                    {% if can_add %}<a href="{{new_link}}">{% translate "Add New One" %}</a>{% endif %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+{% for variant in variants %}
+
+<!-- Modal -->
+<div class="modal fade" id="stock-transit{{variant.id}}" tabindex="-1" aria-labelledby="exampleModalLabel{{variant.pk}}" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel{{variant.pk}}">{{variant.car_model}} {{variant.trim}} {{variant.color}} - Transit</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            {% if variant.get_transit %}
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Sl No</th>
+                    <th scope="col">Chassis No</th>
+                    <th scope="col">Color</th>
+                    <th scope="col">Ageing</th>
+                    <th scope="col">TM Invoice Date</th>
+                    <th scope="col">Year</th>
+
+                    <th scope="col">Dealer Location</th>
+                    <th scope="col">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for i in variant.get_transit %}
+                  <tr>
+                    <th scope="row">{{forloop.counter}}</th>
+                    <td>{{i.chassis_number}}</td>
+                    <td>{{i.variant.color}}</td>
+                    <td>{{i.age}}</td>
+                    <td>{{i.tm_invoice_date}}</td>
+                    <td>{{ i.tm_invoice_date|date:"Y" }}</td>
+                    <td>{{i.dealer_location}}</td>
+                    <td>{{i.get_display_status_display}}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            {% else %}
+            <div  class="text-center" >
+                <p>No Stocks in Transit for this Variant.</p>
+            </div>
+            {% endif %}
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="stock-physical{{variant.id}}" tabindex="-1" aria-labelledby="exampleModalLabel{{variant.id}}" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel{{variant.id}}">{{variant.car_model}} {{variant.trim}} {{variant.color}} - Physical</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            {% if variant.get_physical %}
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Sl No</th>
+                    <th scope="col">Chassis No</th>
+                    <th scope="col">Color</th>
+                    <th scope="col">Ageing</th>
+                    <th scope="col">TM Invoice Date</th>
+                    <th scope="col">Year</th>
+                    <th scope="col">Dealer Location</th>
+                    <th scope="col">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for i in variant.get_physical %}
+                  <tr>
+                    <th scope="row">{{forloop.counter}}</th>
+                    <td>{{i.chassis_number}}</td>
+                    <td>{{i.variant.color}}</td>
+                    <td>{{i.age}}</td>
+                    <td>{{i.tm_invoice_date}}</td>
+                    <td>{{ i.tm_invoice_date|date:"Y" }}</td>
+                    <td>{{i.dealer_location}}</td>
+                    <td>{{i.get_display_status_display}}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+              {% else %}
+            <div  class="text-center" >
+                <p>No Stocks in Physical for this Variant.</p>
+            </div>
+            {% endif %}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+{% endfor %}
+
+
+  
+{% include 'app/partials/filter.html' %}
+{% include 'app/partials/help.html' %}
+
+{% endblock content %}
+
+{% block javascript %}
+{{form.media}}
+{% include 'app/partials/variant_selector.html' %}
+{% endblock %}
+

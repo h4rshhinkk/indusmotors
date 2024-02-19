@@ -1,0 +1,63 @@
+<ul>
+    {% if request.user.usertype == 'registration_bo' %}
+        <li><a class="btn btn-sm btn-primary mb-1" href="{{record.registration_remark_create_url}}">Add Remarks</a></li>
+        <li>
+            <button type="button"  class=" form20-add-btn btn btn-primary mb-1 document-upload" data-bs-toggle="modal" data-bs-target="#consolidated-modal" data-invoice-id="{{record.pk}}" data-document-name="Upload Form20"  data-form-type='form20_upload'>
+                Upload Form20
+            </button>
+        </li>
+        <li>
+            <button type="button"  class=" disclimer-add-btn btn btn-primary mb-1 document-upload" data-bs-toggle="modal" data-bs-target="#consolidated-modal" data-invoice-id="{{record.pk}}" data-document-name="Upload Disclimer" data-form-type='disclimer_upload'>
+                Upload Disclimer
+            </button>
+        </li>
+        <li>
+            <button type="button" class=" undertaking-add-btn btn btn-primary mb-1 document-upload" data-bs-toggle="modal" data-bs-target="#consolidated-modal" data-invoice-id="{{record.pk}}" data-document-name="Upload Undertaking" data-form-type='undertaking_upload'>
+                Upload Undertaking
+            </button>
+        </li>
+    {% elif request.user.usertype == 'accounts' %}
+        <li>
+            <button type="button"  class=" invoice-add-btn btn btn-primary mb-1 document-upload" data-bs-toggle="modal" data-bs-target="#consolidated-modal" data-invoice-id="{{record.pk}}"   data-document-name="Upload Invoice" data-form-type='invoice_upload'>
+                Upload Invoice
+            </button>
+        </li>
+        <li>
+            <button type="button" class=" settlement-add-btn btn btn-primary mb-1 document-upload" data-bs-toggle="modal" data-bs-target="#consolidated-modal" data-invoice-id="{{record.pk}}" data-document-name="Upload Settlement" data-form-type='settlement_upload'>
+                Upload Settlement
+            </button>
+        </li>
+        <li>
+            <button type="button"  class="receipt-add-btn btn btn-primary mb-1 document-upload" data-bs-toggle="modal" data-bs-target="#consolidated-modal" data-invoice-id="{{record.pk}}" data-document-name="Upload Receipts" data-form-type='receipts_upload'>
+                Upload Receipts
+            </button>
+        </li>
+
+        {% elif request.user.usertype == 'tmga' %}
+        <li>
+            <button type="button"  class=" accessory-bill-add-btn btn btn-primary mb-1 document-upload" data-bs-toggle="modal" data-bs-target="#consolidated-modal" data-invoice-id="{{record.pk}}"   data-document-name="Upload Accessory Bill" data-form-type='accessory_bill_upload'>
+                Upload Accessory Bill
+            </button>
+        </li>
+        
+    {% else %}
+        <li><a class="btn btn-sm btn-primary mb-1" href="{% url 'crm:gate_pass' record.pk %}" target="_blank">Gate Pass</a></li>
+        <li><a class="btn btn-sm btn-primary mb-1" href="{% url 'crm:update_to_delivered' record.pk %}">Update</a></li>
+        <li>
+            <button type="button" class="signed_form20-add-btn btn btn-primary mb-1 document-upload" data-bs-toggle="modal" data-bs-target="#consolidated-modal" data-invoice-id="{{record.pk}}" data-document-name="Upload  signed Form20" data-form-type='signed_form20_upload'>
+                Upload signed Form20
+            </button>
+        </li>
+        <li>
+            <button type="button"  class=" signed_disclimer-add-btn btn btn-primary mb-1 document-upload" data-bs-toggle="modal" data-bs-target="#consolidated-modal" data-invoice-id="{{record.pk}}" data-document-name="Upload signed Disclimer" data-form-type='signed_disclimer_upload'>
+                Upload signed Disclimer
+            </button>
+        </li>
+        <li>
+            <button type="button"  class=" signed_undertaking-add-btn btn btn-primary mb-1 document-upload" data-bs-toggle="modal" data-bs-target="#consolidated-modal" data-invoice-id="{{record.pk}}"  data-document-name="Upload signed Undertaking" data-form-type='signed_undertaking_upload'>
+                Upload signed Undertaking
+            </button>
+        </li>
+        
+    {% endif %}
+</ul>

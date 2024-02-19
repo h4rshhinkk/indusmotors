@@ -1,0 +1,229 @@
+{% extends 'app/base.html' %}
+{% load static i18n crispy_forms_tags django_tables2 %}
+{% block title %}{{title|title}} : {{app_settings.site_title}}{% endblock %}
+
+{% block content %}
+
+{% if invoice %}
+<div class="side-app main-container detail_page">
+
+  <!-- Row-->
+  <div class="row mt-5">
+    {% block invoice_mini_list %}
+    {% include 'app/partials/invoice_mini_list.html' %}
+    {% endblock %}
+  </div>
+  <!-- End Row-->
+
+
+  <div class="row row-sm">
+    <div class="col-lg-12">
+
+      <div class="card">
+        {% if table.paginated_rows %}
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            {% render_table table %}
+          </div>
+        </div>
+        {% else %}
+        <div class="card-body">
+           {% translate "No Documents So Far" %}
+          {% if can_add %}<a href="{{new_link}}">{% translate "Add New One" %}</a>{% endif %}
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% if accessory %}
+  <div class="row row-sm">
+    <div class="col-lg-12">
+
+      <div class="card">
+        {% if accessory.paginated_rows %}
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            {% render_table accessory %}
+          </div>
+        </div>
+        {% else %}
+        <div class="card-body">
+           {% translate "No Accessory So Far" %}
+          {% if can_add %}<a href="{{new_link}}">{% translate "Add New One" %}</a>{% endif %}
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  {% if discounts %}
+  <div class="row row-sm">
+    <div class="col-lg-12">
+
+      <div class="card">
+        {% if discounts.paginated_rows %}
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            {% render_table discounts %}
+          </div>
+        </div>
+        {% else %}
+        <div class="card-body">
+           {% translate "No Invoice Discount So Far" %}
+          {% if can_add %}<a href="{{new_link}}">{% translate "Add New One" %}</a>{% endif %}
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% endif %}
+  <div class="row">
+    <div class="col-12 mx-auto">
+      <div class="card">
+        <div class="card-header border-bottom-0">
+          <h5 class="mb-0">{{title}}</h5>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-lg-12 col-md-12">
+              <form class="form-horizontal" method="post" autocomplete="off" enctype="multipart/form-data" action=""
+                enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <div class="card_seperator">
+                    <label class="form-label mb-0">Scheme Details</label>
+                </div>
+
+
+                {% for field in form.visible_fields|slice:"0:5" %}
+                {{ field|as_crispy_field }}
+                {% endfor %}
+
+                <div class="card_seperator">
+                    <label class="form-label mb-0">Yono Details</label>
+                </div>
+
+                {% for field in form.visible_fields|slice:"5:8" %}
+                {{ field|as_crispy_field }}
+                {% endfor %}
+                
+                <div class="card_seperator">
+                    <label class="form-label mb-0">Status Update</label>
+                </div>
+
+                {% for field in form.visible_fields|slice:"8:10" %}
+                {{ field|as_crispy_field }}
+                {% endfor %}
+
+                
+
+
+                <div class="my-4">
+                  <div class="form-group mb-0">
+                    <button type="submit" class="btn btn-primary me-2">{% translate "Save" %}</button>
+                    <button type="button" onclick="history.back()" class="border btn btn-outline-grey">
+                      {% translate "Cancel" %}</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+{% else %}
+
+<div class="side-app main-container detail_page">
+
+  <div class="row mt-5">
+  <!-- Opportunity update -->
+    <div class="row">
+      <div class="col-12 mx-auto">
+        <div class="card">
+          <div class="card-header border-bottom-0">
+            <h5 class="mb-0">Opportunity Follow Up Update</h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-lg-12 col-md-12">
+                <form class="form-horizontal" method="post" autocomplete="off" enctype="multipart/form-data" action=""
+                  enctype="multipart/form-data">
+                  {% csrf_token %}
+                  {{form|crispy}}
+                  <div class="my-4">
+                    <div class="form-group mb-0">
+                      <button type="submit" class="btn btn-primary me-2">{% translate "Save" %}</button>
+                      <button type="button" onclick="history.back()" class="border btn btn-outline-grey">
+                        {% translate "Cancel" %}</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+{% endif %}
+
+{% include 'app/partials/filter.html' %}
+{% include 'app/partials/help.html' %}
+
+{% endblock content %}
+
+{% block javascript %}
+<script>
+    isLoading = false;
+    $(document).on("change", ".each_discount_update_form select", function (e) {
+        e.preventDefault();
+        var $this = $(this.closest("form"));
+        data = new FormData($this[0]),
+            action_url = $this.attr("action");
+
+        if (!isLoading) {
+            isLoading = true;
+            var csrfToken = $('input[name="csrfmiddlewaretoken"]').val();
+            $.ajax({
+                url: action_url,
+                type: "POST",
+                data: data,
+                cache: false,
+                contentType: false,
+                processData: false,
+                dataType: "json",
+                headers: {
+                    "X-CSRFToken": csrfToken
+                },
+                success: function (data) {
+                    var status = data.status;
+                    var title = data.title;
+                    var message = data.message;
+                    if (status == "true") {
+                        console.log("true");
+                    } else {
+                        title ? (title = title) : (title = "An Error Occurred");
+                    }
+                },
+                error: function (data) {
+                    var title = "An error occurred", message = "something went wrong";
+                },
+            }).then(function (response) {
+                isLoading = false;
+            });
+        }
+    });
+
+</script>
+
+{% endblock %}

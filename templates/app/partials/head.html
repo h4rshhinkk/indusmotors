@@ -1,0 +1,24 @@
+{% load static %}
+
+<meta content="{{author}}" name="author">
+<meta name="keywords" content="" />
+
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-config" content="{% static 'app/images/favicons/browserconfig.xml' %}{{current_version}}">
+<meta name="theme-color" content="#ffffff">
+
+<link href="{% static 'app/plugins/bootstrap/css/bootstrap.css' %}{{current_version}}" rel="stylesheet" />
+<link href="{% static 'app/css/style.css' %}{{current_version}}" rel="stylesheet" />
+<link href="{% static 'app/css/plugins.css' %}{{current_version}}" rel="stylesheet" />
+<link href="{% static 'app/css/boxed.css' %}{{current_version}}" rel="stylesheet" />
+<link href="{% static 'app/css/dark.css' %}{{current_version}}" rel="stylesheet" />
+<link href="{% static 'app/css/skin-modes.css' %}{{current_version}}" rel="stylesheet" />
+<link href="{% static 'app/css/transparent-style.css' %}{{current_version}}" rel="stylesheet">
+<link href="{% static 'app/css/animated.css' %}{{current_version}}" rel="stylesheet" />
+<link href="{% static 'app/css/plugins/jqueryui.css' %}{{current_version}}" rel="stylesheet" />
+
+{% block extra_css %}{% endblock %}
+
+<link href="{% static 'app/css/icons.css' %}{{current_version}}" rel="stylesheet" />
+<link href="{% static 'app/css/custom.css' %}{{current_version}}" rel="stylesheet" />
+<script src="{% static 'app/plugins/jquery/jquery.min.js' %}{{current_version}}"></script>

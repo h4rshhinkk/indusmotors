@@ -1,0 +1,684 @@
+{% extends 'app/base.html' %}
+{% load static i18n crispy_forms_tags django_tables2 extras %}
+{% block title %}Home: {{app_settings.site_title}}{% endblock %}
+
+{% block content %}
+
+<div class="side-app main-container">
+
+
+  <div class="page-header d-xl-flex d-block">
+    <div class="page-leftheader">
+      <div class="page-title">{% translate "Main Dashboard" %}</div>
+    </div>
+  </div>
+
+  {% if request.user.usertype|user_type_allowed:"team_lead, customer_advisor, finance_executive" %}
+  <div class="row">
+
+    <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-4">
+      <div class="card custom-card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-9">
+              <div class="mt-0 text-start">
+                <span class="fs-16 fw-semibold">Opportunity Open</span>
+                <h3 class="mb-0 mt-1 text-primary fs-25">{{opportunity_open_count}}</h3>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="icon1 bg-warning my-auto  float-end">
+                <i class="fe fe-file-text"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-4">
+      <div class="card custom-card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-9">
+              <div class="mt-0 text-start">
+                <span class="fs-16 fw-semibold">Opportunity Lost</span>
+                <h3 class="mb-0 mt-1 text-primary fs-25">{{opportunity_lost_count}}</h3>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="icon1 bg-primary my-auto float-end">
+                <i class="fe fe-x"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-4">
+      <div class="card custom-card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-9">
+              <div class="mt-0 text-start">
+                <span class="fs-16 fw-semibold">Invoiced</span>
+                <h3 class="mb-0 mt-1 text-primary fs-25">{{total_invoiced_count}}</h3>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="icon1 bg-success my-auto  float-end">
+                <i class="fe fe-check"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-4">
+      <div class="card custom-card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-9">
+              <div class="mt-0 text-start">
+                <span class="fs-16 fw-semibold">Plan Pending</span>
+                <h3 class="mb-0 mt-1 text-primary fs-25">{{total_plan_pending_count}}</h3>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="icon1 bg-secondary my-auto  float-end">
+                <i class="fe fe-info"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  {% elif request.user.usertype|user_type_allowed:"deo" %}
+  <div class="row">
+
+    <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-4">
+      <div class="card custom-card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-9">
+              <div class="mt-0 text-start">
+                <span class="fs-16 fw-semibold">Order Pending</span>
+                <h3 class="mb-0 mt-1 text-primary fs-25">{{total_order_pending}}</h3>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="icon1 bg-secondary my-auto  float-end">
+                <i class="fe fe-info"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  {% elif request.user.usertype|user_type_allowed:"test_drive_operator" %}
+  <div class="row">
+
+    <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-4">
+      <div class="card custom-card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-9">
+              <div class="mt-0 text-start">
+                <span class="fs-16 fw-semibold">Testdrive Scheduled</span>
+                <h3 class="mb-0 mt-1 text-primary fs-25">{{total_testdrive_scheduled}}</h3>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="icon1 bg-primary my-auto  float-end">
+                <i class="fe fe-briefcase"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-4">
+      <div class="card custom-card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-9">
+              <div class="mt-0 text-start">
+                <span class="fs-16 fw-semibold">Testdrive Pending</span>
+                <h3 class="mb-0 mt-1 text-primary fs-25">{{total_testdrive_pending}}</h3>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="icon1 bg-secondary my-auto  float-end">
+                <i class="fe fe-info"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-4">
+      <div class="card custom-card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-9">
+              <div class="mt-0 text-start">
+                <span class="fs-16 fw-semibold">Testdrive Rescheduled</span>
+                <h3 class="mb-0 mt-1 text-primary fs-25">{{total_testdrive_rescheduled}}</h3>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="icon1 bg-danger my-auto  float-end">
+                <i class="fe fe-briefcase"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-4">
+      <div class="card custom-card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-9">
+              <div class="mt-0 text-start">
+                <span class="fs-16 fw-semibold">Testdrive Done</span>
+                <h3 class="mb-0 mt-1 text-primary fs-25">{{total_testdrive_done}}</h3>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="icon1 bg-success my-auto  float-end">
+                <i class="fe fe-check"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-4">
+      <div class="card custom-card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-9">
+              <div class="mt-0 text-start">
+                <span class="fs-16 fw-semibold">Testdrive Cancelled</span>
+                <h3 class="mb-0 mt-1 text-primary fs-25">{{total_cancelled}}</h3>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="icon1 bg-danger my-auto  float-end">
+                <i class="fe fe-x"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  {% elif request.user.usertype|user_type_allowed:"stock" %}
+  <div class="row">
+
+    <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-4">
+      <div class="card custom-card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-9">
+              <div class="mt-0 text-start">
+                <span class="fs-16 fw-semibold">Billing Request Pending</span>
+                <h3 class="mb-0 mt-1 text-primary fs-25">{{total_billing_request}}</h3>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="icon1 bg-secondary my-auto  float-end">
+                <i class="fe fe-info"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-4">
+      <div class="card custom-card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-9">
+              <div class="mt-0 text-start">
+                <span class="fs-16 fw-semibold">Back Order Request Pending</span>
+                <h3 class="mb-0 mt-1 text-primary fs-25">{{total_backorder_request}}</h3>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="icon1 bg-danger my-auto  float-end">
+                <i class="fe fe-trending-down"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  {% elif request.user.usertype|user_type_allowed:"invoice_team" %}
+  <div class="row">
+
+    <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-4">
+      <div class="card custom-card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-9">
+              <div class="mt-0 text-start">
+                <span class="fs-16 fw-semibold">Billing Request Pending</span>
+                <h3 class="mb-0 mt-1 text-primary fs-25">{{total_stock_invoice_request}}</h3>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="icon1 bg-danger my-auto  float-end">
+                <i class="fe fe-info"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  {% elif request.user.usertype|user_type_allowed:"finance_bo" %}
+  <div class="row">
+
+    <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-4">
+      <div class="card custom-card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-9">
+              <div class="mt-0 text-start">
+                <span class="fs-16 fw-semibold">Billing Request Pending</span>
+                <h3 class="mb-0 mt-1 text-primary fs-25">{{total_finance_approval_pending_request}}</h3>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="icon1 bg-danger my-auto  float-end">
+                <i class="fe fe-info"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  {% elif request.user.usertype|user_type_allowed:"tmga" %}
+  <div class="row">
+
+    <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-4">
+      <div class="card custom-card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-9">
+              <div class="mt-0 text-start">
+                <span class="fs-16 fw-semibold">TMGA/VAS Request Pending</span>
+                <h3 class="mb-0 mt-1 text-primary fs-25">{{total_accessory_approval_pending_request}}</h3>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="icon1 bg-danger my-auto  float-end">
+                <i class="fe fe-info"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  {% elif request.user.usertype|user_type_allowed:"exchange_bo" %}
+  <div class="row">
+
+    <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-4">
+      <div class="card custom-card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-9">
+              <div class="mt-0 text-start">
+                <span class="fs-16 fw-semibold">Exchange Request Pending</span>
+                <h3 class="mb-0 mt-1 text-primary fs-25">{{total_exchange_approval_pending_request}}</h3>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="icon1 bg-danger my-auto  float-end">
+                <i class="fe fe-info"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  {% elif request.user.usertype|user_type_allowed:"registration_bo" %}
+  <div class="row">
+
+    <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-4">
+      <div class="card custom-card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-9">
+              <div class="mt-0 text-start">
+                <span class="fs-16 fw-semibold">Registration Request Pending</span>
+                <h3 class="mb-0 mt-1 text-primary fs-25">{{total_registration_approval_pending_request}}</h3>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="icon1 bg-danger my-auto  float-end">
+                <i class="fe fe-info"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  {% elif request.user.usertype|user_type_allowed:"scheme" %}
+  <div class="row">
+
+    <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-4">
+      <div class="card custom-card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-9">
+              <div class="mt-0 text-start">
+                <span class="fs-16 fw-semibold">Scheme Request Pending</span>
+                <h3 class="mb-0 mt-1 text-primary fs-25">{{total_scheme_approval_pending_request}}</h3>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="icon1 bg-danger my-auto  float-end">
+                <i class="fe fe-info"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  {% elif request.user.usertype|user_type_allowed:"insurance" %}
+  <div class="row">
+
+    <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-4">
+      <div class="card custom-card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-9">
+              <div class="mt-0 text-start">
+                <span class="fs-16 fw-semibold">Insurance Request Pending</span>
+                <h3 class="mb-0 mt-1 text-primary fs-25">{{total_insurance_approval_pending_request}}</h3>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="icon1 bg-danger my-auto  float-end">
+                <i class="fe fe-info"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  {% elif request.user.usertype|user_type_allowed:"accounts" %}
+  <div class="row">
+
+    <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-4">
+      <div class="card custom-card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-9">
+              <div class="mt-0 text-start">
+                <span class="fs-16 fw-semibold">Billing Request Pending</span>
+                <h3 class="mb-0 mt-1 text-primary fs-25">{{total_accounts_approval_pending_request}}</h3>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="icon1 bg-danger my-auto  float-end">
+                <i class="fe fe-info"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  {% elif request.user.usertype|user_type_allowed:"pdi" %}
+  <div class="row">
+
+    <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-4">
+      <div class="card custom-card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-9">
+              <div class="mt-0 text-start">
+                <span class="fs-16 fw-semibold">PDI Request Pending</span>
+                <h3 class="mb-0 mt-1 text-primary fs-25">{{total_pdi_approval_pending_request}}</h3>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="icon1 bg-danger my-auto  float-end">
+                <i class="fe fe-info"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  {% elif request.user.usertype|user_type_allowed:"cre" %}
+  <div class="row">
+
+    <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-4">
+      <div class="card custom-card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-9">
+              <div class="mt-0 text-start">
+                <span class="fs-16 fw-semibold">Delivered</span>
+                <h3 class="mb-0 mt-1 text-primary fs-25">{{total_delivered_count}}</h3>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="icon1 bg-danger my-auto float-end">
+                <i class="fe fe-info"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  {% endif %}
+
+  <div class="row">
+
+    <div class="col-md-6 mb-3">
+      <div class="card custom-card h-100">
+        <div class="card-header justify-content-between">
+          <h4 class="card-title text-white">Statistics</h4>
+        </div>
+        <div class="card-body">
+          <div class="chart-wrapper">
+            <div id="chartbar-statistics"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class=" col-md-6 mb-3">
+      <div class="card custom-card h-100">
+        <div class="card-header border-0">
+          <h4 class="card-title text-white">Total Analysis</h4>
+        </div>
+        <div class="card-body px-0">
+          <div id="analysis" class="mx-auto apex-dount" style="min-height: 242.8px">
+          </div>
+          <div class="row mt-3">
+            <div class="col-10 mx-auto">
+              <div class="table-responsive">
+                <table class="table table-borderless mb-0">
+                  <tbody>
+                    <tr>
+                      <td class="p-2 d-flex">
+                        <span class="dot-label bg-primary me-2 mt-1"></span><span class="fw-normal"> Invoiced</span>
+                      </td>
+                      <td class="p-2">
+                        <span class="me-4 fs-16">:</span><span class="ms-auto fw-semibold fs-16">953</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="p-2 d-flex">
+                        <span class="dot-label bg-secondary me-2 mt-1"></span>
+                        <span class="fw-normal">Cancelled</span>
+                      </td>
+                      <td class="p-2">
+                        <span class="me-4 fs-16">:</span><span class="ms-auto fw-semibold fs-16">126</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="p-2 d-flex">
+                        <span class="dot-label bg-success me-2 mt-1"></span>
+                        <span class="fw-normal">Delivered</span>
+                      </td>
+                      <td class="p-2">
+                        <span class="me-4 fs-16">:</span><span class="ms-auto fw-semibold fs-16">2553</span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class=" col-md-6 mb-3">
+      <div class="card custom-card h-100">
+        <div class="card-header border-0">
+          <h4 class="card-title text-white">Total Analysis</h4>
+        </div>
+        <div class="card-body">
+          <div class="chart-wrapper">
+            <div id="expenses"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class=" col-md-6 mb-3">
+      <div class="card custom-card h-100">
+        <div class="card-header border-0">
+          <h4 class="card-title text-white">Total Analysis</h4>
+        </div>
+        <div class="card-body">
+          <div class="card-body d-flex flex-wrap gap-2 justify-content-center">
+            <div class="chart-wrapper">
+              <div id="attendance"></div>
+            </div>
+            <div class="chart-wrapper">
+              <div id="attendanc2"></div>
+            </div>
+            <div class="chart-wrapper">
+              <div id="attendance3"></div>
+            </div>
+            <div class="chart-wrapper">
+              <div id="attendance4"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+{% endblock content %}
+
+
+{% block js_plugins %}
+<script src="{% static 'app/plugins/apexchart/apexchart.min.js' %}"></script>
+{% endblock %}
+
+{% block javascript %}
+<script>
+  var data1 = [{ name: "Opportunities", data: [44, 42, 57, 86, 58, 55, 70, 44, 42, 57, 86, 58] }, { name: "Bookings", data: [40, 38, 47, 86, 51, 55, 65, 39, 32, 47, 76, 41] }],
+    data2 = { series: [80, 29, 50, 40], labels: ["Booked", "Invoiced", "Plan Pending", "Delivery Pending"] },
+    data3 = { series: [{ name: "Accepted", type: "line", data: [15, 32, 15, 38, 18] }, { name: "Rejected", type: "area", data: [25, 28, 21, 33, 18] }], labels: ["2016", "2017", "2018", "2019", "2020", "2021"] },
+    data4 = { name: ["75%"], series: [75], color: ["#0dcd94"] }, 
+    data5 = { name: ["38%"], series: [38], color: ["rgba(51,102,255,1)"] },
+    data6 = { name: ["67%"], series: [67], color: ["#0dcd94"] },
+    data7 = { name: ["45%"], series: [45], color: ["#f34932"] };  
+</script>
+
+<script>
+  var options1 = {
+    series: data1, chart: { type: "bar", height: 400, toolbar: { show: !1 } }, grid: { borderColor: "#f1f1f1", strokeDashArray: 3 }, colors: ["rgb(51, 102, 255)", "#e4e7ed"], plotOptions: { bar: { columnWidth: "50%", borderRadius: 5 } },
+    dataLabels: { enabled: !1 }, stroke: { show: !0, width: 2 }, legend: { show: !1, position: "top" }, yaxis: {
+      title: { style: { color: "#adb5be", fontSize: "13px", fontWeight: 600, cssClass: "apexcharts-yaxis-label" } },
+      labels: { formatter: function (o) { return o.toFixed(0) + "" } }
+    }, xaxis: {
+      type: "week", categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], axisBorder: { show: !0, color: "rgba(119, 119, 142, 0.05)", offsetX: 0, offsetY: 0 }, axisTicks: { show: !0, borderType: "solid", color: "rgba(119, 119, 142, 0.05)", width: 6, offsetX: 0, offsetY: 0 },
+      labels: { rotate: -90 }
+    }
+  }; document.getElementById("chartbar-statistics").innerHTML = "";
+  var chart1 = new ApexCharts(document.querySelector("#chartbar-statistics"), options1); function chartbarstatistics() { chart1.updateOptions({ colors: ["rgba(" + myVarVal + ", 1)", "rgba(" + myVarVal + ", 0.2)"] }) } chart1.render();
+
+  var options2 = {
+    series: data2.series, labels: data2.labels, chart: { height: 260, type: "donut", toolbar: { show: !1 } }, dataLabels: { enabled: !1 }, legend: { show: !1, position: "bottom", horizontalAlign: "center", offsetY: 8, fontWeight: "normal", fontSize: "14px", markers: { width: 12, height: 12, strokeWidth: 0, strokeColor: "#fff", fillColors: void 0, radius: 4, customHTML: void 0, onClick: void 0, offsetX: 0, offsetY: 0 } }, stroke: { show: !0, curve: "smooth", lineCap: "round", colors: "#fff", width: 0, dashArray: 0 },
+    plotOptions: { pie: { expandOnClick: !1, donut: { size: "80%", background: "transparent", labels: { show: !0, name: { show: !0, fontSize: "20px", offsetY: -13 }, value: { show: !0, fontSize: "30px", fontWeight: 500, color: void 0, offsetY: 8, formatter: function (o) { return o + "%" } }, total: { show: !0, showAlways: !1, label: "Current Status", fontSize: "18px", fontWeight: 400 } } } } }, colors: ["rgba(51, 102, 255, 1)", "rgba(254, 127, 0, 1)"]
+  };
+  document.querySelector("#analysis").innerHTML = " "; var chart2 = new ApexCharts(document.querySelector("#analysis"), options2); function analysis() { chart2.updateOptions({ colors: ["rgba(" + myVarVal + ", 1)", "rgba(254, 127, 0, 1)", "#0dcd94"] }) } chart2.render();
+
+  var options3 = {
+    series: data3.series, chart: { height: 190, toolbar: { show: !1 } }, grid: { show: !1, borderColor: "#f2f6f7" }, dataLabels: { enabled: !1 }, legend: { show: !1, position: "top", fontSize: "13px" }, stroke: { width: [3, 3], curve: "smooth" },
+    plotOptions: { bar: { columnWidth: "27%", borderRadius: 1 } }, labels: data3.labels
+  },
+    chart3 = new ApexCharts(document.querySelector("#expenses"), options3); function expenses() { chart3.updateOptions({ colors: ["rgba(" + myVarVal + ", 0.99)", "rgba(" + myVarVal + ", 0.2)"] }) } chart3.render();
+
+  var options4 = { chart: { height: 180, width: 120, type: "radialBar" }, series: data4.series, colors: data4.color, plotOptions: { radialBar: { hollow: { margin: 0, size: "40%", background: "#fff" }, dataLabels: { name: { offsetY: 4, fontSize: ".825rem", fontWeight: 500, colors: "#4b9bfa" }, value: { offsetY: 5, color: "#4b9bfa", fontSize: ".875rem", show: !1, fontWeight: 500 } } } }, states: { normal: { filter: { type: "none" } }, hover: { filter: { type: "none" } }, active: { filter: { type: "none" } } }, grid: { padding: { bottom: -8, top: -15 } }, stroke: { lineCap: "round" }, labels: data4.name };
+  document.querySelector("#attendance").innerHTML = ""; var chart = new ApexCharts(document.querySelector("#attendance"), options4); chart.render();
+  var options5 = { chart: { height: 180, width: 120, type: "radialBar" }, series: data5.series, colors: data5.color, plotOptions: { radialBar: { hollow: { margin: 0, size: "40%", background: "#fff" }, dataLabels: { name: { offsetY: 4, fontSize: ".825rem", fontWeight: 500, colors: "#4b9bfa" }, value: { offsetY: 5, color: "#4b9bfa", fontSize: ".875rem", show: !1, fontWeight: 500 } } } }, states: { normal: { filter: { type: "none" } }, hover: { filter: { type: "none" } }, active: { filter: { type: "none" } } }, grid: { padding: { bottom: -8, top: -15 } }, stroke: { lineCap: "round" }, labels: data5.name };
+  document.querySelector("#attendanc2").innerHTML = ""; var chart = new ApexCharts(document.querySelector("#attendanc2"), options5); chart.render();
+  var options6 = { chart: { height: 180, width: 120, type: "radialBar" }, series: data6.series, colors: data6.color, plotOptions: { radialBar: { hollow: { margin: 0, size: "40%", background: "#fff" }, dataLabels: { name: { offsetY: 4, fontSize: ".825rem", fontWeight: 500, colors: "#4b9bfa" }, value: { offsetY: 5, color: "#4b9bfa", fontSize: ".875rem", show: !1, fontWeight: 500 } } } }, states: { normal: { filter: { type: "none" } }, hover: { filter: { type: "none" } }, active: { filter: { type: "none" } } }, grid: { padding: { bottom: -8, top: -15 } }, stroke: { lineCap: "round" }, labels: data6.name };
+  document.querySelector("#attendance3").innerHTML = ""; var chart = new ApexCharts(document.querySelector("#attendance3"), options6); chart.render();
+  var options7 = { chart: { height: 180, width: 120, type: "radialBar" }, series: data7.series, colors: data7.color, plotOptions: { radialBar: { hollow: { margin: 0, size: "40%", background: "#fff" }, dataLabels: { name: { offsetY: 4, fontSize: ".825rem", fontWeight: 500, colors: "#f34932" }, value: { offsetY: 5, color: "#4b9bfa", fontSize: ".875rem", show: !1, fontWeight: 500 } } } }, states: { normal: { filter: { type: "none" } }, hover: { filter: { type: "none" } }, active: { filter: { type: "none" } } }, grid: { padding: { bottom: -8, top: -15 } }, stroke: { lineCap: "round" }, labels: data7.name };
+  document.querySelector("#attendance4").innerHTML = "";
+  var chart = new ApexCharts(document.querySelector("#attendance4"), options7); chart.render();
+</script>
+{% endblock %}

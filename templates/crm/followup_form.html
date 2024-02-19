@@ -1,0 +1,117 @@
+{% extends 'app/base.html' %}
+{% load static i18n crispy_forms_tags django_tables2 %}
+{% block title %}{{title|title}} : {{app_settings.site_title}}{% endblock %}
+
+{% block content %}
+
+{% if opportunity %}
+<div class="side-app main-container detail_page">
+
+  <!-- Row-->
+  <div class="row mt-5">
+
+    {% block opportunity_mini_list %}
+    {% include 'app/partials/opportunity_mini_list.html' %}
+    {% endblock %}
+
+  </div>
+  <!-- End Row-->
+
+
+  <div class="row row-sm">
+    <div class="col-lg-12">
+
+      <div class="card">
+        {% if followups.paginated_rows %}
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            {% render_table followups %}
+          </div>
+        </div>
+        {% else %}
+        <div class="card-body">
+           {% translate "No Opportunity Follow Up So Far" %}
+          {% if can_add %}<a href="{{new_link}}">{% translate "Add New One" %}</a>{% endif %}
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  {% if not request.user.usertype == 'finance_executive' %}
+  <div class="row">
+    <div class="col-12 mx-auto">
+      <div class="card">
+        <div class="card-header border-bottom-0">
+          <h5 class="mb-0">Opportunity Follow Up</h5>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-lg-12 col-md-12">
+              <form class="form-horizontal" method="post" autocomplete="off" enctype="multipart/form-data" action=""
+                enctype="multipart/form-data">
+                {% csrf_token %}
+                {{form|crispy}}
+                <div class="my-4">
+                  <div class="form-group mb-0">
+                    <button type="submit" class="btn btn-primary me-2">{% translate "Save" %}</button>
+                    <button type="button" onclick="history.back()" class="border btn btn-outline-grey">
+                      {% translate "Cancel" %}</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+</div>
+{% else %}
+
+<div class="side-app main-container detail_page">
+
+  <div class="row mt-5">
+  <!-- Opportunity update -->
+    <div class="row">
+      <div class="col-12 mx-auto">
+        <div class="card">
+          <div class="card-header border-bottom-0">
+            <h5 class="mb-0">Opportunity Follow Up Update</h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-lg-12 col-md-12">
+                <form class="form-horizontal" method="post" autocomplete="off" enctype="multipart/form-data" action=""
+                  enctype="multipart/form-data">
+                  {% csrf_token %}
+                  {{form|crispy}}
+                  <div class="my-4">
+                    <div class="form-group mb-0">
+                      <button type="submit" class="btn btn-primary me-2">{% translate "Save" %}</button>
+                      <button type="button" onclick="history.back()" class="border btn btn-outline-grey">
+                        {% translate "Cancel" %}</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+{% endif %}
+
+{% include 'app/partials/filter.html' %}
+{% include 'app/partials/help.html' %}
+
+{% endblock content %}

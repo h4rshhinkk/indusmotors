@@ -1,0 +1,172 @@
+{% load static %}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+    <head>
+        <title>{{object}}'s Gate Pass</title>
+        <style>
+           .container, .page{
+                height: 710px;
+                padding: 60px 75px 600px;
+                max-width: 266mm;
+                width: 100%;
+                background-color: #fff;
+                background-image: url("{% static 'app/config/logo_mini_pdf_2.png' %}");
+                background-size:100% 100%;
+                background-repeat: no-repeat;
+                
+            }
+
+            .detail-box div{
+                margin-bottom: -10px;
+            }
+            
+        </style>
+    </head>
+    <body >
+       <div class="container page">
+        
+        <table style="table-layout: fixed; width: 100%; ">
+            <tbody>
+                <tr>
+                    <td class="">
+                        <div style="width: 160px; margin-left: 40px;">
+                            <img src="{% static 'app/config/rotanatatalogo.png' %}" alt="Company Logo" style="max-width: 100%;">
+                        </div>
+                    </td>
+                    <td width="15%">
+                        
+                    </td>
+                    <td>    
+                        <table class="tbl-padded">
+                            <caption style="text-transform: uppercase; text-align: left; font-size: 34px;">
+                                <strong>
+                                    Gate Pass
+                                </strong>
+                            </caption> 
+                            <tbody>
+                                <tr>
+                                    <td style="padding:5px;">
+                                        <strong >Invoice No:</strong>
+                                    </td>
+                                    <td style="padding:5px;">
+                                        <div>
+                                            {{  object.invoice_no }}
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:5px;">
+                                        <strong >Invoice Date:</strong>                            
+                                    </td>
+                                    <td style="padding:5px;">
+                                        {{ object.invoice_date|date:'M / d / Y' }}
+                                    </td>
+                                </tr>
+                               
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div style="padding-top: 2cm; padding-bottom: 2cm;">
+            <table style="table-layout: fixed; width: 100%;">
+                <tbody>
+                    <tr>
+                        <td width="15%">
+                            
+                        </td>
+                        <td>
+                            <div style="padding-bottom: 10px;">
+                                <strong style="text-transform: uppercase;">Vehicle Details</strong>
+                            </div>
+                            <div class="detail-box">
+                                <div><strong>Model:</strong> {{object.chassis.variant.car_model}}</div><br>
+                                <div><strong>Trim:</strong>  {{object.chassis.variant.trim}}</div><br>
+                                <div><strong>Variant:</strong>  {{object.chassis.variant.vehicle_code}}</div><br>
+                                <div><strong>Chassis:</strong>  {{object.chassis.chassis_number}}</div><br>
+                                <div><strong>Transmission:</strong>  {{object.chassis.variant.transmission}}</div><br>
+                                <div><strong>Fuel:</strong>  {{object.chassis.variant.fuel}}</div><br>
+                                <div><strong>Color:</strong>  {{object.chassis.variant.color}}</div><br>
+                            </div>
+                        </td>
+                        
+                        <td>
+                            <div style="padding-bottom: 10px;">
+                                <strong style="text-transform: uppercase;">Customer Details</strong>
+                            </div>
+                            <div class="detail-box">
+                                <div><strong>Name:</strong> {{object.customer_salutation}}{{object.customer_name}}</div><br>
+                                <div><strong>DSE:</strong> {{object.dse}}</div><br>
+                                <div><strong>Address:</strong> {{object.house_name}}</div><br>
+                                <div>{{object.place}}-{{object.village}}</div><br>
+                                <div>{{object.pin}}-{{object.district}}</div><br>
+                                <div><strong>Phone:</strong> {{object.mobile}}</div><br>
+                            </div>
+                        </td>
+                        <td width="10%">
+                            
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div style="padding-top: 1cm; padding-bottom: 1cm;">
+            <table style="table-layout: fixed; width: 100%;">
+                <tbody>
+                    <tr>
+                        <td>
+                            
+                            <div style="padding-bottom: 10px;">
+                                <strong style="text-transform: uppercase;">Notes:</strong>
+                            </div>
+                            <p class="mb-0">For any enquiry, reach out via email at info@.com, call on +91 75000 55558</p>
+                            <p class="mb-0">For Any Complaint, Call on Toll Free No. 96000000</p>
+                        </td>
+
+                        
+                        
+                       
+                        <td style="text-align: end;">
+                            <div >
+                                <strong style="text-transform: uppercase;">Authorised Signatory</strong>
+                            </div>
+                           
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div style="padding-bottom: 1cm;">
+            <table style="table-layout: fixed; width: 100%;">
+                <tbody>
+                    <tr>
+                        <td>
+                            
+                            <div style="padding-bottom: 10px;">
+                                <strong style="text-transform: uppercase;">Feedback:</strong>
+                            </div>
+                           
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="padding-bottom: 10px;">
+                               
+                                <input type="text" id="feedbackInput" name="feedbackInput" style="width: 100%; height:250px; background-color: transparent;">
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+       </div>
+       
+</body>
+
+</html>

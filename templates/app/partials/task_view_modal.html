@@ -1,0 +1,49 @@
+<button type="button" class="btn btn-gray btn-sm" data-bs-toggle="modal" data-bs-target="#Task_{{record.pk}}">
+    View
+</button>
+
+<div class="modal fade" id="Task_{{record.pk}}" tabindex="-1" aria-labelledby="Task_{{record.pk}}Label" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="Task_{{record.pk}}Label">{{record.title}}</h5>
+            <button type="button" class="btn-close btn-sm" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="mb-2">{{record.description|linebreaksbr|urlize}}</div>
+            <div class="d-flex flex-wrap justify-content-start mt-4">
+                <img src="{{record.assigned_to.get_image_url}}" alt="" class="avatar-sm me-1"
+                title="{{record.assigned_to}}">
+                {% if record.start_from == record.end_before %}
+                <span class="my-0 badge bg-warning me-1">{{record.start_from}}</span>
+                {% else %}
+                <span class="my-0 badge bg-success me-1">{{record.start_from}}</span>
+                <span class="my-0 badge bg-danger me-1">{{record.end_before}}</span>
+                {% endif %}
+            </div>
+        </div>
+        <div class="modal-footer justify-content-start">
+            <div class="footer-content">
+                <div class="d-flex flex-wrap justify-content-center mb-3">
+                {% if record.remarks %}
+                    <button type="button" class="btn btn-sm edit_btn">Edit Remarks</button>
+                {% else %}
+                    <button type="button" class="btn btn-sm edit_btn">Edit Remarks</button>
+                {% endif %}
+                {% if record.rework_reason %}
+                    <button type="button" class="btn btn-sm edit_btn">Edit Reason</button>
+                {% else %}
+                    <button type="button" class="btn btn-sm edit_btn">Edit Reason</button>
+                {% endif %}
+                </div>
+
+                {% if record.remarks %}
+                    <p><strong class="d-inline">Remarks: </strong>{{record.remarks|linebreaksbr|urlize}}</p>
+                {% endif %}
+                {% if record.rework_reason %}
+                    <p><strong class="d-inline">Rework Reason: </strong>{{record.rework_reason|linebreaksbr|urlize}}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

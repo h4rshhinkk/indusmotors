@@ -1,0 +1,22 @@
+username    -   pass         
+
+dmsteam	        dms@123			                DMS/DEO Team
+stockteam	    stock@123			            Stock
+invoice	        12345			                Invoice
+testdrive_op	top@123			                TestDrive Operator
+exchange	    ex@123			                Exchange
+finance_bo	    fin@123		                    Finance
+registration	rg@123			                Registration
+Scheme	        s@123			                Scheme
+Insurance	    in@123			                Insurance
+pdi_team	    pdi@123			                PDI
+tmga	        tm@123			                TMGA-accessoryteam
+accounts	    ac@123			                Accounts
+
+
+XX_123465	XX_123465	     Abhinand	Koduvally- 1	team_lead	
+LT_3008510	LT_3008510	    Lijesht T	Koduvally- 1	customer_advisor	
+MS1_3008510	MS1_3008510	   Muhammed Subi S M	Koduvally- 1	customer_advisor	
+SL_3008510	SL_3008510	   Sabin Lal	Koduvally- 1	customer_advisor	
+XX_123475	XX_123475	Subramanyan		asm
+					

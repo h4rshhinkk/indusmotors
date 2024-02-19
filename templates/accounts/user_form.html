@@ -1,0 +1,53 @@
+{% extends 'app/base.html' %}
+{% load static i18n crispy_forms_tags %}
+{% block title %}New/Change User: {{app_settings.site_title}}{% endblock %}
+
+{% block javascript %}
+{{form.media}}
+{% endblock javascript %}
+
+{% block content %}
+
+<div class="side-app main-container edit_page">
+
+    <!--Page header-->
+    <div class="page-header d-flex">
+        <div class="page-leftheader">
+            <div class="page-title">New/Change User</div>
+        </div>
+    </div>
+    <!--End Page header-->
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header border-bottom-0">
+                    <h5 class="mb-0">New/Change User</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12">
+                            <form class="form-horizontal" method="post" autocomplete="off" enctype="multipart/form-data"
+                                action="" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                {{form|crispy}}
+                                <div class="my-4">
+                                    <div class="form-group mb-0">
+                                        <button type="submit" class="btn btn-primary me-2">
+                                            {% translate "Save" %}</button>
+                                        <button type="button" onclick="history.back()"
+                                            class="border btn btn-outline-grey">{% translate "Cancel" %}</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock content %}

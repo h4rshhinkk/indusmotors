@@ -1,0 +1,94 @@
+{% extends 'app/base.html' %}
+{% load static i18n crispy_forms_tags %}
+{% block title %}{{object}}: {{app_settings.site_title}}{% endblock %}
+
+{% block content %}
+
+<div class="side-app main-container detail_page">
+
+    <!--Page header-->
+    <div class="page-header d-flex">
+        <div class="page-leftheader">
+            <div class="page-title">{{title|title}}</div>
+        </div>
+        <div class="page-rightheader ms-md-auto">
+            <div class="btn-list">
+
+                <a href="javascript:void(0);" onclick="window.print();" class="btn btn-sm btn-white" title="Print"> <i
+                        class="feather feather-printer"></i> </a>
+
+                <a href="{{object.get_update_url}}" class="btn btn-sm btn-white" data-bs-placement="top"
+                    data-bs-toggle="tooltip" title="Edit"> <i class="text-primary feather feather-edit-3"></i> </a>
+
+                <a href="{{object.get_delete_url}}" class="btn btn-sm btn-white" data-bs-placement="top"
+                    data-bs-toggle="tooltip" title="Delete"> <i class="text-danger feather feather-trash-2"></i> </a>
+
+            </div>
+        </div>
+    </div>
+    <!--End Page header-->
+
+    <!-- Row-->
+    <div class="row">
+
+        <div class="col-md-6">
+            <div class="card content_card">
+                <div class="card-header">
+                    <div class="card-title d-flex align-items-center w-100">
+                        <h5 class="mb-0">{{object.car_model}} - {{object.trim}} - {{object.vehicle_code}}</h5>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover info_table mb-0" style="width:100%;">
+                            <tbody>
+                                <tr><td>Car Model </td><td> {{object.car_model|default:"-"}} </td></tr>
+                                <tr><td> Fuel </td><td> {{object.fuel|default:"-"}} </td></tr>
+                                <tr><td> Trim </td><td> {{object.trim|default:"-"}} </td></tr>
+                                <tr><td> Transmission </td><td> {{object.transmission|default:"-"}} </td></tr>
+                                <tr><td> Color </td><td> {{object.color|default:"-"}} </td></tr>
+                                <tr><td> Variant </td><td> {{object.vehicle_code|default:"-"}} </td></tr>
+                            
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card content_card">
+                <div class="card-header">
+                    <div class="card-title d-flex align-items-center w-100">
+                        <h5 class="mb-0">Price Details</h5>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover info_table mb-0" style="width:100%;">
+                            <tbody>
+                                <tr><td> Showroom Price </td><td> {{object.showroom_price|default:"-"}} </td></tr>
+                                <tr><td> Insurance </td><td> {{object.insurance|default:"-"}} </td></tr>
+                                <tr><td> Road Tax </td><td> {{object.road_tax|default:"-"}} </td></tr>
+                                <tr><td> Registration Charge </td><td> {{object.registration_charge|default:"-"}} </td></tr>
+                                <tr><td> TCS </td><td> {{object.tcs|default:"-"}} </td></tr>
+                                <tr><td> RSA </td><td> {{object.rsa|default:"-"}} </td></tr>
+                                <tr><td> P2P </td><td> {{object.p2p|default:"-"}} </td></tr>
+                                <tr><td> Extended Warranty </td><td> {{object.extended_warranty|default:"-"}} </td></tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        
+    </div>
+    <!-- End Row-->
+
+</div>
+
+{% endblock content %}

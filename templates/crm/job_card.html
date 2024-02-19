@@ -1,0 +1,137 @@
+{% load static %}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+    <body style="font-family:Arial Unicode MS, Helvetica , Sans-Serif;">
+        
+        <style>
+            .striped-table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 100px;
+            }
+        
+            .striped-table th,
+            .striped-table td {
+                padding: 10px;
+                border: 1px solid #ddd; /* Add borders to cells for better visibility */
+            }
+        
+            .striped-table th {
+                background-color: #f2f2f2; /* Background color for header */
+            }
+        
+            .striped-table tr:nth-child(even) {
+                background-color: #f9f9f9; /* Background color for even rows */
+            }
+        
+            .striped-table tr:nth-child(odd) {
+                background-color: #ffffff; /* Background color for odd rows */
+            }
+        </style>
+        
+        
+        <table style="table-layout: fixed; width: 100%;">
+            <tbody>
+                <tr>
+                    <td class="">
+                        <div style="width: 160px;  margin-top: 20px;">
+                            <img src="https://rotanatata.geany.website/static/app/config/rotanatatalogo.png" alt="Company Logo" style="max-width: 100%;">
+                        </div>
+                    </td>
+                    <td width="15%">
+                        <caption style=" text-transform: uppercase; text-align: center; font-size: 30px;">
+                                <strong>
+                                    Accessory Job Card
+                                </strong>
+                            </caption> 
+                    </td>
+                    
+                </tr>
+            </tbody>
+        </table>
+
+
+        <table style="width: 100%; margin-top:40px;">
+            <tr>
+                <td style="width: 20%; vertical-align: top;">
+                    <strong>Name</strong>
+                    <div style="padding: 5px;">{{object_details.customer_name}}</div>
+                </td>
+                
+                <td style="width: 25%; vertical-align: top;">
+                    <strong>Contact Details</strong>
+                    <div style="padding: 5px;">
+                        {{object_details.house_name}}<br>
+                        {{object_details.place}}<br>
+                        {{object_details.village}}<br>
+                        {{object_details.house_name}}<br>
+                    </div>
+                </td>
+        
+                <td style="width: 35%; vertical-align: top;">
+                    <strong>Vehicle Details</strong>
+                    <div style="padding: 5px;">
+                        Variant: {{object_details.chassis.variant}}<br>
+                        Car Model: {{object_details.chassis.variant.car_model}}<br>
+                        Trim: {{object_details.chassis.variant.trim}}<br>
+                        Transmission / Fuel: {{object_details.chassis.variant.transmission}} - 
+                        {{object_details.chassis.variant.fuel}}<br>
+                        Chassis: {{object_details.chassis.chassis_number}}<br>
+                    </div>
+                </td>
+        
+                <td style="width: 20%; vertical-align: top;">
+                    <strong>Order Details</strong>
+                    <div style="padding: 5px;">
+                        Invoice No: {{object_details.invoice_no}}<br>
+                        Invoice Date: {{object_details.invoice_date}}<br>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        
+       
+       
+        <div>
+            <table class="striped-table">
+                <thead>
+                    <tr>
+                        <th style="text-align: left;">Accessory Type</th>
+                        <th style="text-align: left;">Accessory Name</th>
+                        <th style="text-align: left;">Payment Type</th>
+                        <th style="text-align: right;">Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for accessory in object_list %}
+                    <tr>
+                        <td style="text-align: left;">{{ accessory.accessory_type }}</td>
+                        <td style="text-align: left;">{{ accessory.accessory_name }}</td>
+                        <td style="text-align: left;">{{ accessory.get_payment_type_display }}</td>
+                        <td style="text-align: right;">{{ accessory.amount }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+       
+        
+       
+        <div style="border-top: 1px solid #eee;padding-top: 20px;">
+            <table style="table-layout: fixed; width: 100%; border-collapse: collapse;">
+                <tbody>
+                    
+                    <tr>
+                        <td align="right" width="20%" style=" padding-top: 48px;">
+                            <strong style="font-size: 16pt;">
+                                Authorized Signatory
+                            </strong>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+</body>
+
+</html>

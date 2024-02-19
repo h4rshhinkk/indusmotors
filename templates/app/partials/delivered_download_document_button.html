@@ -1,0 +1,43 @@
+<ul>
+    {% if request.user.usertype == 'team_lead' %}
+        {% if record.invoice and record.invoice.url %}
+            <li>
+                <a href="{{record.invoice.url}}" target="_blank">
+                    <button type="button" class="btn btn-primary mb-1">
+                        Download Invoice
+                    </button>
+                </a>
+            </li>
+        {% else %}
+        <li>
+            <a href="#" >
+                <button type="button" class="btn btn-primary mb-1">
+                    Invoice Not Uploaded
+                </button>
+            </a>
+        </li>
+
+        
+        {% endif %}
+        {% if record.settlement and record.settlement.url %}
+            <li>
+                <a href="{{record.settlement.url}}" target="_blank">
+                    <button type="button" class="btn btn-primary mb-1">
+                        Download Settlement
+                    </button>
+                </a>
+            </li>
+
+        {% else %}
+            <li>
+                <a href="#" >
+                    <button type="button" class="btn btn-primary mb-1">
+                        Settlement Not Uploaded
+                    </button>
+                </a>
+            </li>
+        
+        {% endif %}
+        
+    {% endif %}
+</ul>

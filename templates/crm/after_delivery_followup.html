@@ -1,0 +1,340 @@
+{% extends 'app/base.html' %}
+{% load static i18n crispy_forms_tags django_tables2 %}
+{% block title %}{{title|title}} : {{app_settings.site_title}}{% endblock %}
+
+{% block content %}
+
+{% if invoice %}
+<div class="side-app main-container detail_page">
+
+
+
+  <div class="row row-sm  mt-5">
+    <div class="col-lg-12">
+
+      <div class="card">
+        {% if followups.paginated_rows %}
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            {% render_table followups %}
+          </div>
+        </div>
+        {% else %}
+        <div class="card-body">
+           {% translate "No Followup's So Far" %}
+          {% if can_add %}<a href="{{new_link}}">{% translate "Add New One" %}</a>{% endif %}
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  
+  
+  <div class="row">
+    <div class="col-12 mx-auto">
+      <div class="card">
+        <div class="card-header border-bottom-0">
+          <h5 class="mb-0">{{title}}</h5>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-lg-12 col-md-12">
+              <form class="form-horizontal" method="post" autocomplete="off" enctype="multipart/form-data" action=""
+                enctype="multipart/form-data">
+                {% csrf_token %}
+
+
+                {% for field in form.visible_fields|slice:"0:6" %}
+                {{ field|as_crispy_field }}
+                {% endfor %}
+
+                <div> <hr class="solid"></div>
+
+
+                <!-- Additional Content -->
+                <div class="mt-3 mb-3 col-lg-12 col-md-4 col-sm-6 col-12 visible text-center">
+                    <h4 class="form-h4">
+                        Sir/Madam, May I confirm that you had taken delivery of ________________ from our dealership Rotana Motor
+                    </h4>
+
+                    <h4 class="form-h4">
+                      Sir/Madam, congratulations for your new vehicle. We would like to welcome you to the Tata Motors Family.
+                    </h4>
+
+                    <h4 class="form-h4">
+                    May I take a few more minutes of your valuable time to know how your experience was at our dealership?
+                    </h4>
+
+                    <h4 class="form-h4">
+                      Thank you, Sir/Madam. I would like to ask a few questions for which you have to answer Yes or No.
+                    </h4>
+                  
+                </div>
+
+                <!-- End Additional Content -->
+
+                <div> <hr class="solid"></div>
+
+                <div  class="mb-3 col-lg-6 col-md-4 col-sm-6 col-12 visible">
+                  <label  class="form-label">
+                   1.  At the time of booking, did the Customer Advisor handover the Order booking & Commitment form* with all the booking and deal details?
+                  </label>
+                </div>
+
+                {% for field in form.visible_fields|slice:"6:8" %}
+                {{ field|as_crispy_field }}
+                {% endfor %}
+
+                <div> <hr class="solid"></div>
+
+                <div  class="mb-3 col-lg-6 col-md-4 col-sm-6 col-12 visible">
+                  <label  class="form-label">
+                   2.  Did the Sales Consultant proactively keep you informed about your vehicle's delivery status?
+                  </label>
+                </div>
+
+                {% for field in form.visible_fields|slice:"8:10" %}
+                {{ field|as_crispy_field }}
+                {% endfor %}
+
+                <div> <hr class="solid"></div>
+
+                <div  class="mb-3 col-lg-6 col-md-4 col-sm-6 col-12 visible">
+                  <label  class="form-label">
+                   3.  How would you like to rate the dealership facility in terms of cleanliness, comfort & Amenities available at the dealership (Ex: Parking Facility, Air conditioning, Ambience, Beverages, Snacks, Wi-Fi etc.)?
+                  </label>
+                </div>
+
+                {% for field in form.visible_fields|slice:"10:12" %}
+                {{ field|as_crispy_field }}
+                {% endfor %}
+
+                <div> <hr class="solid"></div>
+
+                <div  class="mb-3 col-lg-6 col-md-4 col-sm-6 col-12 visible">
+                  <label  class="form-label">
+                   4. How would you like to rate your Sales Consultant on Grooming, Communication Skills and Courtesy?
+
+                  </label>
+                </div>
+
+                {% for field in form.visible_fields|slice:"12:14" %}
+                {{ field|as_crispy_field }}
+                {% endfor %}
+
+                <div> <hr class="solid"></div>
+
+                <div  class="mb-3 col-lg-6 col-md-4 col-sm-6 col-12 visible">
+                  <label  class="form-label">
+                   5. Keeping in consideration, the features explanation provided by the Sales Consultant and ability to answer your queries, How would you like to rate the Sales Consultant on his/her Knowledge/ Expertise about Vehicles?
+
+                  </label>
+                </div>
+
+                {% for field in form.visible_fields|slice:"14:16" %}
+                {{ field|as_crispy_field }}
+                {% endfor %}
+
+                <div> <hr class="solid"></div>
+
+                <div  class="mb-3 col-lg-6 col-md-4 col-sm-6 col-12 visible">
+                  <label  class="form-label">
+                   6. How would you like to rate the paperwork process in terms of clarity of explanation and timeliness of completion?
+
+                  </label>
+                </div>
+
+                {% for field in form.visible_fields|slice:"16:18" %}
+                {{ field|as_crispy_field }}
+                {% endfor %}
+
+                <div> <hr class="solid"></div>
+
+                <div  class="mb-3 col-lg-6 col-md-4 col-sm-6 col-12 visible">
+                  <label  class="form-label">
+                   7. How would you like to rate the condition of your vehicle on the day of delivery (Ex: clean and perfect condition)?
+
+                  </label>
+                </div>
+
+                {% for field in form.visible_fields|slice:"18:20" %}
+                {{ field|as_crispy_field }}
+                {% endfor %}
+
+                <div> <hr class="solid"></div>
+
+                <div  class="mb-3 col-lg-6 col-md-4 col-sm-6 col-12 visible">
+                  <label  class="form-label">
+                   8. How would you like to rate the vehicle delivery ceremony?
+                  </label>
+                </div>
+
+                {% for field in form.visible_fields|slice:"20:22" %}
+                {{ field|as_crispy_field }}
+                {% endfor %}
+
+                <div> <hr class="solid"></div>
+
+                <div  class="mb-3 col-lg-6 col-md-4 col-sm-6 col-12 visible">
+                  <label  class="form-label">
+                   9. How would you like to rate the quality of explanations done by Sales consultant for your vehicle's features, operations and controls on the day of delivery?
+                  </label>
+                </div>
+
+                {% for field in form.visible_fields|slice:"22:24" %}
+                {{ field|as_crispy_field }}
+                {% endfor %}
+
+                <div> <hr class="solid"></div>
+
+                <div  class="mb-3 col-lg-6 col-md-4 col-sm-6 col-12 visible">
+                  <label  class="form-label">
+                   10. On the day of delivery, How would you like to rate the timeliness of completing the final delivery (ex: Going over features, owner's manual etc)?
+                  </label>
+                </div>
+
+                {% for field in form.visible_fields|slice:"24:26" %}
+                {{ field|as_crispy_field }}
+                {% endfor %}
+
+                <div> <hr class="solid"></div>
+
+                <div  class="mb-3 col-lg-6 col-md-4 col-sm-6 col-12 visible">
+                  <label  class="form-label">
+                   11. On the day of delivery, how long did it take from the moment you arrived at the dealership to driving out in the new vehicle?
+                  </label>
+                </div>
+
+                {% for field in form.visible_fields|slice:"26:28" %}
+                {{ field|as_crispy_field }}
+                {% endfor %}
+
+                <div> <hr class="solid"></div>
+
+                <div  class="mb-3 col-lg-6 col-md-4 col-sm-6 col-12 visible">
+                  <label  class="form-label">
+                   12. Sir/Ma'am, is anything pending to be received from the dealership which you want us to inform them about?
+                  </label>
+                </div>
+
+                {% for field in form.visible_fields|slice:"28:30" %}
+                {{ field|as_crispy_field }}
+                {% endfor %}
+
+                <div> <hr class="solid"></div>
+
+                <div  class="mb-3 col-lg-6 col-md-4 col-sm-6 col-12 visible">
+                  <label  class="form-label">
+                   13. How would you like to rate your overall vehicle Purchase experience?
+                  </label>
+                </div>
+
+                {% for field in form.visible_fields|slice:"30:32" %}
+                {{ field|as_crispy_field }}
+                {% endfor %}
+
+                <div> <hr class="solid"></div>
+
+                <div  class="mb-3 col-lg-6 col-md-4 col-sm-6 col-12 visible">
+                  <label  class="form-label">
+                   14. Dealer Staff: Gave overview of Z Connect App
+                  </label>
+                </div>
+
+                {% for field in form.visible_fields|slice:"32:34" %}
+                {{ field|as_crispy_field }}
+                {% endfor %}
+
+                <div> <hr class="solid"></div>
+
+                <div  class="mb-3 col-lg-6 col-md-4 col-sm-6 col-12 visible">
+                  <label  class="form-label">
+                   15. Dealer Staff: Gave overview of charging process
+                  </label>
+                </div>
+
+                {% for field in form.visible_fields|slice:"34:36" %}
+                {{ field|as_crispy_field }}
+                {% endfor %}
+
+                <div> <hr class="solid"></div>
+
+                  {% for field in form.visible_fields|slice:"36:37" %}
+                  {{ field|as_crispy_field }}
+                  {% endfor %}
+               
+                <div> <hr class="solid"></div>
+
+                <div> <hr class="solid"></div>
+
+                  {% for field in form.visible_fields|slice:"37:38" %}
+                  {{ field|as_crispy_field }}
+                  {% endfor %}
+               
+                <div> <hr class="solid"></div>
+
+
+
+
+                <div class="my-4">
+                  <div class="form-group mb-0">
+                    <button type="submit" class="btn btn-primary me-2">{% translate "Save" %}</button>
+                    <button type="button" onclick="history.back()" class="border btn btn-outline-grey">
+                      {% translate "Cancel" %}</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+{% else %}
+
+<div class="side-app main-container detail_page">
+
+  <div class="row mt-5">
+  <!-- Delivery update -->
+    <div class="row">
+      <div class="col-12 mx-auto">
+        <div class="card">
+          <div class="card-header border-bottom-0">
+            <h5 class="mb-0">Delivery Follow Up Update</h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-lg-12 col-md-12">
+                <form class="form-horizontal" method="post" autocomplete="off" enctype="multipart/form-data" action=""
+                  enctype="multipart/form-data">
+                  {% csrf_token %}
+                  {{form|crispy}}
+                  <div class="my-4">
+                    <div class="form-group mb-0">
+                      <button type="submit" class="btn btn-primary me-2">{% translate "Save" %}</button>
+                      <button type="button" onclick="history.back()" class="border btn btn-outline-grey">
+                        {% translate "Cancel" %}</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+{% endif %}
+
+{% include 'app/partials/filter.html' %}
+{% include 'app/partials/help.html' %}
+
+{% endblock content %}

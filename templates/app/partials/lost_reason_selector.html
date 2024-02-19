@@ -1,0 +1,34 @@
+<script>
+    var get_url = "{% url 'crm:get_reasons' %}";
+    var reasonSelect = $("#id_lost_reason");
+
+
+    function updateSelectOptions(selectId, data, valueKey, textKey) {
+        const select = $(selectId);
+        select.empty().append('<option value="" selected="selected">---------</option>');
+        if (data) {
+            const options = data.map(item => `<option value="${item[valueKey]}">${item[textKey]}</option>`);
+            select.append(options.join(''));
+        }
+    }
+
+    function makeAjaxCall(data, successCallback) {
+        $.ajax({
+            url: get_url,
+            data: data,
+            dataType: 'json',
+            success: successCallback
+        });
+    }
+
+    reasonSelect.change(function () {
+        let lostReason = reasonSelect.val();
+        let data = { reason: lostReason };
+
+        makeAjaxCall(data, function (data) {
+            updateSelectOptions("#id_reason", data.lost_sub_reasons, "id", "name");
+        });
+    });
+
+
+</script>

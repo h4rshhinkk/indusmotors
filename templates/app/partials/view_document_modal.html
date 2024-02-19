@@ -1,0 +1,112 @@
+<button type="button" class="btn btn-gray btn-sm" data-bs-toggle="modal" data-bs-target="#Invoice_{{record.pk}}">
+    View
+</button>
+
+<div class="modal fade" id="Invoice_{{record.pk}}" tabindex="-1" aria-labelledby="Invoice_{{record.pk}}Label" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-fullscreen-xl-down">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="Invoice_{{record.pk}}Label">Uploaded Documents</h5>
+            <button type="button" class="btn-close btn-sm" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="mb-2">{{ record }}</div>
+            <table class="table">
+                <tbody>
+                    {% if request.user.usertype == 'accounts' %}
+                        {% for name, value in record.get_fields|slice:"141:144" %}
+                        {% if value %}
+                        <tr>
+                            <td> {{name}} </td>
+                            <td> {{ value }} </td>
+                        </tr>
+                        {% endif %}
+                        {% endfor %}
+
+                        {% for name, value in record.get_fields|slice:"147:149" %}
+                        {% if value %}
+                        <tr>
+                            <td> {{name}} </td>
+                            <td> {{ value }} </td>
+                        </tr>
+                        {% endif %}
+                        {% endfor %}
+                    {% elif request.user.usertype == 'registration_bo' %}
+                        {% for name, value in record.get_fields|slice:"138:141" %}
+                        {% if value %}
+                        <tr>
+                            <td> {{name}} </td>
+                            <td> {{ value }} </td>
+                        </tr>
+                        {% endif %}
+                        {% endfor %}
+
+                        {% for name, value in record.get_fields|slice:"144:147" %}
+                        {% if value %}
+                        <tr>
+                            <td> {{name}} </td>
+                            <td> {{ value }} </td>
+                        </tr>
+                        {% endif %}
+                        {% endfor %}
+                    
+                    {% elif request.user.usertype == 'team_lead' %}
+                        {% for name, value in record.get_fields|slice:"138:141" %}
+                            {% if value %}
+                            <tr>
+                                <td> {{name}} </td>
+                                <td> {{ value }} </td>
+                            </tr>
+                            {% endif %}
+                        {% endfor %}
+                        {% for name, value in record.get_fields|slice:"141:151" %}
+                            {% if value %}
+                            <tr>
+                                <td> {{name}} </td>
+                                <td> {{ value }} </td>
+                            </tr>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% for name, value in record.get_fields|slice:"157:158" %}
+                            {% if value %}
+                            <tr>
+                                <td> {{name}} </td>
+                                <td> {{ value }} </td>
+                            </tr>
+                            {% endif %}
+                        {% endfor %}
+
+                    {% elif request.user.usertype == 'tmga' %}
+                        {% for name, value in record.get_fields|slice:"138:141" %}
+                            {% if value %}
+                            <tr>
+                                <td> {{name}} </td>
+                                <td> {{ value }} </td>
+                            </tr>
+                            {% endif %}
+                        {% endfor %}
+                        {% for name, value in record.get_fields|slice:"141:151" %}
+                            {% if value %}
+                            <tr>
+                                <td> {{name}} </td>
+                                <td> {{ value }} </td>
+                            </tr>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% for name, value in record.get_fields|slice:"157:158" %}
+                            {% if value %}
+                            <tr>
+                                <td> {{name}} </td>
+                                <td> {{ value }} </td>
+                            </tr>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </tbody>
+              </table>
+        </div>
+       
+    </div>
+</div>

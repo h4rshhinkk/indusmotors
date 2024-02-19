@@ -1,0 +1,445 @@
+{% extends 'app/base.html' %}
+{% load static i18n crispy_forms_tags django_tables2 %}
+{% block title %}{{title|title}} : {{app_settings.site_title}}{% endblock %}
+
+{% block content %}
+
+<div class="side-app main-container detail_page mt-5 mb-5">
+  
+  {% if request.user.usertype == 'invoice_team' or request.user.usertype == 'stock' %}
+    {% if is_stock_billing_req_update %}
+    {% include 'app/partials/invoice_request_card.html' %}
+    {% endif %}
+  {% endif %}
+  
+  <div class="row">
+    <div class="col-12 mx-auto">
+      <div class="card">
+
+        <div class="card-header border-bottom-0">
+          <h5 class="mb-0">{{title}}</h5>
+        </div>
+
+
+        <div class="card-body">
+          <div class="row">
+
+            <div class="col-lg-12 col-md-12">
+
+              <form class="form-horizontal" method="post" autocomplete="off" enctype="multipart/form-data" action=""
+                enctype="multipart/form-data">
+                {% csrf_token %}
+
+                {% if request.user.usertype == 'stock' %}
+                  {{form|crispy}}
+                {% elif request.user.usertype == 'invoice_team' %}
+
+                  <div class="card_seperator">
+                    <label class="form-label mb-0">Invoice Details</label>
+                  </div>
+
+                  {% for field in form.visible_fields|slice:"0:2" %}
+                  {{ field|as_crispy_field }}
+                  {% endfor %}
+
+                  <div class="card_seperator">
+                    <label class="form-label mb-0">Consumer Offer Details</label>
+                  </div>
+
+                  {% for field in form.visible_fields|slice:"2:7" %}
+                  {{ field|as_crispy_field }}
+                  {% endfor %}
+
+                  <div class="card_seperator">
+                    <label class="form-label mb-0">ISL Scheme Details</label>
+                  </div>
+
+                  {% for field in form.visible_fields|slice:"7:12" %}
+                  {{ field|as_crispy_field }}
+                  {% endfor %}
+
+                  <div class="card_seperator">
+                    <label class="form-label mb-0"> Scheme Details</label>
+                  </div>
+
+                  {% for field in form.visible_fields|slice:"12:17" %}
+                  {{ field|as_crispy_field }}
+                  {% endfor %}
+
+                  <div class="card_seperator">
+                    <label class="form-label mb-0"> YONO Scheme Details</label>
+                  </div>
+
+                  {% for field in form.visible_fields|slice:"17:22" %}
+                  {{ field|as_crispy_field }}
+                  {% endfor %}
+
+                  <div class="card_seperator">
+                    <label class="form-label mb-0"> Exchange Details</label>
+                  </div>
+
+                  {% for field in form.visible_fields|slice:"22:27" %}
+                  {{ field|as_crispy_field }}
+                  {% endfor %}
+
+
+                {% else %}
+
+                <div class=" my-3 row contact-fields">
+                  {% for field in form.visible_fields|slice:"0:1" %}
+                  {{ field|as_crispy_field }}
+                  {% endfor %}
+                </div>
+
+                <div class="card-header border-bottom-0">
+                  <h5 class="mb-0">Vehicle Details</h5>
+                </div>
+                <table class="table table-hover info_table mb-0" style="width:100%;">
+                  <tbody>
+                    <tr>
+                      <td> <strong>Vehicle Model</strong> </td>
+                      <td>{{object.chassis.variant.car_model}}</td>
+
+                      <td> <strong>Variant</strong> </td>
+                      <td>{{object.chassis.variant}}</td>
+
+                      <td> <strong>Trim</strong> </td>
+                      <td>{{object.chassis.variant.trim}}</td>
+                    </tr>
+                    <tr>
+                      <td> <strong>Fuel</strong> </td>
+                      <td>{{object.chassis.variant.fuel}}</td>
+
+                      <td> <strong>Color</strong> </td>
+                      <td>{{object.chassis.variant.color}}</td>
+
+                      <td> <strong>Chassis</strong> </td>
+                      <td>{{object.chassis}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="card_seperator">
+                  <h5 class="mb-0">Name & Contacts</h5>
+                </div>
+                
+                <div class=" my-3 row contact-fields">
+                {% for field in form.visible_fields|slice:"1:9" %}
+                {{ field|as_crispy_field }}
+                {% endfor %}
+                </div>
+
+                <div class="card_seperator">
+                  <h5 class="mb-0">Permanant Address</h5>
+                </div>
+
+                <div class=" my-3 row address-fields">
+                {% for field in form.visible_fields|slice:"9:17" %}
+                {{ field|as_crispy_field }}
+                {% endfor %}
+                </div>  
+
+                <div class="card_seperator">
+                  <label  class="form-label">
+                    Temporary Address
+                  </label>
+                  <div class="col-lg-3 col-md-4 col-sm-6 col-12 visible">
+                    {{form.is_temp_address}}
+                  </div>
+                </div>
+
+                <div class=" my-3 row temp-address-fields">
+                {% for field in form.visible_fields|slice:"17:25" %}
+                {{ field|as_crispy_field }}
+                {% endfor %}
+                </div>
+
+                <div class="card_seperator">
+                  <h5 class="mb-0">Registration/Tax Details</h5>
+                </div>
+
+                
+
+                <div class="my-3 row registration-fields">
+                  {% for field in form.visible_fields|slice:"25:30" %}
+                  {% if field.name != 'reg_remarks' %}
+                  {{ field|as_crispy_field }}
+                  {% endif %}
+                  {% endfor %}
+                  </div>
+
+                <div class="card_seperator">
+                  <h5 class="mb-0">Insurance Details</h5>
+                </div>
+
+               
+
+                <div class="my-3 row insurance-fields">
+                {% for field in form.visible_fields|slice:"30:38" %}
+                {{ field|as_crispy_field }}
+                {% endfor %}
+                </div>
+
+                <div class="card_seperator">
+                  <label  class="form-label">
+                    Is Scheme Involved?
+                  </label>
+                  <div class="col-lg-3 col-md-4 col-sm-6 col-12 visible">
+                      
+                    {{form.is_scheme}}
+                  
+                </div>
+                </div>
+                
+                <div class="my-3 row scheme-fields">
+                {% for field in form.visible_fields|slice:"38:42" %}
+                {{ field|as_crispy_field }}
+                {% endfor %}
+                </div>
+
+                <div class="card_seperator">
+                  <label  class="form-label">
+                    Is YONO Involved?
+                  </label>
+                  <div class="col-lg-3 col-md-4 col-sm-6 col-12 visible">
+                     
+                    {{form.is_yono_scheme}}
+                  
+                </div>
+                </div>
+
+                <div class="my-3 row yono-fields">
+                  {% for field in form.visible_fields|slice:"42:43" %}
+                  {{ field|as_crispy_field }}
+                  {% endfor %}
+                </div>
+
+
+                <div class="card_seperator">
+                  <label  class="form-label">
+                    Finance
+                  </label>
+                  <div class="col-lg-3 col-md-4 col-sm-6 col-12 visible">
+                    {{form.is_finance}}
+                  </div>
+                </div>
+               
+                <div class="my-3 row finance-fields">
+                  {% for field in form.visible_fields|slice:"43:47" %}
+                  {{ field|as_crispy_field }}
+                  {% endfor %}
+                  
+                </div>
+
+
+                {% endif %}
+                <div class="my-4 visible">
+                  <div class="form-group mb-0">
+                    <button type="submit" class="btn btn-primary me-2">{% translate "Save" %}</button>
+                    <button type="button" onclick="history.back()" class="border btn btn-outline-grey">
+                      {% translate "Cancel" %}</button>
+                  </div>
+                </div>
+
+              </form>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+{% endblock content %}
+
+{% block javascript %}
+{{form.media}}
+{% include 'app/partials/district_selector.html' %}
+{% include 'app/partials/variant_selector.html' %}
+
+<script>
+
+
+    $(document).ready(function () {
+
+        // Initially hide the scheme-fields and finance-fields
+        $(".scheme-fields").hide();
+        $(".finance-fields").hide();
+        $(".temp-address-fields").hide();
+        $(".finance-fields").hide();
+        $(".yono-fields").hide();
+
+      
+
+
+        // Check if any field in scheme-fields has a value
+        var schemeFieldsNotEmpty = $(".scheme-fields :input").filter(function () {
+          return $(this).val() !== "";
+        }).length > 0;
+
+        // Set the value of visibilitySelector_scheme based on the condition
+        $("#id_is_scheme").val(schemeFieldsNotEmpty ? 'yes' : 'no');
+
+        // Show or hide scheme-fields based on the condition
+        if (schemeFieldsNotEmpty) {
+          $(".scheme-fields").show();
+        }
+
+        // Bind the change event to the visibilitySelector_scheme
+        $("#id_is_scheme").change(function () {
+          // If 'Yes' is selected, show the scheme-fields; otherwise, hide them
+          if ($(this).val() === 'yes') {
+            $(".scheme-fields").show();
+          } else {
+            $(".scheme-fields").hide();
+          }
+        });
+
+    
+        var schemeFieldsNotEmpty = $(".finance-fields :input").filter(function () {
+          return $(this).val() !== "";
+        }).length > 0;
+      
+        // Set the value of visibilitySelector_scheme based on the condition
+        $("#id_is_finance").val(schemeFieldsNotEmpty ? 'yes' : 'cash');
+      
+        // Show or hide yono-fields based on the condition
+        if (schemeFieldsNotEmpty) {
+          $(".finance-fields").show();
+        }
+      
+        // Bind the change event to the visibilitySelector_yono
+        $("#id_is_finance").change(function () {
+          // If 'Yes' is selected, show the yono-fields; otherwise, hide them
+          if ($(this).val() === 'yes') {
+            $(".finance-fields").show();
+          } else {
+            $(".finance-fields").hide();
+          }
+        }); 
+    
+        // ... (Other event bindings) ...
+
+        var schemeFieldsNotEmpty = $(".temp-address-fields :input").filter(function () {
+          return $(this).val() !== "";
+        }).length > 0;
+      
+        // Set the value of visibilitySelector_scheme based on the condition
+        $("#id_is_temp_address").val(schemeFieldsNotEmpty ? 'yes' : 'no');
+      
+        // Show or hide yono-fields based on the condition
+        if (schemeFieldsNotEmpty) {
+          $(".temp-address-fields").show();
+        }
+      
+        // Bind the change event to the visibilitySelector_yono
+        $("#id_is_temp_address").change(function () {
+          // If 'Yes' is selected, show the yono-fields; otherwise, hide them
+          if ($(this).val() === 'yes') {
+            $(".temp-address-fields").show();
+          } else {
+            $(".temp-address-fields").hide();
+          }
+        }); 
+
+
+        // ........other
+
+        var schemeFieldsNotEmpty = $(".yono-fields :input").filter(function () {
+          return $(this).val() !== "";
+        }).length > 0;
+        // Set the value of visibilitySelector_scheme based on the condition
+        $("#id_is_yono_scheme").val(schemeFieldsNotEmpty ? 'yes' : 'no');
+
+        // Show or hide yono-fields based on the condition
+        if (schemeFieldsNotEmpty) {
+          $(".yono-fields").show();
+        }
+
+        // Bind the change event to the visibilitySelector_yono
+        $("#id_is_yono_scheme").change(function () {
+          // If 'Yes' is selected, show the yono-fields; otherwise, hide them
+          if ($(this).val() === 'yes') {
+            $(".yono-fields").show();
+          } else {
+            $(".yono-fields").hide();
+          }
+        }); 
+
+
+        //-------chassis stock update jan11
+        
+        
+
+        var data_color = {{ car_color|safe }};  
+        var selected_color_id = {{ selected_color_id|safe }};
+        updateSelectOptionsColor("#id_color", data_color, "color__id", "color__name", selected_color_id);
+
+        function updateSelectOptionsColor(selectId, data_color, valueKey, textKey, selected_color_id) {
+            const select = $(selectId);
+            select.empty().append('<option value="" selected="selected">---------</option>');
+
+            if (data_color) {
+                const options = data_color.map(item => {
+                    const isSelected = (item[valueKey] === selected_color_id) ? 'selected="selected"' : '';
+                    return `<option value="${item[valueKey]}" ${isSelected}>${item[textKey]}</option>`;
+                });
+                select.append(options.join(''));
+            }
+        }
+        
+        var data_trim = {{ car_trim|safe }};
+        var selected_trim_id = {{ selected_trim_id|safe }};
+        updateSelectOptionsTrim("#id_trim", data_trim, "trim__id", "trim__name", selected_trim_id);
+        function updateSelectOptionsTrim(selectId, data_trim, valueKey, textKey, selected_trim_id) {
+            const select = $(selectId);
+            select.empty().append('<option value="" selected="selected">---------</option>');
+
+            if (data_trim) {
+                const options = data_trim.map(item => {
+                    const isSelected = (item[valueKey] === selected_trim_id) ? 'selected="selected"' : '';
+                    return `<option value="${item[valueKey]}" ${isSelected}>${item[textKey]}</option>`;
+                });
+                select.append(options.join(''));
+            }
+        }
+
+        var data0 = {{car_chassis|safe }}
+        var selected_chassis = {{ selected_chassis_id|safe }};
+        console.log('selected_chassis=',selected_chassis)
+        console.log('data0=',data0)
+        updateSelectOptions3("#id_chassis", data0, "id", "chassis_number",selected_chassis);
+        function updateSelectOptions3(selectId, data0, valueKey, textKey,selected_chassis) {
+          const select = $(selectId);
+          select.empty().append('<option value="" selected="selected">---------</option>');
+          if (data0) {
+            const options = data0.map(item => {
+                const isSelected = (item[valueKey] === selected_chassis) ? 'selected="selected"' : '';
+                return `<option value="${item[valueKey]}" ${isSelected}>${item[textKey]}</option>`;
+            });
+            select.append(options.join(''));
+        }
+        }
+      });
+
+
+
+</script>
+<script>
+  var chassis_url = "{% url 'crm:get_chassis' %}";
+  var variantSelect = $("#id_variant");
+  
+  variantSelect.change(function () {
+      let variant = variantSelect.val();
+      let data = { variant_id: variant };
+      makeAjaxCall(chassis_url, data, function (data) {
+          updateSelectOptions("#id_chassis", data.stocks, "id", "chassis_number");
+          
+      });
+  });
+
+</script>
+{% endblock %}

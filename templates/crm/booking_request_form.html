@@ -1,0 +1,205 @@
+{% extends 'app/base.html' %}
+{% load static i18n crispy_forms_tags django_tables2 %}
+{% block title %}{{title|title}} : {{app_settings.site_title}}{% endblock %}
+
+{% block content %}
+
+<style>
+  hr.solid {
+      border-top: 3px solid #a1a1a1;
+    }
+</style>
+
+<div class="side-app main-container detail_page">
+
+  <div class="row mt-5">
+    <div class="col-12 mx-auto">
+      <div class="card">
+        <div class="card-header border-bottom-0">
+          <h5 class="mb-0">Booking Request</h5>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-lg-12 col-md-12">
+              <form class="form-horizontal-col-six" method="post" autocomplete="off" enctype="multipart/form-data" action=""
+                enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                {% for field in form.visible_fields|slice:"0:4" %}
+                {{ field|as_crispy_field }}
+                {% endfor %}
+
+                <div> <hr class="solid"></div>
+
+                {% for field in form.visible_fields|slice:"4:16" %}
+                {{ field|as_crispy_field }}
+                {% endfor %}
+
+                <div> <hr class="solid"></div>
+
+                {% for field in form.visible_fields|slice:"16:18" %}
+                {{ field|as_crispy_field }}
+                {% endfor %}
+
+                <div> <hr class="solid"></div>
+
+                {% for field in form.visible_fields|slice:"18:25" %}
+                {{ field|as_crispy_field }}
+                {% endfor %}
+
+                <div> <hr class="solid"></div>
+
+                {% for field in form.visible_fields|slice:"25:29" %}
+                {{ field|as_crispy_field }}
+                {% endfor %}
+
+                <div> <hr class="solid"></div>
+
+               
+
+                <div  class="mb-3 col-lg-3 col-md-4 col-sm-6 col-12 visible">
+                  <label  class="form-label">
+                   Scheme?
+                  </label>
+                  <select id="visibilitySelector" name="visibility" class="select form-control" required >
+                    <option value="" disabled selected>-- Select --</option>
+                    <option value="no">No</option>
+                    <option value="yes">Yes</option>
+                  </select>
+                </div>
+
+                <div class="row scheme-fields">
+                {% for field in form.visible_fields|slice:"29:33" %}
+                {{ field|as_crispy_field }}
+                {% endfor %}
+                </div>
+
+                <div  class="mb-3 col-lg-3 col-md-4 col-sm-6 col-12 visible">
+                  <label  class="form-label">
+                   YONO Scheme?
+                  </label>
+                  <select id="visibilitySelector_yonoscheme" name="visibility" class="select form-control" required>
+                    <option value="" disabled selected>-- Select --</option>
+                    <option value="no">No</option>
+                    <option value="yes">Yes</option>
+                  </select>
+                </div>
+                
+                <div class="row yonoscheme-fields">
+                  {% for field in form.visible_fields|slice:"33:34" %}
+                  {{ field|as_crispy_field }}
+                  {% endfor %}
+                  </div>
+                
+
+                <div class="my-4">
+                  <div class="form-group mb-0">
+                    <button type="submit" class="btn btn-primary me-2">{% translate "Save" %}</button>
+                    <button type="button" onclick="history.back()" class="border btn btn-outline-grey">
+                      {% translate "Cancel" %}</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+
+{% include 'app/partials/filter.html' %}
+{% include 'app/partials/help.html' %}
+
+{% endblock content %}
+
+{% block javascript %}
+{% include 'app/partials/opt_variant_selector.html' %}
+{% include 'app/partials/district_selector.html' %}
+
+<script>
+  
+
+  
+  $(document).ready(function() {
+    // Initially hide the scheme-fields
+    $(".scheme-fields").hide();
+    $(".yonoscheme-fields").hide();
+
+    // Bind the change event to the visibilitySelector
+    $("#visibilitySelector").change(function() {
+      // If 'Yes' is selected, show the scheme-fields; otherwise, hide them
+      if ($(this).val() === 'yes') {
+        $(".scheme-fields").show();
+      } else {
+        $(".scheme-fields").hide();
+      }
+    });
+
+    $("#visibilitySelector_yonoscheme").change(function() {
+      // If 'Yes' is selected, show the scheme-fields; otherwise, hide them
+      if ($(this).val() === 'yes') {
+        $(".yonoscheme-fields").show();
+      } else {
+        $(".yonoscheme-fields").hide();
+      }
+    });
+
+
+    // Initially hide the fields
+    $('#div_id_exchange_vehicle_make').hide();
+    $('#div_id_exchange_vehicle_model').hide();
+    $('#div_id_exchange_reg_no').hide();
+    $('#div_id_exchange_mfg_year').hide();
+    $('#div_id_owner_name').hide();
+    $('#div_id_relation').hide();
+
+    // Function to show or hide fields based on id_opt_type value
+    function toggleExchangeFields() {
+      var val = $('#id_opt_type').val();
+      if (val === 'Exchange Buyer') {
+        $('#div_id_exchange_vehicle_make').show();
+        $('#div_id_exchange_vehicle_model').show();
+        $('#div_id_exchange_reg_no').show();
+        $('#div_id_exchange_mfg_year').show();
+        $('#div_id_owner_name').show();
+        $('#div_id_relation').show();
+      } else {
+        // Hide the fields for other options
+        $('#div_id_exchange_vehicle_make').hide();
+        $('#div_id_exchange_vehicle_model').hide();
+        $('#div_id_exchange_reg_no').hide();
+        $('#div_id_exchange_mfg_year').hide();
+        $('#div_id_owner_name').hide();
+        $('#div_id_relation').hide();
+      }
+    }
+
+    // Call the function on page load
+    toggleExchangeFields();
+
+    // Bind the change event to the id_opt_type
+    $('#id_opt_type').on('change', toggleExchangeFields);
+    
+
+
+
+
+    
+
+
+
+
+  });
+
+
+
+</script>
+
+
+{% endblock %}
+

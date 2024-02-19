@@ -1,0 +1,565 @@
+{% extends 'app/base.html' %}
+{% load static i18n crispy_forms_tags django_tables2 %}
+{% block title %}{{title|title}} : {{app_settings.site_title}}{% endblock %}
+
+{% block content %}
+
+{% if invoice %}
+<div class="side-app main-container detail_page">
+
+  <!-- Row-->
+  <div class="row mt-5">
+    {% block invoice_mini_list %}
+    {% include 'app/partials/invoice_mini_list.html' %}
+    {% endblock %}
+  </div>
+  <!-- End Row-->
+
+  <form class="form-horizontal" method="post" autocomplete="off" enctype="multipart/form-data" action=""
+    enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row row-sm">
+      <div class="col-lg-12">
+
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              
+             
+              <div class="col-lg-6">
+                <table class="table table-bordered border-3 border-bottom-0 p-3 border-dark custom-table">
+                  <thead>
+                    <tr>
+                      <th>Particular</th>
+                      <th>Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>{{ form.showroom_price.label }}</td>
+                      <td>{{ form.showroom_price }} </td>
+                    </tr>
+                    <tr>
+                      <td>{{ form.insurance.label }} </td>
+                      <td>{{ form.insurance }} </td>
+                    </tr>
+                    <tr>
+                      <td>{{ form.road_tax.label }}</td>
+                      <td>{{ form.road_tax }} </td>
+                    </tr>
+                    <tr>
+                      <td>{{ form.registration_charge.label }}</td>
+                      <td>{{ form.registration_charge }} </td>
+                    </tr>
+                    <tr>
+                      <td>{{ form.tcs.label }}</td>
+                      <td>{{ form.tcs }} </td>
+                    </tr>
+                    <tr>
+                      <td>{{ form.rsa.label }}</td>
+                      <td>{{ form.rsa }} </td>
+                    </tr>
+                    <tr>
+                      <td>{{ form.p2p.label }}</td>
+                      <td>{{ form.p2p }} </td>
+                    </tr>
+                    <tr>
+                      <td>{{ form.extended_warranty.label }}</td>
+                      <td>{{ form.extended_warranty }} </td>
+                    </tr>
+                    <tr>
+                      <td>{{ form.vd_other_amount_one.label }}</td>
+                      <td>{{ form.vd_other_amount_one }} </td>
+                    </tr>
+                    <tr>
+                      <td>{{ form.vd_other_amount_two.label }}</td>
+                      <td>{{ form.vd_other_amount_two }} </td>
+                    </tr>
+
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <th class="text-end"><strong class="fw-bold">Total Amount(A)</strong></th>
+                      <th id="on_road_price" class="fw-bold">₹{{ invoice.on_road_price }}</th>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+              <div class="col-lg-6">
+                <table class="table table-bordered border-3 p-3 border-dark custom-table">
+                  <thead>
+                    <tr>
+                      <th>Particular</th>
+                      <th>Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for accessory in accessories %}
+                    <tr>
+                      <td>{{ accessory.accessory_name }}</td>
+                      <td>{{ accessory.amount }}</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <th class="text-end"><strong class="fw-bold">Total Amount(B)</strong></th>
+                      <th id="accessory_total_amount" class="fw-bold">₹{{ invoice.get_accessory_total }}</th>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+              <div class="col-12">
+                <div class="card">
+                  <div class="card-body p-0">
+                    <table class="table table-bordered border-3  p-3 border-dark w-100">
+                      <tbody>
+                        <tr>
+                          <th class="text-end w-50"><strong class="fw-bold">Total Amount (A+B)</strong></th>
+                          <th id="total-amount" class="fw-bold w-50">₹{{ invoice.total_price }}</th>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <h5 class="text-center">Receipt Details</h5>
+                <table class="table table-bordered border-3 p-3 border-dark custom-table top-up-table">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Particular</th>
+                      <th>Mode Of Payment</th>
+                      <th>Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>{{ invoice.booking_request.order_date }}</td>
+                      <td>{{ form.booking_amount.label }}</td>
+                      <td></td>
+                      <td>{{ form.booking_amount }}</td>
+                    </tr>
+                    <tr>
+                      <td>{{ invoice.loan_amount_receipt_date }}</td>
+                      <td>{{ form.loan_amount.label }}</td>
+                      <td></td>
+                      <td>{{ form.loan_amount }}</td>
+                    </tr>
+
+                    <tr>
+                      <td> - </td>
+                      <td>{{ form.total_value_to_new_car.label }}</td>
+                      <td> - </td>
+                      <td>{{ form.total_value_to_new_car }}</td>
+                    </tr>
+
+                    <tr>
+                      <td> - </td>
+                      <td>{{ form.total_eligible_bonus.label }}</td>
+                      <td> - </td>
+                      <td>{{ form.total_eligible_bonus }}</td>
+                    </tr>
+
+                    <tr>
+                      <td> - </td>
+                      <td>{{ form.rd_other_amount_one.label }}</td>
+                      <td> - </td>
+                      <td>{{ form.rd_other_amount_one }}</td>
+                    </tr>
+
+                    <tr>
+                      <td> - </td>
+                      <td>{{ form.rd_other_amount_two.label }}</td>
+                      <td> - </td>
+                      <td>{{ form.rd_other_amount_two }}</td>
+                    </tr>
+
+                    {% for receipt in topups %}
+                    <tr>
+                      <td>{{ receipt.receipt_date }}</td>
+                      <td>TopUp</td>
+                      <td>{{ receipt.mode_of_payment }}</td>
+                      <td>{{ receipt.top_up_amount }}</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <th colspan="3" class="text-end"><strong class="fw-bold">Total Receipt Amount</strong></th>
+                      <th id="total_receipt_amount" class="fw-bold">₹{{ invoice.get_total_receipt_amount }}</th>
+                    </tr>
+                    <tr>
+                      <th colspan="3" class="text-end"><strong class="fw-bold">Balance Amount </strong>(Total Amount - Total Discount - Total Receipts)</th>
+                      <th id="balance_amount_to_pay" class="fw-bold">₹{{ invoice.get_balance }}</th>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+              <div class="col-lg-6">
+                <h5 class="text-center">Discounts</h5>
+                <table class="table border-2 table-bordered border-3 p-3 border-dark custom-table">
+                  <thead>
+                    <tr>
+                      <th>Particular</th>
+                      <th>Amount</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                   
+
+                    <tr>
+                      <td> Scheme {{ form.amount.label }} </td>
+                      <td> {{ form.amount }} </td>
+                    </tr>
+
+                    <tr>
+                      <td> {{ form.yono_scheme_amount.label }} </td>
+                      <td> {{ form.yono_scheme_amount }} </td>
+                    </tr>
+
+                    <tr>
+                      <td> {{ form.ac_consumer_offer_amount.label }} </td>
+                      <td> {{ form.ac_consumer_offer_amount }} </td>
+                    </tr>
+                    {% for discount in invoice.get_discounts %}
+                    <tr>
+                      <td> {{ discount.discount }} </td>
+                      <td class="additional-discounts"> {{ discount.amount }} </td>
+                      <td class="additional-discounts"> {{ discount.get_discount_status_display }} </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <th class="text-end"><strong class="fw-bold">Total Discount Amount</strong></th>
+                      <th id="total_discount" class="fw-bold">₹{{ invoice.get_discount_total_amount }}</th>
+                    </tr>
+                    {% comment %} <tr>
+                      <th class="text-end"><strong class="fw-bold">To Pay</strong></th>
+                      <th id="to_pay_amount" class="fw-bold">₹{{ invoice.to_pay }}</th>
+                    </tr> {% endcomment %}
+                  </tfoot>
+                </table>
+              </div>
+
+              <div class="col-12 my-3">
+
+
+                <h5>Add Top Up Amount</h5>
+                {{ invoice_topup_formset.management_form }}
+                <table class="table w-100 ">
+                  <thead>
+                    <tr>
+                      <th>Receipt.No</th>
+                      <th>Receipt Date</th>
+                      <th>Top Up Amount</th>
+                      <th>Mode Of Paiment</th>
+                      <th>Receipt Document</th>
+                      <th width=""></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for form in invoice_topup_formset.forms %}
+                    <tr class="invoice_topup_formset_row">
+                      {% for hidden in form.hidden_fields %}
+                      {{ hidden }}
+                      {% endfor %}
+                      <td>
+                        {{ form.receipt_no }}
+                        {{ form.receipt_no.errors }}
+                      </td>
+                      <td>
+                        {{ form.receipt_date }}
+                        {{ form.receipt_date.errors }}
+                      </td>
+                      <td>
+                        {{ form.top_up_amount }}
+                        {{ form.top_up_amount.errors }}
+                      </td>
+                      <td>
+                        {{ form.mode_of_payment }}
+                        {{ form.mode_of_payment.errors }}
+                      </td>
+                      <td>
+                        {{ form.receipt_document }}
+                        {{ form.receipt_document.errors }}
+                      </td>
+                      <td style="vertical-align: middle;">{{ form.DELETE }}</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+
+                </table>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-12 mx-auto">
+        <div class="card">
+          <div class="card-header border-bottom-0">
+            <h5 class="mb-0">{{title}}</h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              
+              {% for field in form.visible_fields|slice:"12:14" %}
+              {{ field|as_crispy_field }}
+              {{ field.errors }}
+              {% endfor %}
+              <div class="my-4">
+                <div class="form-group mb-0">
+                  <button type="submit" class="btn btn-primary me-2">{% translate "Save" %}</button>
+                  <button type="button" onclick="history.back()" class="border btn btn-outline-grey">
+                    {% translate "Cancel" %}</button>
+                </div>
+              </div>
+
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+{% endif %}
+
+{% include 'app/partials/filter.html' %}
+{% include 'app/partials/help.html' %}
+
+{% endblock content %}
+
+
+{% block js_plugins %}
+<script src="{% static 'app/js/formset/formset.js' %}"></script>
+<script>
+  $(document).ready(function () {
+    // Your first script for formset
+    $('.invoice_topup_formset_row').formset({
+      addText: '<span>Add Item</span>',
+      deleteText: '<i class="fa-solid fa-xmark"></i>',
+      prefix: '{{ invoice_topup_formset.prefix }}',
+      formCssClass: 'invoice_topup_formset_row',
+      added: function (row) {
+        initializeDatePicker();
+        row.find('[name$="-receipt_date"], [name$="-top_up_amount"], [name$="-mode_of_payment"]').on('change', function () {
+          handleRowChange($(this));
+        });
+      },
+      removed: function (row) {
+        removeTableRow(row);
+        // Handle removal logic if needed
+      }
+    });
+
+    $('.invoice_topup_formset_row [name$="-receipt_date"], .invoice_topup_formset_row [name$="-top_up_amount"], .invoice_topup_formset_row [name$="-mode_of_payment"]').on('change', function () {
+      handleRowChange($(this));
+    });
+
+    $('.booking_invoice_document_formset_row').formset({
+      addText: '<span>Add Document</span>',
+      deleteText: '<i class="fa-solid fa-xmark"></i>',
+      prefix: '{{ booking_invoice_document_formset.prefix }}',
+      formCssClass: 'booking_invoice_document_formset_row',
+      added: function (row) {
+        // row.find('.select2-formset').select2();
+      },
+      removed: function (row) {
+        // Handle additional logic after removing a form
+      }
+    });
+
+    // Counter to track changes
+    var changeCounter = 1;
+
+    // Function to generate unique ID
+    function generateUniqueId() {
+      var uniqueId = 'row_' + new Date().getTime() + '_' + changeCounter;
+      changeCounter++;
+      return uniqueId;
+    }
+
+    function appendTableRow(receiptDate, amount, modeOfPayment, rowId) {
+      // Create a new table row with cells for date, particular, mode of payment, and amount
+      var newRow = $('<tr class="top-up-row" data-row-id="' + rowId + '">');
+      newRow.append('<td>' + receiptDate + '</td>');
+      newRow.append('<td>TopUp</td>'); // Assuming "TopUp" for the particular column
+      newRow.append('<td>' + modeOfPayment + '</td>');
+      newRow.append('<td>' + amount + '</td>');
+
+      // Append the new row to the table body
+      $('.top-up-table tbody').append(newRow);
+    }
+
+    // Function to update or append a table row
+    function updateOrAppendTableRow(receiptDate, amount, modeOfPayment, rowId) {
+      // Check if the row with the provided ID exists
+      var existingRow = $('.top-up-row[data-row-id="' + rowId + '"]');
+      console.log(existingRow)
+      if (existingRow.length > 0) {
+        console.log("existing row found")
+        // Update the values in the existing row
+        existingRow.find('td:eq(0)').text(receiptDate);
+        existingRow.find('td:eq(2)').text(modeOfPayment);
+        existingRow.find('td:eq(3)').text(amount);
+      } else {
+        // If the row doesn't exist, append a new row with the provided ID
+        appendTableRow(receiptDate, amount, modeOfPayment, rowId);
+        calculatePrices();
+      }
+    }
+
+
+
+    function initializeDatePicker() {
+      $('input.dateinput').bootstrapdatepicker({
+        dateFormat: 'yy-mm-dd',
+        viewMode: 'date',
+        multidate: false,
+        multidateSeparator: '-',
+        orientation: 'bottom right',
+        autoclose: true,
+        todayHighlight: true
+      });
+    }
+
+    function handleRowChange(row) {
+      var closestRow = row.closest('.invoice_topup_formset_row');
+      var existingId = closestRow.attr('id');
+
+      function getValues() {
+        return {
+          receiptDate: closestRow.find('[name$="-receipt_date"]').val(),
+          amount: closestRow.find('[name$="-top_up_amount"]').val(),
+          modeOfPayment: closestRow.find('[name$="-mode_of_payment"]').val()
+        };
+      }
+
+      function isValid(values) {
+        return values.receiptDate && values.amount && values.modeOfPayment;
+      }
+
+      if (!existingId) {
+        var values = getValues();
+
+        if (isValid(values)) {
+          var rowId = generateUniqueId();
+          closestRow.attr('id', rowId);
+          updateOrAppendTableRow(values.receiptDate, values.amount, values.modeOfPayment, rowId);
+        }
+      } else {
+        var values = getValues();
+
+        if (isValid(values)) {
+          console.log(existingId)
+          updateOrAppendTableRow(values.receiptDate, values.amount, values.modeOfPayment, existingId);
+        }
+      }
+    }
+
+    function removeTableRow(row) {
+      // Get the row ID
+      var rowId = row.attr('id');
+
+      // Assuming your table rows have a data attribute with the row ID, like data-row-id
+      var tableRow = $('.top-up-table').find('[data-row-id="' + rowId + '"]');
+
+      // Remove the corresponding table row
+      tableRow.remove();
+    }
+
+    // Function to calculate and update On Road Price, Amount Receivable, and Amount Received
+    function calculatePrices() {
+      // Get the values of the input fields
+      var booking_amount = parseFloat($("#id_booking_amount").val()) || 0;
+      var loan_amount = parseFloat($("#id_loan_amount").val()) || 0;
+      var total_value_to_new_car = parseFloat($("#id_total_value_to_new_car").val()) || 0;
+      var total_eligible_bonus = parseFloat($("#id_total_eligible_bonus").val()) || 0;
+      var rd_other_amount_one = parseFloat($("#id_rd_other_amount_one").val()) || 0;
+      var rd_other_amount_two = parseFloat($("#id_rd_other_amount_two").val()) || 0;
+      
+     
+      var amount = parseFloat($("#id_amount").val()) || 0;
+      var yono_scheme_amount = parseFloat($("#id_yono_scheme_amount").val()) || 0;
+      var ac_consumer_offer_amount = parseFloat($("#id_ac_consumer_offer_amount").val()) || 0;
+
+      
+      var sum_of_additional_discount = 0;
+      $('.additional-discounts').each(function () {
+        var value = parseFloat($(this).text().trim().replace(/[^0-9.]/g, ''));
+        // Add the value to the sum if it's a valid number
+        if (!isNaN(value)) {
+          sum_of_additional_discount += value;
+        }
+      });
+
+      var sumOfTopups = 0;
+      $('.top-up-row').each(function () {
+        // Extract the value from the last <td> in the current row
+        var topUpamount = parseFloat($(this).find('td:last').text());
+
+        // Add the amount to the sum
+        sumOfTopups += isNaN(topUpamount) ? 0 : topUpamount;
+      });
+
+      var showroomPrice = parseFloat($("#id_showroom_price").val()) || 0;
+      var insurance = parseFloat($("#id_insurance").val()) || 0;
+      var roadTax = parseFloat($("#id_road_tax").val()) || 0;
+      var registrationCharge = parseFloat($("#id_registration_charge").val()) || 0;
+      var tcs = parseFloat($("#id_tcs").val()) || 0;
+      var rsa = parseFloat($("#id_rsa").val()) || 0;
+      var p2p = parseFloat($("#id_p2p").val()) || 0;
+      var extendedWarranty = parseFloat($("#id_extended_warranty").val()) || 0;
+      // additional feild in vehicle amounts
+      var vdOtherAmountOne = parseFloat($("#id_vd_other_amount_one").val()) || 0;
+      var vdOtherAmountTwo = parseFloat($("#id_vd_other_amount_two").val()) || 0;
+
+      //  accessory total amount
+      var accessoryTotalamount = parseFloat($('#accessory_total_amount').text().trim().replace(/[^0-9.]/g, ''));
+      // Calculate the receipt Total
+      var totalReceiptamount = booking_amount + loan_amount + total_value_to_new_car + total_eligible_bonus + rd_other_amount_one + rd_other_amount_two +sumOfTopups
+
+      // Calculate the discount Total
+      var totalDiscountamount =   amount + yono_scheme_amount + ac_consumer_offer_amount +sum_of_additional_discount
+
+      // Calculate the On Road Price
+      var onRoadPrice = showroomPrice + insurance + roadTax + registrationCharge + tcs + rsa + p2p + extendedWarranty + vdOtherAmountOne + vdOtherAmountTwo;
+      // total amount a+b
+      var total_amount = onRoadPrice + accessoryTotalamount
+      // to pay amount 
+      var to_apy_amount = total_amount -  totalDiscountamount
+      // balance amount 
+      var balance_amount_to_pay = to_apy_amount - totalReceiptamount
+      // Update the result in the table
+      $("#on_road_price").text("₹ " + onRoadPrice.toFixed(2));
+      $("#total_receipt_amount").text("₹ " + totalReceiptamount.toFixed(2));
+      $("#total_discount").text("₹ " + totalDiscountamount.toFixed(2));
+      $("#total-amount").text("₹ " + total_amount.toFixed(2));
+      $("#to_pay_amount").text("₹ " + to_apy_amount.toFixed(2));
+      $("#balance_amount_to_pay").text("₹ " + balance_amount_to_pay.toFixed(2));
+
+    }
+
+    // Trigger the calculation on page load
+    calculatePrices();
+
+    // Add an event listener to the change event of input fields
+    $("form :input[type='number']").on("keyup", calculatePrices);
+
+
+  });
+
+</script>
+{% endblock js_plugins %}

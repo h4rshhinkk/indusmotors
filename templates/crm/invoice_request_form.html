@@ -1,0 +1,443 @@
+{% extends 'app/base.html' %}
+{% load static i18n crispy_forms_tags django_tables2 %}
+{% block title %}{{title|title}} : {{app_settings.site_title}}{% endblock %}
+
+{% block content %}
+
+<div class="side-app main-container detail_page mt-5 mb-5">
+
+  {% if request.user.usertype == 'invoice_team' or request.user.usertype == 'stock' %}
+  {% if is_stock_billing_req_update %}
+  {% include 'app/partials/invoice_request_card.html' %}
+  {% endif %}
+  {% endif %}
+
+  <div class="row">
+    <div class="col-12 mx-auto">
+      <div class="card">
+
+        <div class="card-header border-bottom-0">
+          <h5 class="mb-0">{{title}}</h5>
+        </div>
+
+        <div class="card-body">
+          <div class="row">
+
+            <div class="col-lg-12 col-md-12">
+
+              <form class="form-horizontal" method="post" autocomplete="off" enctype="multipart/form-data" action=""
+                enctype="multipart/form-data">
+                {% csrf_token %}
+
+                {% if request.user.usertype == 'stock' or request.user.usertype == 'invoice_team' %}
+
+                {{form|crispy}}
+
+                {% else %}
+
+                {% if is_delivar_plan %}
+                <div class="vehicle_details">
+
+                  <table class="table table-hover info_table mb-4" style="width:100%;">
+                    <tbody>
+                      <tr>
+                        <td> <strong>Vehicle</strong> </td>
+                        <td>{{object.chassis.variant.car_model}}</td>
+
+                        <td> <strong>Variant</strong> </td>
+                        <td>{{object.chassis.variant}}</td>
+                      </tr>
+                      <tr>
+                        <td> <strong>Color</strong> </td>
+                        <td>{{object.chassis.variant.color}}</td>
+
+                        <td> <strong>Chassis</strong> </td>
+                        <td>{{object.chassis}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+                  <div class="card_seperator">
+                    <label class="form-label mb-0">Name & Contacts</label>
+                  </div>
+
+                  <div class=" my-3 row contact-fields">
+                    {% for field in form.visible_fields|slice:":9" %}
+                    {{ field|as_crispy_field }}
+                    {% endfor %}
+                  </div>
+
+                  <div class="card_seperator">
+                    <label class="form-label mb-0">Permanant Address</label>
+                  </div>
+
+                  <div class=" my-3 row address-fields">
+                    {% for field in form.visible_fields|slice:"9:17" %}
+                    {{ field|as_crispy_field }}
+                    {% endfor %}
+                  </div>
+
+                  <div class="card_seperator">
+                    <label class="form-label mb-0">
+                      Temporary Address
+                    </label>
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-12 visible">
+                      {{form.is_temp_address}}
+                    </div>
+                  </div>
+
+                  <div class=" my-3 row temp-address-fields">
+                    {% for field in form.visible_fields|slice:"17:25" %}
+                    {{ field|as_crispy_field }}
+                    {% endfor %}
+                  </div>
+
+                  <div class="card_seperator">
+                    <label class="form-label mb-0">Registration/Tax Details</label>
+                  </div>
+
+
+                  <div class="my-3 row registration-fields">
+                    {% for field in form.visible_fields|slice:"25:30" %}
+                    {{ field|as_crispy_field }}
+                    {% endfor %}
+                  </div>
+
+                  <div class="card_seperator">
+                    <label class="form-label mb-0">Insurance Details</h5>
+                  </div>
+
+
+
+                  <div class="my-3 row insurance-fields">
+                    {% for field in form.visible_fields|slice:"30:38" %}
+                    {{ field|as_crispy_field }}
+                    {% endfor %}
+                  </div>
+
+                  <div class="card_seperator">
+                    <label class="form-label mb-0">
+                      Is Scheme Involved?
+                    </label>
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-12 visible">
+                      {{form.is_scheme}}
+                    </div>
+                  </div>
+
+                  <div class="my-3 row scheme-fields">
+                    {% for field in form.visible_fields|slice:"38:42" %}
+                    {{ field|as_crispy_field }}
+                    {% endfor %}
+                  </div>
+                  
+                  <div class="card_seperator">
+                    <label class="form-label mb-0">
+                      Is Yono Scheme Involved?
+                    </label>
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-12 visible">
+                      {{form.is_yono_scheme}}
+                    </div>
+                  </div>
+
+                  <div class="my-3 row yono-fields">
+                    {% for field in form.visible_fields|slice:"42:43" %}
+                    {{ field|as_crispy_field }}
+                    {% endfor %}
+                  </div>
+
+                  <div class="card_seperator">
+                    <label class="form-label mb-0">
+                      Finance
+                    </label>
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-12 visible">
+                      {{form.is_finance}}
+                    </div>
+                  </div>
+
+                  <div class="my-3 row finance-fields">
+                    {% for field in form.visible_fields|slice:"43:47" %}
+                    {{ field|as_crispy_field }}
+                    {% endfor %}
+
+                  </div>
+                </div>
+                {% else %}
+                
+                <div class="not_delivery">
+
+                  <div class="row">
+
+                    {% for field in form.visible_fields|slice:"49:52" %}
+                    {{ field|as_crispy_field }}
+                    {% endfor %}
+
+                  </div>
+               
+                  <div class=" my-3 row contact-fields">
+                    {% for field in form.visible_fields|slice:"0:8" %}
+                    {{ field|as_crispy_field }}
+                    {% endfor %}
+                  </div>
+
+                  <div class="card_seperator">
+                    <label class="form-label mb-0">Permanant Address</label>
+                  </div>
+
+                  <div class=" my-3 row address-fields">
+                    {% for field in form.visible_fields|slice:"8:16" %}
+                    {{ field|as_crispy_field }}
+                    {% endfor %}
+                  </div>
+
+                  <div class="card_seperator">
+                    <label class="form-label mb-0">
+                      Temporary Address
+                    </label>
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-12 visible">
+                      {{form.is_temp_address}}
+                    </div>
+                  </div>
+
+                  <div class=" my-3 row temp-address-fields">
+                    {% for field in form.visible_fields|slice:"16:24" %}
+                    {{ field|as_crispy_field }}
+                    {% endfor %}
+                  </div>
+
+                  <div class="card_seperator">
+                    <label class="form-label mb-0">New Vehicle Details</label>
+                  </div>
+
+                  <div class=" my-3 row new-vehicle-fields">
+                    {% for field in form.visible_fields|slice:"24:29" %}
+                    {{ field|as_crispy_field }}
+                    {% endfor %}
+                  </div>
+
+                  <div class="card_seperator">
+                    <label class="form-label mb-0">Exchange</label>
+                    <div class=" col-lg-3 col-md-4 col-sm-6 col-12 visible">
+                      
+                        {{form.is_exchange}}
+                      
+                    </div>
+                  </div>
+
+                  <div class="my-3 row exchange-fields">
+                    {% for field in form.visible_fields|slice:"29:36" %}
+                    {{ field|as_crispy_field }}
+                    {% endfor %}
+                  </div>
+
+                  <div class="card_seperator">
+                    <label class="form-label mb-0">Is Scheme Involved?</label>
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-12 visible">
+                      
+                        {{form.is_scheme}}
+                      
+                    </div>
+                  </div>
+
+                  <div class="my-3 row scheme-fields">
+                    {% for field in form.visible_fields|slice:"36:40" %}
+                    {{ field|as_crispy_field }}
+                    {% endfor %}
+                  </div>
+
+                  <div class="card_seperator">
+                    <label class="form-label mb-0">
+                      Is YONO Involved?
+                    </label>
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-12 visible">
+                     
+                        {{form.is_yono_scheme}}
+                      
+                    </div>
+                  </div>
+
+                  <div class="my-3 row yono-fields">
+                    {% for field in form.visible_fields|slice:"40:41" %}
+                    {{ field|as_crispy_field }}
+                    {% endfor %}
+                  </div>
+
+                  
+                    <div class="card_seperator">
+                      <label class="form-label mb-0">
+                        Finance
+                      </label>
+                      <div class="col-lg-3 col-md-4 col-sm-6 col-12 visible">
+                        {{form.is_finance}}
+                      </div>
+                    </div>
+                 
+
+                  <div class="my-3 row finance-fields">
+                    {% for field in form.visible_fields|slice:"41:44" %}
+                    {{ field|as_crispy_field }}
+                    {% endfor %}
+
+                  </div>
+                </div>
+                {% endif %}
+
+                {% endif %}
+
+                <div class="my-4 visible">
+                  <div class="form-group mb-0">
+                    <button type="submit" class="btn btn-primary me-2">{% translate "Save" %}</button>
+                    <button type="button" onclick="history.back()" class="border btn btn-outline-grey">
+                      {% translate "Cancel" %}</button>
+                  </div>
+                </div>
+
+              </form>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+{% endblock content %}
+
+{% block javascript %}
+{{form.media}}
+{% include 'app/partials/district_selector.html' %}
+{% include 'app/partials/variant_selector.html' %}
+{% include 'app/partials/chassis_selector.html' %}
+<script>
+
+
+  
+  $(document).ready(function () {
+
+    // chasiis chnage according to variant change
+    
+    {% if not is_delivar_plan %}
+
+    var data0 = {{car_chassis|safe }}
+    updateSelectOptions3("#id_chassis", data0, "id", "chassis_number");
+    function updateSelectOptions3(selectId, data0, valueKey, textKey) {
+      const select = $(selectId);
+      select.empty().append('<option value="" selected="selected">---------</option>');
+      if (data0) {
+          const options = data0.map(item => `<option value="${item[valueKey]}">${item[textKey]}</option>`);
+          select.append(options.join(''));
+      }
+    }
+
+    var data_color = {{ car_color|safe }};  
+    var selected_color_id = {{ selected_color_id|safe }};
+    updateSelectOptionsColor("#id_color", data_color, "color__id", "color__name", selected_color_id);
+
+    function updateSelectOptionsColor(selectId, data_color, valueKey, textKey, selected_color_id) {
+        const select = $(selectId);
+        select.empty().append('<option value="" selected="selected">---------</option>');
+
+        if (data_color) {
+            const options = data_color.map(item => {
+                const isSelected = (item[valueKey] === selected_color_id) ? 'selected="selected"' : '';
+                return `<option value="${item[valueKey]}" ${isSelected}>${item[textKey]}</option>`;
+            });
+            select.append(options.join(''));
+        }
+    }
+    
+    var data_trim = {{ car_trim|safe }};
+    var selected_trim_id = {{ selected_trim_id|safe }};
+    updateSelectOptionsTrim("#id_trim", data_trim, "trim__id", "trim__name", selected_trim_id);
+    function updateSelectOptionsTrim(selectId, data_trim, valueKey, textKey, selected_trim_id) {
+        const select = $(selectId);
+        select.empty().append('<option value="" selected="selected">---------</option>');
+
+        if (data_trim) {
+            const options = data_trim.map(item => {
+                const isSelected = (item[valueKey] === selected_trim_id) ? 'selected="selected"' : '';
+                return `<option value="${item[valueKey]}" ${isSelected}>${item[textKey]}</option>`;
+            });
+            select.append(options.join(''));
+        }
+    }
+
+    {% endif %}
+    
+    // Initially hide the scheme-fields
+    $(".scheme-fields").hide();
+    $(".temp-address-fields").hide();
+    $(".exchange-fields").hide();
+    $(".finance-fields").hide();
+    $(".yono-fields").hide();
+
+    function handleVisibilityChange(selector, targetFields) {
+      var fieldValue = $(selector).val();
+      // If 'yes' is selected, show the targetFields; otherwise, hide them
+      if (fieldValue === 'yes') {
+          $(targetFields).show().find(':input').prop('required', true);
+      } else {
+          $(targetFields).hide().find(':input').prop('required', false);
+      }
+    }
+
+    var tempaddress = $('#id_is_temp_address').val()
+      // If 'Yes' is selected, show the targetFields; otherwise, hide them
+      if (tempaddress === 'yes') {
+        $('.temp-address-fields').show().find(':input').prop('required', true);
+      } else {
+        $('.temp-address-fields').hide().find(':input').prop('required', false);
+      }
+
+    var scheme = $('#id_is_scheme').val()
+      // If 'Yes' is selected, show the targetFields; otherwise, hide them
+      if (scheme === 'yes') {
+        $('.scheme-fields').show().find(':input').prop('required', true);
+      } else {
+        $('.scheme-fields').hide().find(':input').prop('required', false);
+      }
+
+    var yonoscheme = $('#id_is_yono_scheme').val()
+      // If 'Yes' is selected, show the targetFields; otherwise, hide them
+      if (yonoscheme === 'yes') {
+        $('.yono-fields').show().find(':input').prop('required', true);
+      } else {
+        $('.yono-fields').hide().find(':input').prop('required', false);
+      }
+
+    var financef = $('#id_is_finance').val()
+      // If 'Yes' is selected, show the targetFields; otherwise, hide them
+      if (financef === 'yes') {
+        $('.finance-fields').show().find(':input').prop('required', true);
+      } else {
+        $('.finance-fields').hide().find(':input').prop('required', false);
+      }
+      
+
+    
+    $("#id_is_temp_address").change(function () {
+      handleVisibilityChange("#id_is_temp_address", ".temp-address-fields");
+    });
+    $("#id_is_scheme").change(function () {
+      handleVisibilityChange("#id_is_scheme", ".scheme-fields");
+    });
+    $("#id_is_yono_scheme").change(function () {
+      handleVisibilityChange("#id_is_yono_scheme", ".yono-fields");
+    });
+    $("#id_is_exchange").change(function () {
+      handleVisibilityChange("#id_is_exchange", ".exchange-fields");
+    });
+    $("#id_is_finance").change(function () {
+      handleVisibilityChange("#id_is_finance", ".finance-fields");
+    });
+   
+  });
+
+
+
+</script>
+
+{% endblock %}

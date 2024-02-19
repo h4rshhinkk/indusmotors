@@ -1,0 +1,172 @@
+{% extends 'app/base.html' %}
+{% load static i18n crispy_forms_tags %}
+{% block title %}{{object}}: {{app_settings.site_title}}{% endblock %}
+
+{% block content %}
+
+<div class="side-app main-container detail_page">
+
+  <!--Page header-->
+  <div class="page-header d-flex">
+    <div class="page-leftheader">
+        <div class="page-title">{{title|title}}</div>
+    </div>
+    <div class="page-rightheader ms-md-auto">
+      <div class="btn-list">
+
+        <a href="javascript:void(0);" onclick="window.print();" class="btn btn-sm btn-white" title="Print"> <i
+            class="feather feather-printer"></i> </a>
+
+      </div>
+    </div>
+  </div>
+  <!--End Page header-->
+
+  <!-- Row-->
+  <div class="row">
+
+    <div class="col-lg-12 col-md-8 col-12">
+      {% if object %}
+      <div class="card content_card">
+        <div class="card-header">
+          <div class="card-title d-flex align-items-center w-100">
+            <h5 class="mb-0">{{object}}</h5>
+          </div>
+        </div>
+        <div class="card-body p-0 ">
+          <div class="table-responsive">
+            <table class="table table-hover info_table mb-0 table-striped table-bordered " style="width:100%;">
+              <tbody>
+            
+                     
+                <tr>
+                    <th>Opt No</th>
+                    <td> {{object.opportunity.opt_id}}</td>
+                    <th>DSE</th>
+                    <td>{{object.opportunity.dse}}</td>
+                </tr>    
+        
+                
+                <tr>
+                    <th>Vehicle</th>
+                    <td> {{object.variant.car_model}}</td>
+                    <th>Variant</th>
+                    <td>{{object.variant}}</td>
+                    
+                </tr>
+
+                <tr>
+                    <th>Color</th>
+                    <td>{{object.variant.color}}</td>
+                </tr>
+
+                <tr>
+                    <th colspan="4">
+                      <h4 class="font-weight-bold">Name & Contacts</h4>
+                    </th>
+                </tr>     
+                <tr>
+                    <th>Customer Name</th>
+                    <td> {{object.opportunity.customer_salutation}}.{{object.opportunity.customer_name}}</td>
+                    <th>Guardian</th>
+                    <td>{{object.opportunity.guardian_salutation}}.{{object.opportunity.guardian_name}}</td>
+                </tr>  
+
+                <tr>
+                    <th>Phone 1</th>
+                    <td> {{object.opportunity.mobile}}</td>
+                    <th>Phone 2</th>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <th>Email Id</th>
+                    <td> {{object.opportunity.email}}</td>
+                    <th>DOB</th>
+                    <td>{{object.opportunity.dob}}</td>
+                </tr>
+
+                <tr>
+                    <th>Address</th>
+                    <td> {{object.opportunity.address}}</td>
+                    <th>Place</th>
+                    <td>{{object.opportunity.place}}</td>
+                </tr>
+
+                <tr>
+                    <th>State</th>
+                    <td> {{object.opportunity.district.state}}</td>
+                    <th>District</th>
+                    <td>{{object.opportunity.district}}</td>
+                </tr>
+
+                <tr>
+                    <th>Profession</th>
+                    <td> {{object.opportunity.profession}}</td>
+                    <th>Enquiry Type</th>
+                    <td>{{object.opportunity.opt_type}}</td>
+                </tr>
+
+                  <tr>
+                    <th colspan="4">
+                      <h4 class="font-weight-bold">Exchange Details</h4>
+                    </th>
+                  </tr>     
+                  <tr>
+                      <th>Vechicle Make</th>
+                      <td> {{object.opportunity.exchange_vehicle_make|default:" "}}</td>
+                      <th>Vehicle</th>
+                      <td>{{object.opportunity.exchange_vehicle_model|default:" "}}</td>
+                  </tr>
+                  <tr>
+                    <th>Reg No</th>
+                    <td> {{object.opportunity.exchange_reg_no|default:" "}}</td>
+                    <th>Man Year</th>
+                    <td>{{object.opportunity.exchange_mfg_year|default:" "}}</td>
+                  </tr>
+                  <tr>
+                    <th>Owner Name</th>
+                    <td> {{object.opportunity.owner_name|default:" "}}</td>
+                    <th>Relation</th>
+                    <td>{{object.opportunity.relation|default:" "}}</td>
+                  </tr>
+
+
+                  <tr>
+                    <th colspan="4">
+                      <h4 class="font-weight-bold">Scheme Details</h4>
+                    </th>
+                  </tr>     
+                  <tr>
+                      <th>Scheme</th>
+                      <td> {{object.scheme|default:" "}}</td>
+                      <th>Amount</th>
+                      <td>{{object.amount|default:" "}}</td>
+                  </tr>
+                  <tr>
+                    <th>YONO Scheme Amount</th>
+                    <td> {{object.yono_scheme_amount|default:" "}}</td>
+                    
+                  </tr>
+                  
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+      {% else %}
+      <div class="card content_card">
+        <div class="card-body">
+          <p class="text-center">There is nothing here</p>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+
+  </div>
+  <!-- End Row-->
+
+</div>
+
+{% endblock content %}

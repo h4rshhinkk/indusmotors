@@ -1,0 +1,15 @@
+{% if request.user.usertype == 'test_drive_operator' %}
+<form action="{% url 'crm:testdrive_status_update' record.pk %}" method="GET" class="task_update_form">
+    <select name="status" id="status" class="form-control niceselect" style="width:auto">
+
+        <option value="pending" {% if record.status == 'pending' %} selected {% endif %} >Pending</option>
+        <option value="scheduled" {% if record.status == 'scheduled' %} selected {% endif %} >Scheduled</option>
+        <option value="test_drived" {% if record.status == 'test_drived' %} selected {% endif %} >Test Drived</option>
+        <option value="cancelled" {% if record.status == 'cancelled' %} selected {% endif %} >Cancelled</option>
+
+    </select>
+</form>
+{% else %}
+{{record.get_status_display}}
+{% endif %}
+

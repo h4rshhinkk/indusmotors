@@ -1,0 +1,75 @@
+<div class="col-lg-12">
+    {% if opportunity %}
+    <div class="card content_card">
+        <div class="card-header">
+          <div class="card-title d-flex align-items-center w-100">
+            <h5 class="mb-0">{{opportunity.customer_name}}</h5>
+          </div>
+        </div>
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table table-hover info_table mb-0" style="width:100%;">
+              <tbody>
+                <tr>
+                  <td> <strong>Opportunity Date</strong> </td>
+                  <td>{{opportunity.opt_date}}</td>
+
+                  <td> <strong>Opportunity ID</strong> </td>
+                  <td>{{opportunity.opt_id}}</td>
+                </tr>
+
+                <tr>
+                  <td> <strong>Name</strong> </td>
+                  <td>{{opportunity.customer_name}}</td>
+
+                  <td> <strong>Address</strong> </td>
+                  <td>{{opportunity.address}}</td>
+                </tr>
+
+                <tr>
+                  <td> <strong>City</strong> </td>
+                  <td>{{opportunity.place}}</td>
+
+                  <td> <strong>Mobile</strong> </td>
+                  <td>{{opportunity.phone|default:"-"}}</td>
+                </tr>
+
+                <tr>
+                  <td> <strong>Vehicle Code</strong> </td>
+                  <td>{{opportunity.variant.vehicle_code}}</td>
+
+                  <td> <strong>Vehicle Model</strong> </td>
+                  <td>{{opportunity.variant.car_model}}</td>
+                </tr>
+
+                <tr>
+                  <td> <strong>Fuel</strong> </td>
+                  <td>{{opportunity.variant.fuel}}</td>
+
+                  <td> <strong>Vehicle Trim</strong> </td>
+                  <td>{{opportunity.variant.trim}}</td>
+                </tr>
+
+                <tr>
+                  <td> <strong>Color</strong> </td>
+                  <td>{{opportunity.variant.color}}</td>
+
+                  <td> <strong>Vehicle Transmission</strong> </td>
+                  <td>{{opportunity.variant.transmission}}</td>
+                </tr>
+
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    {% else %}
+    <div class="card content_card">
+      <div class="card-body">
+        <p class="text-center">There is nothing here</p>
+      </div>
+    </div>
+    {% endif %}
+  </div>

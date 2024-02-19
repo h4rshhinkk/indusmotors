@@ -1,0 +1,83 @@
+  <!-- Row-->
+  <div class="row mt-5">
+
+    <div class="col-lg-12">
+        {% if invoice_request_details %}
+        <div class="card content_card">
+            <div class="card-header">
+              <div class="card-title d-flex align-items-center w-100">
+                <h5 class="mb-0">{{invoice_request_details}}</h5>
+              </div>
+            </div>
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="table table-hover info_table mb-0" style="width:100%;">
+                  <tbody>
+                    <tr>
+                      <td> <strong>Order Date</strong> </td>
+                      <td>{{invoice_request_details.booking_request.order_date}}</td>
+    
+                      <td> <strong>Order No</strong> </td>
+                      <td>{{invoice_request_details.booking_request.order_no}}</td>
+                    </tr>
+    
+                    <tr>
+                      <td> <strong>Name</strong> </td>
+                      <td>{{invoice_request_details.customer_name   }}</td>
+    
+                      <td> <strong>Address</strong> </td>
+                      <td>{{invoice_request_details.house_name}}</td>
+                    </tr>
+    
+                    <tr>
+                      <td> <strong>City</strong> </td>
+                      <td>{{invoice_request_details.place}},{{invoice_request_details.village}},</td>
+    
+                      <td> <strong>Mobile</strong> </td>
+                      <td>{{invoice_request_details.mobile|default:"-"}}</td>
+                    </tr>
+    
+                    <tr>
+                      <td> <strong>Vehicle Model</strong> </td>
+                      <td>{{invoice_request_details.chassis.variant.vehicle_code}}</td>
+    
+                      <td> <strong>Vehicle Code</strong> </td>
+                      <td>{{invoice_request_details.chassis.variant.car_model}} {{invoice_request_details.chassis.variant.trim}}</td>
+                    </tr>
+    
+                    <tr>
+                      <td> <strong>Fuel</strong> </td>
+                      <td>{{invoice_request_details.chassis.variant.fuel}}</td>
+    
+                      <td> <strong>Vehicle Transmission</strong> </td>
+                      <td>{{invoice_request_details.chassis.variant.transmission}}</td>
+                    </tr>
+    
+                    <tr>
+                      <td> <strong>Color</strong> </td>
+                      <td>{{invoice_request_details.chassis.variant.color}}</td>
+    
+                      
+
+                      <td> <strong>Chassis</strong> </td>
+                      <td>{{invoice_request_details.chassis}}</td>
+                    </tr>
+    
+    
+                  </tbody>
+                </table>
+              </div>
+            </div>
+    
+          </div>
+        {% else %}
+        <div class="card content_card">
+          <div class="card-body">
+            <p class="text-center">There is nothing here</p>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+
+  </div>
+  <!-- End Row-->

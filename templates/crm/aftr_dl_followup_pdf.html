@@ -1,0 +1,208 @@
+{% load static %}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+    <body style="font-family:Arial Unicode MS, Helvetica , Sans-Serif;">
+        
+        
+        <table style="table-layout: fixed; width: 100%;">
+            <tbody>
+                <tr>
+                    <td class="">
+                        <div style="width: 160px;  margin-top: 20px;">
+                            <img src="https://rotanatata.geany.website/static/app/config/rotanatatalogo.png" alt="Company Logo" style="max-width: 100%;">
+                        </div>
+                    </td>
+                    <td width="15%" >
+                        <caption style="  text-align: center; font-size: 30px;">
+                                <strong>
+                                    Delivery Followup Informations
+                                </strong>
+                        </caption> 
+                            
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        
+        
+        <div>
+            <h2 style="text-align: center; margin-top:50px; margin-bottom: 30px;"></h2>
+            <table style="table-layout: fixed; width: 100%;  border-collapse: collapse;">
+                <tbody>
+                    <tr>
+                        <th style="border: 1px solid #ddd; padding: 8px;">Customer Name</th>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{object.invoice.customer_name}}</td>
+
+                        <th style="border: 1px solid #ddd; padding: 8px;">Contact Number</th>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{object.invoice.mobile|default:"-"}}</td>
+                    </tr>
+                    <tr>
+                        <th style="border: 1px solid #ddd; padding: 8px;">Date of Delivery</th>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{object.invoice.vehicle_delivered_date|default:"-"}}</td>
+
+                        <th style="border: 1px solid #ddd; padding: 8px;">CA Name</th>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{object.invoice.dse|default:"-"}}</td>
+                        
+                    </tr>
+                   
+                    <tr>
+                        <th style="border: 1px solid #ddd; padding: 8px;">D+7 Call Date</th>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{object.dcall_date|default:"-"}}</td>
+
+                        <th style="border: 1px solid #ddd; padding: 8px;">Email ID</th>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{object.invoice.email|default:"-"}}</td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="4" style="border: 1px solid #ddd; padding: 8px; text-align: left;">
+
+                            Sir/Madam, May I confirm that you had taken delivery of <strong>{{object.invoice.chassis.variant.car_model}} - {{object.invoice.chassis.variant.trim}} - {{object.invoice.chassis.variant.transmission}} - {{object.invoice.chassis.variant.fuel}}</strong> from our dealership Rotana Motor.<br><br>
+                        
+                            Sir/Madam, congratulations for your new vehicle. We would like to welcome you to the Tata Motors Family.<br><br>
+                        
+                            May I take a few more minutes of your valuable time to know how your experience was at our dealership?<br><br>
+                        
+                            Thank you, Sir/Madam. I would like to ask a few questions for which you have to answer Yes or No.<br><br>
+                        
+                        </td>
+                    </tr>
+                   
+                    
+                    
+                </tbody>
+            </table>
+        </div>
+
+        <div>
+            <h2 style="text-align: center; margin-top:50px; margin-bottom: 30px;"></h2>
+            <table style="table-layout: fixed; width: 100%;  border-collapse: collapse;">
+                <tbody>
+                    <tr>
+                        <th style="border: 1px solid #ddd; padding: 8px;">Question</th>
+                        <th style="border: 1px solid #ddd; padding: 8px;">Answer</th>
+                        <th style="border: 1px solid #ddd; padding: 8px;">Remark</th>
+                    </tr>
+
+                    <tr>
+                        <td style="border: 1px solid #ddd; padding: 8px;">1.At the time of booking, did the Customer Advisor handover the Order booking & Commitment form* with all the booking and deal details?</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{object.get_answer_1_display}}</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{object.answer_remark_1}}</td>
+                    </tr>
+
+                    <tr>
+                        <td style="border: 1px solid #ddd; padding: 8px;">2.Did the Sales Consultant proactively keep you informed about your vehicle's delivery status?</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{object.get_answer_2_display}}</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{object.answer_remark_2}}</td>
+                    </tr>
+
+                    <tr>
+                        <td style="border: 1px solid #ddd; padding: 8px;">3.How would you like to rate the dealership facility in terms of cleanliness, comfort & Amenities available at the dealership (Ex: Parking Facility, Air conditioning, Ambience, Beverages, Snacks, Wi-Fi etc.)?                        </td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{object.get_answer_3_display}}</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{object.answer_remark_3}}</td>
+                    </tr>
+
+                    <tr>
+                        <td style="border: 1px solid #ddd; padding: 8px;">4.How would you like to rate your Sales Consultant on Grooming, Communication Skills and Courtesy?</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{object.get_answer_4_display}}</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{object.answer_remark_4}}</td>
+                    </tr>
+
+                    <tr>
+                        <td style="border: 1px solid #ddd; padding: 8px;">5.Keeping in consideration, the features explanation provided by the Sales Consultant and ability to answer your queries, How would you like to rate the Sales Consultant on his/her Knowledge/ Expertise about Vehicles?</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{object.get_answer_5_display}}</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{object.answer_remark_5}}</td>
+                    </tr>
+
+                    <tr>
+                        <td style="border: 1px solid #ddd; padding: 8px;">6.How would you like to rate the paperwork process in terms of clarity of explanation and timeliness of completion?</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{object.get_answer_6_display}}/10</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{object.answer_remark_6}}</td>
+                    </tr>
+
+                    <tr>
+                        <td style="border: 1px solid #ddd; padding: 8px;">7.How would you like to rate the condition of your vehicle on the day of delivery (Ex: clean and perfect condition)?</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{object.get_answer_7_display}}/10</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{object.answer_remark_7}}</td>
+                    </tr>
+
+                    <tr>
+                        <td style="border: 1px solid #ddd; padding: 8px;">8.How would you like to rate the vehicle delivery ceremony?</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{object.get_answer_8_display}}/10</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{object.answer_remark_8}}</td>
+                    </tr>
+
+                    <tr>
+                        <td style="border: 1px solid #ddd; padding: 8px;">9.How would you like to rate the quality of explanations done by Sales consultant for your vehicle's features, operations and controls on the day of delivery?</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{object.get_answer_9_display}}/10</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{object.answer_remark_9}}</td>
+                    </tr>
+
+                    <tr>
+                        <td style="border: 1px solid #ddd; padding: 8px;">10.On the day of delivery, How would you like to rate the timeliness of completing the final delivery (ex: Going over features, owner's manual etc)?</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{object.get_answer_10_display}}/10</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{object.answer_remark_10}}</td>
+                    </tr>
+
+                    <tr>
+                        <td style="border: 1px solid #ddd; padding: 8px;">11.On the day of delivery, how long did it take from the moment you arrived at the dealership to driving out in the new vehicle?</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{object.get_answer_11_display}}/10</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{object.answer_remark_11}}</td>
+                    </tr>
+
+                    <tr>
+                        <td style="border: 1px solid #ddd; padding: 8px;">12.Sir/Ma'am, is anything pending to be received from the dealership which you want us to inform them about?                        </td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{object.get_answer_12_display}}/10</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{object.answer_remark_12}}</td>
+                    </tr>
+
+                    <tr>
+                        <td style="border: 1px solid #ddd; padding: 8px;">13.How would you like to rate your overali vehicle Purchase experience</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{object.get_answer_13_display}}/10</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{object.answer_remark_13}}</td>
+                    </tr>
+
+                    <tr>
+                        <td style="border: 1px solid #ddd; padding: 8px;">14.Dealer Staff: Gave overview of Z Connect App</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{object.get_answer_14_display}}/10</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{object.answer_remark_14}}</td>
+                    </tr>
+
+                    <tr>
+                        <td style="border: 1px solid #ddd; padding: 8px;">15.Dealer Staff: Gave overview of charging process</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{object.get_answer_15_display}}/10</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{object.answer_remark_15}}</td>
+                    </tr>
+
+                    <tr>
+                        <th colspan="3" style="border: 1px solid #ddd; padding: 8px;">Customer Voice</th>
+                        
+                    </tr>
+
+                    <tr>
+                        <td colspan="3" style="border: 1px solid #ddd; padding: 8px;">
+                            <textarea rows="10" cols="100" style="resize: none;  border: 0px;">{{ object.customer_voice }}</textarea>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th colspan="3" style="border: 1px solid #ddd; padding: 8px;">D+15 Calling Remark</th>
+                        
+                    </tr>
+
+                    <tr>
+                        <td colspan="3" style="border: 1px solid #ddd; padding: 8px;">
+                            <textarea rows="10" cols="100" style="resize: none;  border: 0px;">{{ object.d15_calling_remark }}</textarea>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+        
+        
+       
+        
+</body>
+
+</html>

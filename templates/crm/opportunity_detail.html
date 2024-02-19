@@ -1,0 +1,102 @@
+{% extends 'app/base.html' %}
+{% load static i18n crispy_forms_tags %}
+{% block title %}{{object}}: {{app_settings.site_title}}{% endblock %}
+
+{% block content %}
+
+<div class="side-app main-container detail_page">
+
+    <!--Page header-->
+    <div class="page-header d-flex">
+        <div class="page-leftheader">
+            <div class="page-title">{{title|title}}</div>
+        </div>
+        <div class="page-rightheader ms-md-auto">
+            <div class="btn-list">
+
+                <a href="javascript:void(0);" onclick="window.print();" class="btn btn-sm btn-white" title="Print"> <i
+                        class="feather feather-printer"></i> </a>
+
+                <a href="{{object.get_update_url}}" class="btn btn-sm btn-white" data-bs-placement="top"
+                    data-bs-toggle="tooltip" title="Edit"> <i class="text-primary feather feather-edit-3"></i> </a>
+
+                <a href="{{object.get_delete_url}}" class="btn btn-sm btn-white" data-bs-placement="top"
+                    data-bs-toggle="tooltip" title="Delete"> <i class="text-danger feather feather-trash-2"></i> </a>
+
+            </div>
+        </div>
+    </div>
+    <!--End Page header-->
+
+    <!-- Row-->
+    <div class="row">
+
+        <div class="col-md-6">
+            <div class="card content_card">
+                <div class="card-header">
+                    <div class="card-title d-flex align-items-center w-100">
+                        <h5 class="mb-0">{{object}}</h5>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover info_table mb-0" style="width:100%;">
+                            <tbody>
+                                <tr><td> Opportunity Date </td><td> {{object.opt_date|default:"-"}} </td></tr>
+                                <tr><td> Opportunity Id </td><td> {{object.opt_id|default:"-"}} </td></tr>
+                                <tr><td> Opportunity Source </td><td> {{object.opportunity_source|default:"-"}} </td></tr>
+                                <tr><td> DSE </td><td> <a href="{{object.dse.get_absolute_url}}">{{object.dse}}</|default:"-"a> </td></tr>
+                                <tr><td> Variant </td><td> <a href="{{object.variant.get_absolute_url}}">{{object.variant|default:"-"}}</a> </td></tr>
+                                <tr><td> Opportunity Status </td><td> {{object.opt_status|default:"-"}} </td></tr>
+                                <tr><td> Next Followup Date </td><td> {{object.next_followup_date|default:"-"}} </td></tr>
+                                <tr><td> Enquiry Type </td><td> {{object.opt_type|default:"-"}} </td></tr>
+                                <tr><td> Exchange Vehicle Make </td><td> {{object.exchange_vehicle_make|default:"-"}} </td></tr>
+                                <tr><td> Exchange Vehicle Model </td><td> {{object.exchange_vehicle_model|default:"-"}} </td></tr>
+                                <tr><td> Exchange Vehicle Reg No </td><td> {{object.exchange_reg_no|default:"-"}} </td></tr>
+                                <tr><td> Exchange Vehicle Mfg Year </td><td> {{object.exchange_mfg_year|default:"-"}} </td></tr>
+                                <tr><td> Owner Name </td><td> {{object.owner_name|default:"-"}} </td></tr>
+                                <tr><td> Relation </td><td> {{object.relation|default:"-"}} </td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card content_card">
+                <div class="card-header">
+                    <div class="card-title d-flex align-items-center w-100">
+                        <h5 class="mb-0">Customer Details</h5>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover info_table mb-0" style="width:100%;">
+                            <tbody>
+                                <tr><td> Customer </td><td> {{object.customer_salutation}} {{object.customer_name|default:"-"}} </td></tr>
+                                <tr><td> Mobile </td><td> {{object.mobile|default:"-"}} </td></tr>
+                                <tr><td> Phone </td><td> {{object.phone|default:"-"}} </td></tr>
+                                <tr><td> Address </td><td> {{object.address|default:"-"}} </td></tr>
+                                <tr><td> Place </td><td> {{object.place|default:"-"}} </td></tr>
+                                <tr><td> District </td><td> {{object.district|default:"-"}} </td></tr>
+                                <tr><td> Email </td><td> {{object.email|default:"-"}} </td></tr>
+                                <tr><td> Date Of Birth </td><td> {{object.dob|default:"-"}} </td></tr>  
+                                <tr><td> Profession </td><td> {{object.profession|default:"-"}} </td></tr>
+                                <tr><td> Profession Details </td><td> {{object.profession_detail|default:"-"}} </td></tr>   
+                                <tr><td> Guardian </td><td> {{object.guardian_salutation}} {{object.guardian_name|default:"-"}} </td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <!-- End Row-->
+
+</div>
+
+{% endblock content %}

@@ -1,0 +1,96 @@
+<ul>
+    {% if request.user.usertype == 'team_lead' %}
+        {% if record.form20 and record.form20.url %}
+            <li>
+                <a href="{{record.form20.url}}" target="_blank">
+                    <button type="button" class="btn btn-primary mb-1">
+                        Download Form20
+                    </button>
+                </a>
+            </li>
+        {% endif %}
+        {% if record.disclimer and record.disclimer.url %}
+            <li>
+                <a href="{{record.disclimer.url}}" target="_blank">
+                    <button type="button" class="btn btn-primary mb-1">
+                        Download Disclaimer
+                    </button>
+                </a>
+            </li>
+        
+        {% endif %}
+        {% if record.under_taking_letter and record.under_taking_letter.url %}
+            <li>
+                <a href="{{record.under_taking_letter.url}}" target="_blank">
+                    <button type="button" class="btn btn-primary mb-1">
+                        Download Undertaking
+                    </button>
+                </a>
+            </li>
+        {% endif %}
+
+    {% elif request.user.usertype == 'registration_bo' %}
+
+        {% if record.form20 and record.form20.url %}
+            <li>
+                <a href="{{record.form20.url}}" target="_blank">
+                    <button type="button" class="btn btn-primary mb-1">
+                        Download Form20
+                    </button>
+                </a>
+            </li>
+        {% endif %}
+        {% if record.disclimer and record.disclimer.url %}
+            <li>
+                <a href="{{record.disclimer.url}}" target="_blank">
+                    <button type="button" class="btn btn-primary mb-1">
+                        Download Disclaimer
+                    </button>
+                </a>
+            </li>
+
+        {% endif %}
+        {% if record.under_taking_letter and record.under_taking_letter.url %}
+            <li>
+                <a href="{{record.under_taking_letter.url}}" target="_blank">
+                    <button type="button" class="btn btn-primary mb-1">
+                        Download Undertaking
+                    </button>
+                </a>
+            </li>
+        {% endif %}
+        
+        {% elif request.user.usertype == 'accounts' %}
+
+        {% if record.invoice and record.invoice.url %}
+            <li>
+                <a href="{{record.invoice.url}}" target="_blank">
+                    <button type="button" class="btn btn-primary mb-1">
+                        Download Invoice
+                    </button>
+                </a>
+            </li>
+        {% endif %}
+        {% if record.settlement and record.settlement.url %}
+            <li>
+                <a href="{{record.settlement.url}}" target="_blank">
+                    <button type="button" class="btn btn-primary mb-1">
+                        Download Settlement
+                    </button>
+                </a>
+            </li>
+
+        {% endif %}
+        {% if record.receipts and record.receipts.url %}
+            <li>
+                <a href="{{record.receipts.url}}" target="_blank">
+                    <button type="button" class="btn btn-primary mb-1">
+                        Download Receipts
+                    </button>
+                </a>
+            </li>
+        {% endif %}
+
+
+    {% endif %}
+</ul>

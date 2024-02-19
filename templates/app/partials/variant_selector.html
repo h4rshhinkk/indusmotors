@@ -1,0 +1,60 @@
+<script>
+    var get_url = "{% url 'crm:get_variants' %}";
+    var carModelSelect = $("#id_car_model");
+    var trimSelect = $("#id_trim");
+    var colorSelect = $("#id_color");
+
+    function updateSelectOptions(selectId, data, valueKey, textKey) {
+        const select = $(selectId);
+        select.empty().append('<option value="" selected="selected">---------</option>');
+        if (data) {
+            const options = data.map(item => `<option value="${item[valueKey]}">${item[textKey]}</option>`);
+            select.append(options.join(''));
+        }
+    }
+
+    function makeAjaxCallCar(get_url, data, successCallback) {
+        $.ajax({
+            url: get_url,
+            data: data,
+            dataType: 'json',
+            success: successCallback
+        });
+    }
+
+    carModelSelect.change(function () {
+        let carModel = carModelSelect.val();
+        let data = { car_model: carModel };
+
+        makeAjaxCallCar(get_url, data, function (data) {
+            updateSelectOptions("#id_trim", data.trims, "trim__id", "trim__name");
+            updateSelectOptions("#id_color", data.colors, "color__id", "color__name");
+            updateSelectOptions("#id_variant", data.variants, "id", "vehicle_code");
+            updateSelectOptions("#id_chassis", data.variants, "id", "chassis_number");
+        });
+    });
+
+    trimSelect.change(function () {
+        let carModel = carModelSelect.val();
+        let trim = trimSelect.val();
+        let data = { car_model: carModel, trim: trim };
+
+        makeAjaxCallCar(get_url, data, function (data) {
+            updateSelectOptions("#id_color", data.colors, "color__id", "color__name");
+            updateSelectOptions("#id_variant", data.variants, "id", "vehicle_code");
+        });
+    });
+
+    colorSelect.change(function () {
+        let carModel = carModelSelect.val();
+        let trim = trimSelect.val();
+        let color = colorSelect.val();
+        let data = { car_model: carModel, trim: trim, color: color };
+
+        makeAjaxCallCar(get_url, data, function (data) {
+            updateSelectOptions("#id_variant", data.variants, "id", "vehicle_code");
+            
+        });
+    });
+
+</script>

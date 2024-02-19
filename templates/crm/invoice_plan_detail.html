@@ -1,0 +1,663 @@
+{% extends 'app/base.html' %}
+{% load static i18n crispy_forms_tags %}
+{% block title %}{{object}}: {{app_settings.site_title}}{% endblock %}
+
+{% block content %}
+
+<div class="side-app main-container detail_page">
+
+  <!--Page header-->
+  <div class="page-header d-flex">
+    <div class="page-leftheader">
+      <div class="page-title">{{title|title}}</div>
+    </div>
+    <div class="page-rightheader ms-md-auto">
+      <div class="btn-list">
+
+        <a href="javascript:void(0);" onclick="window.print();" class="btn btn-sm btn-white" title="Print"> <i
+            class="feather feather-printer"></i> </a>
+
+      </div>
+    </div>
+  </div>
+  <!--End Page header-->
+
+  <!-- Row-->
+  <div class="row">
+
+    {% if invoice_request_view %}
+
+    <div class="col-lg-12 col-md-8 col-12">
+      {% if object %}
+      <div class="card content_card">
+        <div class="card-header">
+          <div class="card-title d-flex align-items-center w-100">
+            <h5 class="mb-0">{{object}}</h5>
+          </div>
+        </div>
+        <div class="card-body p-0 ">
+          <div class="table-responsive">
+            <table class="table table-hover info_table mb-0 table-striped table-bordered " style="width:100%;">
+              <tbody>
+
+                <tr>
+                  <th colspan="4">
+                    <h4 class="font-weight-bold"> Vehicle Details</h4>
+                  </th>
+                </tr>
+                <tr>
+                  <th>Opt No</th>
+                  <td> {{object.booking_request.opportunity.opt_id}}</td>
+                  <th>DSE</th>
+                  <td>{{object.dse}}</td>
+                </tr>
+                <tr>
+                  <th>Order No / Date</th>
+                  <td> {{object.booking_request.order_no}} - {{object.booking_request.order_date}}</td>
+                  <th>Invioce No / Date</th>
+                  <td>{{object.invoice_no}} - {{object.invoice_date}}</td>
+                </tr>
+
+                <tr>
+                  <th>Vehicle</th>
+                  <td> {{object.chassis.variant.car_model}}</td>
+                  <th>Variant</th>
+                  <td>{{object.chassis.variant}}</td>
+
+                </tr>
+
+                <tr>
+                  <th>Color</th>
+                  <td>{{object.chassis.variant.color}}</td>
+                  <th>Chassis</th>
+                  <td>{{object.chassis}}</td>
+                </tr>
+
+                <tr>
+                  <th colspan="4">
+                    <h4 class="font-weight-bold">Name & Contacts</h4>
+                  </th>
+                </tr>
+                <tr>
+                  <th>Customer Name</th>
+                  <td> {{object.customer_salutation}}.{{object.customer_name}}</td>
+                  <th>Guardian</th>
+                  <td>{{object.guardian_salutation}}.{{object.guardian_name}}</td>
+                </tr>
+
+                <tr>
+                  <th>Phone 1</th>
+                  <td> {{object.mobile}}</td>
+                  <th>Phone 2</th>
+                  <td></td>
+                </tr>
+
+                <tr>
+                  <th>Email Id</th>
+                  <td> {{object.email}}</td>
+                  <th>DOB</th>
+                  <td>{{object.dob}}</td>
+                </tr>
+
+                {% comment %} <tr>
+                  <th>Pan</th>
+                  <td> </td>
+                  <th></th>
+                  <td></td>
+                </tr> {% endcomment %}
+
+                {% if object.is_temp_address == "yes" %}
+                <tr>
+                  <th colspan="2">
+                    <h4 class="font-weight-bold">Address 1 (Permanent)</h4>
+                  </th>
+                  {% if object.temp_place %}
+                  <th colspan="2">
+                    <h4 class="font-weight-bold">Address 2 (Temparory)</h4>
+                  </th>
+                  {% endif %}
+                </tr>
+                {% else %}
+                <tr>
+                  <th colspan="4">
+                    <h4 class="font-weight-bold">Address 1 (Permanent)</h4>
+                  </th>
+                  
+                </tr>
+                {% endif %}
+
+
+              {% if object.is_temp_address == "yes" %}
+                <tr>
+                  <th>Address</th>
+                  <td> {{object.address|default:"-"}}</td>
+
+                  {% if object.temp_address %}
+                  <th>Address</th>
+                  <td>{{object.temp_address|default:"-"}}</td>
+                  {% endif %}
+                </tr>
+
+
+                <tr>
+                  <th>Place</th>
+                  <td> {{object.place|default:"-"}}</td>
+                  {% if object.temp_place %}
+                  <th>Place</th>
+                  <td>{{object.temp_place|default:"-"}}</td>
+                  {% endif %}
+                </tr>
+                <tr>
+                  <th>Village</th>
+                  <td> {{object.village|default:"-"}}</td>
+                  {% if object.temp_village %}
+                  <th>Village</th>
+                  <td>{{object.temp_village|default:"-"}}</td>
+                  {% endif %}
+                </tr>
+               
+                <tr>
+                  <th>Panchayath</th>
+                  <td> {{object.panchayath|default:"-"}}</td>
+                  {% if object.temp_panchayath %}
+                  <th>Panchayath</th>
+                  <td>{{object.temp_panchayath|default:"-"}}</td>
+                  {% endif %}
+                </tr>
+                <tr>
+                  <th>Post</th>
+                  <td> {{object.post|default:"-"}}</td>
+                  {% if object.temp_post %}
+                  <th>Post</th>
+                  <td>{{object.temp_post|default:"-"}}</td>
+                  {% endif %}
+                </tr>
+                <tr>
+                  <th>District</th>
+                  <td> {{object.district|default:"-"}}</td>
+                  {% if object.temp_district %}
+                  <th>District</th>
+                  <td>{{object.temp_district|default:"-"}}</td>
+                  {% endif %}
+                </tr>
+                <tr>
+                  <th>State</th>
+                  <td> {{object.district.state|default:"-"}}</td>
+                  {% if object.temp_district %}
+                  <th>State</th>
+                  <td>{{object.district.state|default:"-"}}</td>
+                  {% endif %}
+                </tr>
+                
+              {% else %}
+                <tr>
+                  <th>Address</th>
+                  <td> {{object.address|default:"-"}}</td>
+
+                  <th>Place</th>
+                  <td> {{object.place|default:"-"}}</td>
+                </tr>  
+
+                <tr>
+                  <th>Village</th>
+                  <td> {{object.village|default:"-"}}</td>
+
+                  <th>Panchayath</th>
+                  <td> {{object.panchayath|default:"-"}}</td>
+                </tr>
+               
+                <tr>
+                  <th>Post</th>
+                  <td> {{object.post|default:"-"}}</td>
+                  <th>District</th>
+                  <td> {{object.district|default:"-"}}</td>
+                </tr>
+                <tr>
+                  <th><strong>State</strong></th>
+                  <td> {{object.district.state|default:"-"}}</td>
+                </tr>
+              {% endif %}
+
+
+
+                <tr>
+                  <th colspan="1">
+                    <h4 class="font-weight-bold">Scheme</h4>
+                  </th>
+                  <th colspan="3">
+                    <h4 class="font-weight-bold ">{{ object.scheme|yesno:"Yes,No" }}</h4>
+                  </th>
+                </tr>
+                <tr>
+                  <th>Crop Scheme</th>
+                  <td> {{object.scheme}}</td>
+                  <th>Amount</th>
+                  <td>{{object.amount|default:"-"}}</td>
+                </tr>
+                <tr>
+                  <th>YONO Scheme Amount</th>
+                  <td> {{object.yono_scheme_amount|default:"-"}}</td>
+                  <th></th>
+                  <td></td>
+                </tr>
+
+                <tr>
+                  <th colspan="1">
+                    <h4 class="font-weight-bold">Finance</h4>
+                  </th>
+                  <th colspan="3">
+                    <h4 class="font-weight-bold">{{ object.finance|yesno:"Yes,No" }}</h4>
+                  </th>
+                </tr>
+                <tr>
+                  <th>Finance Company</th>
+                  <td> {{object.finance|default:"-"}}</td>
+                  <th>Branch</th>
+                  <td>{{object.branch|default:"-"}}</td>
+                </tr>
+                <tr>
+                  <th>Loan Amount</th>
+                  <td> {{object.loan_amount|default:"-"}}</td>
+                  <th>Executive</th>
+                  <td>{{object.executive|default:"-"}}</td>
+                </tr>
+
+                <tr>
+                  <th colspan="1">
+                    <h4 class="font-weight-bold">Exchange</h4>
+                  </th>
+                  <th colspan="3">
+                    <h4 class="font-weight-bold">{{ object.exchange_vehicle_make|yesno:"Yes,No" }}</h4>
+                  </th>
+                </tr>
+                <tr>
+                  <th>Vechicle Make</th>
+                  <td> {{object.exchange_vehicle_make|default:"-"}}</td>
+                  <th>Vehicle</th>
+                  <td>{{object.exchange_vehicle_model|default:"-"}}</td>
+                </tr>
+                <tr>
+                  <th>Reg No</th>
+                  <td> {{object.exchange_reg_no|default:"-"}}</td>
+                  <th>Man Year</th>
+                  <td>{{object.exchange_mfg_year|default:"-"}}</td>
+                </tr>
+                <tr>
+                  <th>Owner Name</th>
+                  <td> {{object.owner_name|default:"-"}}</td>
+                  <th>Relation</th>
+                  <td>{{object.relation|default:"-"}}</td>
+
+                </tr>
+                <tr>
+                  <th>Exchange Vehicle Status</th>
+                  <td>{{object.exchange_vehicle_status|default:"-"}}</td>
+                </tr>
+
+                <tr>
+                  <th colspan="4">
+                    <h4 class="font-weight-bold">Insurance</h4>
+                  </th>
+                </tr>
+
+                <tr>
+                  <th>Insurance Type</th>
+                  <td> {{object.get_insurance_type_display|default:"-"}}</td>
+                  <th>NCB Eligibility</th>
+                  <td>{{object.get_ncb_eligibility_display|default:"-"}}</td>
+                </tr>
+
+                <tr>
+                  <th>NCB Percentage</th>
+                  <td> {{object.get_ncb_percentage_display|default:"-"}}</td>
+                  <th>Any Other Discounts</th>
+                  <td>{{object.any_other_discount|default:"-"}}</td>
+                </tr>
+
+                <tr>
+                  <th>Nominee Name</th>
+                  <td> {{object.nominee_name|default:"-"}}</td>
+                  <th>Nominee DOB</th>
+                  <td>{{object.dob_of_nominee|default:"-"}}</td>
+                </tr>
+
+                <tr>
+                  <th>Nominee Relation</th>
+                  <td> {{object.nominee_relation|default:"-"}}</td>
+
+                </tr>
+
+                <tr>
+                  <th colspan="4">
+                    <h4 class="font-weight-bold">Registration/Tax Details</h4>
+                  </th>
+                </tr>
+                <tr>
+                  <th>Registration Type</th>
+                  <td> {{object.get_reg_type_display|default:" "}}</td>
+                  <th>Registration Remark</th>
+                  <td>{{object.reg_remarks|default:" "}}</td>
+                </tr>
+                <tr>
+                  <th>Any Tax Exemption</th>
+                  <td> {{object.get_any_tax_exemption_display|default:" "}}</td>
+                  <th>Tax Remark</th>
+                  <td>{{object.tax_remarks|default:" "}}</td>
+                </tr>
+                <tr>
+                  <th>RTO</th>
+                  <td> {{object.rto|default:" "}}</td>
+                  <th></th>
+                  <td></td>
+                </tr>
+
+
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+      {% else %}
+      <div class="card content_card">
+        <div class="card-body">
+          <p class="text-center">There is nothing here</p>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+
+    {% else %}
+
+    <div class="col-lg-12 col-md-8 col-12">
+      {% if object %}
+      <div class="card content_card">
+        <div class="card-header">
+          <div class="card-title d-flex align-items-center w-100">
+            <h5 class="mb-0">{{object}}</h5>
+          </div>
+        </div>
+        <div class="card-body p-0 ">
+          <div class="table-responsive">
+            <table class="table table-hover info_table mb-0 table-striped table-bordered " style="width:100%;">
+              <tbody>
+
+                <tr>
+                  <th colspan="4">
+                    <h4 class="font-weight-bold"> Vehicle Details</h4>
+                  </th>
+                </tr>
+                <tr>
+                  <th>Opt No</th>
+                  <td> {{object.booking_request.opportunity.opt_id}}</td>
+                  <th>DSE</th>
+                  <td>{{object.dse}}</td>
+                </tr>
+                <tr>
+                  <th>Order No / Date</th>
+                  <td> {{object.booking_request.order_no}} - {{object.booking_request.order_date}}</td>
+                  <th>Invioce No / Date</th>
+                  <td>{{object.invoice_no}} - {{object.invoice_date}}</td>
+                </tr>
+
+                <tr>
+                  <th>Vehicle</th>
+                  <td> {{object.chassis.variant.car_model}}</td>
+                  <th>Variant</th>
+                  <td>{{object.chassis.variant}}</td>
+
+                </tr>
+
+                <tr>
+                  <th>Color</th>
+                  <td>{{object.chassis.variant.color}}</td>
+                  <th>Chassis</th>
+                  <td>{{object.chassis}}</td>
+                </tr>
+
+                <tr>
+                  <th colspan="4">
+                    <h4 class="font-weight-bold">Name & Contacts</h4>
+                  </th>
+                </tr>
+                <tr>
+                  <th>Customer Name</th>
+                  <td> {{object.customer_salutation}}.{{object.customer_name}}</td>
+                  <th>Guardian</th>
+                  <td>{{object.guardian_salutation}}.{{object.guardian_name}}</td>
+                </tr>
+
+                <tr>
+                  <th>Phone 1</th>
+                  <td> {{object.mobile}}</td>
+                  <th>Phone 2</th>
+                  <td></td>
+                </tr>
+
+                <tr>
+                  <th>Email Id</th>
+                  <td> {{object.email}}</td>
+                  <th>DOB</th>
+                  <td>{{object.dob}}</td>
+                </tr>
+
+                <tr>
+                  <th>Pan</th>
+                  <td> </td>
+                  <th></th>
+                  <td></td>
+                </tr>
+
+
+                <tr>
+                  <th colspan="2">
+                    <h4 class="font-weight-bold">Address 1 (Permanent)</h4>
+                  </th>
+                  <th colspan="2">
+                    <h4 class="font-weight-bold">Address 2 (Temparory)</h4>
+                  </th>
+                </tr>
+                <tr>
+                  <th>Address</th>
+                  <td> {{object.address}}</td>
+                  <th>Address</th>
+                  <td>{{object.temp_address}}</td>
+                </tr>
+                <tr>
+                  <th>Place</th>
+                  <td> {{object.place}}</td>
+                  <th>Place</th>
+                  <td>{{object.temp_place}}</td>
+                </tr>
+                <tr>
+                  <th>Village</th>
+                  <td> {{object.village}}</td>
+                  <th>Village</th>
+                  <td>{{object.temp_village}}</td>
+                </tr>
+                <tr>
+                  <th>Taluk</th>
+                  <td> {{object.taluk}}</td>
+                  <th>Taluk</th>
+                  <td>{{object.temp_taluk}}</td>
+                </tr>
+                <tr>
+                  <th>Panchayath</th>
+                  <td> {{object.panchayath}}</td>
+                  <th>Panchayath</th>
+                  <td>{{object.temp_panchayath}}</td>
+                </tr>
+                <tr>
+                  <th>Post</th>
+                  <td> {{object.post}}</td>
+                  <th>Post</th>
+                  <td>{{object.temp_post}}</td>
+                </tr>
+                <tr>
+                  <th>District</th>
+                  <td> {{object.district}}</td>
+                  <th>District</th>
+                  <td>{{object.temp_district}}</td>
+                </tr>
+                <tr>
+                  <th>State</th>
+                  <td> {{object.district.state}}</td>
+                  <th>State</th>
+                  <td>{{object.district.state}}</td>
+                </tr>
+
+                <tr>
+                  <th colspan="4">
+                    <h4 class="font-weight-bold">Scheme</h4>
+                  </th>
+                </tr>
+                <tr>
+                  <th>Crop Scheme</th>
+                  <td> {{object.scheme}}</td>
+                  <th>Amount</th>
+                  <td>{{object.amount|default:"-"}}</td>
+                </tr>
+                <tr>
+                  <th>YONO Scheme Amount</th>
+                  <td> {{object.yono_scheme_amount|default:"-"}}</td>
+                  <th></th>
+                  <td></td>
+                </tr>
+
+                <tr>
+                  <th colspan="4">
+                    <h4 class="font-weight-bold">Finance Details</h4>
+                  </th>
+                </tr>
+                <tr>
+                  <th>Finance Company</th>
+                  <td> {{object.finance}}</td>
+                  <th>Branch</th>
+                  <td>{{object.branch}}</td>
+                </tr>
+                <tr>
+                  <th>Loan Amount</th>
+                  <td> {{object.loan_amount}}</td>
+                  <th>Executive</th>
+                  <td>{{object.executive|default:"-"}}</td>
+                </tr>
+
+                <tr>
+                  <th colspan="4">
+                    <h4 class="font-weight-bold">Exchange Details</h4>
+                  </th>
+                </tr>
+                <tr>
+                  <th>Vechicle Make</th>
+                  <td> {{object.exchange_vehicle_make|default:" "}}</td>
+                  <th>Vehicle</th>
+                  <td>{{object.exchange_vehicle_model|default:" "}}</td>
+                </tr>
+                <tr>
+                  <th>Reg No</th>
+                  <td> {{object.exchange_reg_no|default:" "}}</td>
+                  <th>Man Year</th>
+                  <td>{{object.exchange_mfg_year|default:" "}}</td>
+                </tr>
+                <tr>
+                  <th>Owner Name</th>
+                  <td> {{object.owner_name|default:" "}}</td>
+                  <th>Relation</th>
+                  <td>{{object.relation|default:" "}}</td>
+                </tr>
+
+                <tr>
+                  <th colspan="4">
+                    <h4 class="font-weight-bold">Registration/Tax Details</h4>
+                  </th>
+                </tr>
+                <tr>
+                  <th>Registration Type</th>
+                  <td> {{object.get_reg_type_display|default:" "}}</td>
+                  <th>Registration Remark</th>
+                  <td>{{object.reg_remarks|default:" "}}</td>
+                </tr>
+                <tr>
+                  <th>Any Tax Exemption</th>
+                  <td> {{object.get_any_tax_exemption_display|default:" "}}</td>
+                  <th>Tax Remark</th>
+                  <td>{{object.tax_remarks|default:" "}}</td>
+                </tr>
+                <tr>
+                  <th>RTO</th>
+                  <td> {{object.rto|default:" "}}</td>
+                  <th></th>
+                  <td></td>
+                </tr>
+
+                <tr>
+                  <th colspan="4">
+                    <h4 class="font-weight-bold">Insurance Details</h4>
+                  </th>
+                </tr>
+                <tr>
+                  <th>Insurance Type</th>
+                  <td> {{object.get_insurance_type_display|default:" "}}</td>
+                  <th>NCB Eligibility</th>
+                  <td>{{object.get_ncb_eligibility_display|default:" "}}</td>
+                </tr>
+                <tr>
+                  <th>NCB %</th>
+                  <td> {{object.ncb_percentage|default:" "}}</td>
+                  <th>Any Other Discount(Amount)</th>
+                  <td>{{object.any_other_discount|default:" "}}</td>
+                </tr>
+                <tr>
+                  <th>Remark</th>
+                  <td> {{object.insurance_remarks|default:" "}}</td>
+                  <th>Nominee Name</th>
+                  <td>{{object.nominee_name|default:" "}}</td>
+                </tr>
+                <tr>
+                  <th>DOB of Nominee</th>
+                  <td> {{object.dob_of_nominee|default:" "}}</td>
+                  <th>Nominee Relation</th>
+                  <td>{{object.nominee_relation|default:" "}}</td>
+                </tr>
+
+                <tr>
+                  <th colspan="4">
+                    <h4 class="font-weight-bold">Discounts</h4>
+                  </th>
+                </tr>
+
+                {% for discount in invoice_discounts %}
+                <tr>
+                  <th>Discount</th>
+                  <td>{{ discount.discount }}</td>
+                  <th>Amount</th>
+                  <td>{{ discount.amount }}</td>
+                </tr>
+                {% endfor %}
+
+
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+      {% else %}
+      <div class="card content_card">
+        <div class="card-body">
+          <p class="text-center">There is nothing here</p>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+
+    {% endif %}
+
+  </div>
+  <!-- End Row-->
+
+</div>
+
+{% endblock content %}

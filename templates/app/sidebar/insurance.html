@@ -1,0 +1,65 @@
+{% load static extras i18n %}
+<!--app-sidebar-->
+<div class="sticky">
+    <aside class="app-sidebar">
+        <div class="app-sidebar__logo">
+            <a class="header-brand" href="/">
+                <img src="{{app_settings.logo}}" class="header-brand-img desktop-lgo" alt="">
+                <img src="{{app_settings.logo}}" class="header-brand-img dark-logo" alt="">
+                <img src="{{app_settings.favicon}}" class="header-brand-img mobile-logo" alt="">
+                <img src="{{app_settings.favicon}}" class="header-brand-img darkmobile-logo" alt="">
+            </a>
+        </div>
+        <div class="app-sidebar3">
+            <div class="main-menu">
+                
+                <div class="slide-left disabled" id="slide-left">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191" width="24" height="24" viewBox="0 0 24 24">
+                        <path d="M13.293 6.293 7.586 12l5.707 5.707 1.414-1.414L10.414 12l4.293-4.293z" />
+                    </svg>
+                </div>
+
+                
+
+                <ul class="side-menu">
+
+                    <li class="slide">
+                        <a class="side-menu__item {% if is_dashboard %} active {% endif %}" data-bs-toggle="slide" href="{% url 'core:home' %}">
+                            <i class="feather feather-airplay sidemenu_icon"></i>
+                            <span class="side-menu__label">Dashboard</span>
+                        </a>
+                    </li>
+
+
+                    <li class="slide">
+                        <a class="side-menu__item {% if is_plan_pending_list %} active {% endif %}" data-bs-toggle="slide" href="{% url 'crm:plan_pending_list' %}">
+                            <i class="feather feather-file-plus sidemenu_icon"></i>
+                            <span class="side-menu__label">Plan-Insurance</span>
+                        </a>
+                    </li>
+
+                    {% comment %} <li class="slide">
+                        <a class="side-menu__item" data-bs-toggle="slide" href="">
+                            <i class="feather feather-airplay sidemenu_icon"></i>
+                            <span class="side-menu__label">Delivery Pending</span>
+                        </a>
+                    </li> {% endcomment %}
+
+                    <li class="slide">
+                        <a class="side-menu__item {% if is_price_list %} active {% endif %}" data-bs-toggle="slide" href="{% url 'masters:price_list' %}">
+                            <i class="feather feather-file-text sidemenu_icon"></i>
+                            <span class="side-menu__label">Price List</span>
+                        </a>
+                    </li>
+
+                </ul>
+
+                <div class="slide-right" id="slide-right">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191" width="24" height="24" viewBox="0 0 24 24">
+                        <path d="M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </aside>
+</div>

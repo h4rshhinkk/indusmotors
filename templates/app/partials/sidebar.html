@@ -1,0 +1,43 @@
+{% if request.user.usertype == "team_lead" %}
+    {% include 'app/sidebar/branch.html' %}
+{% elif request.user.usertype == "customer_advisor" %}
+    {% include 'app/sidebar/customer_advisor.html' %}
+{% elif request.user.usertype == "deo" %}
+    {% include 'app/sidebar/dms.html' %}
+{% elif request.user.usertype == "stock" %}
+    {% include 'app/sidebar/stock.html' %}
+{% elif request.user.usertype == "invoice_team" %}
+    {% include 'app/sidebar/invoice_team.html' %}
+{% elif request.user.usertype == "test_drive_operator" %}
+    {% include 'app/sidebar/testdrive_operator.html' %}
+{% elif request.user.usertype == "finance_bo" %}
+    {% include 'app/sidebar/finance_bo.html' %}
+{% elif request.user.usertype == "exchange_bo" %}
+    {% include 'app/sidebar/exchange_bo.html' %}
+{% elif request.user.usertype == "registration_bo" %}
+    {% include 'app/sidebar/registration_bo.html' %}
+{% elif request.user.usertype == "scheme" %}
+    {% include 'app/sidebar/scheme.html' %}
+{% elif request.user.usertype == "insurance" %}
+    {% include 'app/sidebar/insurance.html' %}
+{% elif request.user.usertype == "pdi" %}
+    {% include 'app/sidebar/pdi.html' %}
+{% elif request.user.usertype == "tmga" %}
+    {% include 'app/sidebar/tmga.html' %}
+{% elif request.user.usertype == "asm" %}
+    {% include 'app/sidebar/asm.html' %}
+{% elif request.user.usertype == "sm" %}
+    {% include 'app/sidebar/asm.html' %}
+{% elif request.user.usertype == "gm" %}
+    {% include 'app/sidebar/asm.html' %}
+{% elif request.user.usertype == "accounts" %}
+    {% include 'app/sidebar/accounts.html' %}
+{% elif request.user.usertype == "finance_executive" %}
+    {% include 'app/sidebar/finance_executive.html' %}
+{% elif request.user.usertype == "cre" %}
+    {% include 'app/sidebar/cre.html' %}
+{% elif request.user.usertype == "digital_lead" %}
+    {% include 'app/sidebar/digital_lead.html' %}
+{% else %}
+    {% include 'app/sidebar/branch.html' %}
+{% endif %}

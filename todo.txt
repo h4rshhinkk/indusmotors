@@ -1,0 +1,99 @@
+Jan12[
+
+1.Stock Team (done)
+    - chassis alott cheyunna time car or chasiis mattan pattannam
+    -
+
+    * carmodel trim color variant selection is working
+        
+
+    ***Issue
+        -chassis is not geting as a initial
+
+
+
+]
+
+
+
+
+Jan11 [
+
+1.Stock Team (partially done)
+    - chassis alott cheyunna time car or chasiis mattan pattannam
+    -
+
+    * carmodel trim color variant selection is working
+        
+
+    ***Issue
+        -chassis is not geting as a initial
+
+2.Scheme Team 
+    -YONO Separate Status and Remark(done _/)
+
+3.TMGA()
+    -this team can add Accessory(done _/)
+    -accessory list print edukkan pattannam(done _/)
+
+
+]
+
+
+
+
+
+
+
+
+
+
+@admin.register(DailyReport)
+class DailyReportAdmin(BaseAdmin):
+    list_display = ["customer_name", "phone"]
+
+
+
+
+
+
+
+
+
+
+
+
+1. Create views for all commented urls in crm 
+2. Add automatic subreason update in followup lost
+3. Add Variant info, Folloups, Test Drive Requests, Lost, Booking requests of followup in their detail page
+4. 
+
+Jan-5[
+1.chassis selction----
+2.in table scroll for stock list----
+3.total count in table of Total Transit and Total Physical---
+3.auto fill variant after selection of carmodel,color,trim ----
+4.is scheme design
+5.
+]
+
+
+
+
+
+
+BookingFollowUpCreateView
+exclude = ("is_active", "booking_request","finance_executive_status","finance_executive_remark")
+
+
+class JobcardView(PDFView):
+    template_name = 'crm/job_card.html'
+
+    def get_context_data(self, **kwargs):
+        pk = self.kwargs.get('pk')
+        invoice = get_object_or_404(BookingInvoice, pk=pk)
+        accessory_job_cards = InvoiceAccessory.objects.filter(invoice=invoice)
+        context = super().get_context_data(**kwargs)
+        context["object_list"] = accessory_job_cards
+        context["object_details"] = invoice
+        return context

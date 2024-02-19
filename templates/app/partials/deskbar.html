@@ -1,0 +1,184 @@
+
+{% if request.user.usertype == "team_lead" %}
+<ul class="deskbar">
+    <li><a class="btn btn-white btn-desk" href="{% url 'crm:opportunity_create' %}"> New Opportunity </a></li>
+    <li><a class="btn btn-white btn-desk" href="{% url 'crm:opportunity_list' %}"> My Opportunities </a></li>
+    <li><a class="btn btn-white btn-desk" href="{% url 'crm:booking_tracker_list' %}"> Booking Tracker </a></li>
+
+    <li><a class="btn btn-white btn-desk" href="{% url 'crm:invoice_rejected_list' %}"> Invoice Requested </a></li>
+    <li><a class="btn btn-white btn-desk" href="{% url 'stock:billing_request_list' %}"> Invoiced </a></li>
+    <li><a class="btn btn-white btn-desk" href="{% url 'crm:plan_pending_list' %}"> Plan-Pending </a></li>
+
+    <li><a class="btn btn-white btn-desk" href="{% url 'crm:delivary_pending_list' %}"> Delivery Pending </a></li>
+    <li><a class="btn btn-white btn-desk" href="{% url 'crm:delivered_list' %}"> Delivered </a></li>
+
+    <li><a class="btn btn-white btn-desk" href="{% url 'masters:stock_list' %}"> Stock Report </a></li>
+    <li><a class="btn btn-white btn-desk" href="{% url 'masters:price_list' %}"> Price List </a></li>
+    <li><a class="btn btn-white btn-desk" href="{% url 'crm:daily_report_list' %}"> Daily Report </a></li>
+    <li><a class="btn btn-white btn-desk" href="{% url 'crm:digital_leads_list' %}">Digital Leads </a></li>
+
+</ul>
+{% elif request.user.usertype == "deo" %}
+<ul class="deskbar">
+    <li><a class="btn btn-white btn-desk" href="{% url 'core:home' %}"> Dashboard</a></li>
+    <li><a class="btn btn-white btn-desk" href="{% url 'dms:booking_request_list' %}"> Order Request Pending </a></li>
+
+</ul>
+
+{% elif request.user.usertype == "stock" %}
+
+<ul class="deskbar">
+    <li><a class="btn btn-white btn-desk" href="{% url 'core:home' %}"> Dashboard</a></li>
+    <li><a class="btn btn-white btn-desk" href="{% url 'masters:stock_create' %}"> Upload Stock</a></li>
+    <li><a class="btn btn-white btn-desk" href="{% url 'stock:billing_request_list' %}"> Billing Request</a></li>
+    <li><a class="btn btn-white btn-desk" href="{% url 'stock:back_order_request_list' %}"> Back Order</a></li>
+    <li><a class="btn btn-white btn-desk" href="{% url 'masters:stock_list' %}"> Stock Report</a></li>
+    <li><a class="btn btn-white btn-desk" href="{% url 'masters:stock_report_list' %}"> Stock List</a></li>
+    <li><a class="btn btn-white btn-desk" href="{% url 'masters:price_list' %}"> Price List </a></li>
+
+</ul>
+
+{% elif request.user.usertype == "invoice_team" %}
+
+<ul class="deskbar">
+    <li><a class="btn btn-white btn-desk" href="{% url 'core:home' %}"> Dashboard</a></li>
+    <li><a class="btn btn-white btn-desk" href="{% url 'stock:billing_request_list' %}"> Billing Request</a></li>
+    <li><a class="btn btn-white btn-desk" href="{% url 'masters:price_list' %}"> Price List </a></li>
+
+</ul>
+
+{% elif request.user.usertype == "test_drive_operator" %}
+
+<ul class="deskbar">
+    <li><a class="btn btn-white btn-desk" href="{% url 'core:home' %}"> Dashboard</a></li>
+    <li><a class="btn btn-white btn-desk" href="{% url 'crm:pending_testdrive_list' %}"> Test Drive Request</a></li>
+</ul>
+
+{% elif request.user.usertype == "finance_bo" %}
+
+<ul class="deskbar">
+    <li><a class="btn btn-white btn-desk" href="{% url 'core:home' %}"> Dashboard</a></li>
+    <li><a class="btn btn-white btn-desk" href="{% url 'crm:plan_pending_list' %}"> Booking Tracker</a></li>
+    <li><a class="btn btn-white btn-desk" href="{% url 'masters:price_list' %}"> Price List </a></li>
+
+</ul>
+
+{% elif request.user.usertype == "exchange_bo" %}
+
+<ul class="deskbar">
+    <li><a class="btn btn-white btn-desk" href="{% url 'core:home' %}"> Dashboard</a></li>
+    <li><a class="btn btn-white btn-desk" href="{% url 'crm:plan_pending_list' %}"> Booking Tracker</a></li>
+    <li><a class="btn btn-white btn-desk" href="{% url 'masters:price_list' %}"> Price List </a></li>
+
+</ul>
+
+{% elif request.user.usertype == "registration_bo" %}
+
+<ul class="deskbar">
+    <li><a class="btn btn-white btn-desk" href="{% url 'core:home' %}"> Dashboard</a></li>
+    <li><a class="btn btn-white btn-desk" href="{% url 'crm:plan_pending_list' %}"> Plan-Registration</a></li>
+    <li><a class="btn btn-white btn-desk" href="{% url 'crm:delivary_pending_list' %}"> Delivery Pending</a></li>
+    <li><a class="btn btn-white btn-desk" href="{% url 'masters:price_list' %}"> Price List </a></li>
+
+</ul>
+
+{% elif request.user.usertype == "scheme" %}
+
+<ul class="deskbar">
+    <li><a class="btn btn-white btn-desk" href="{% url 'core:home' %}"> Dashboard</a></li>
+    <li><a class="btn btn-white btn-desk" href="{% url 'crm:plan_pending_list' %}"> Booking Tracker</a></li>
+    <li><a class="btn btn-white btn-desk" href="{% url 'masters:price_list' %}"> Price List </a></li>
+
+</ul>
+
+{% elif request.user.usertype == "insurance" %}
+
+<ul class="deskbar">
+    <li><a class="btn btn-white btn-desk" href="{% url 'core:home' %}"> Dashboard</a></li>
+    <li><a class="btn btn-white btn-desk" href="{% url 'crm:plan_pending_list' %}"> Plan-Insurance</a></li>
+    <li><a class="btn btn-white btn-desk" href="{% url 'masters:price_list' %}"> Price List </a></li>
+
+</ul>
+
+{% elif request.user.usertype == "pdi" %}
+
+<ul class="deskbar">
+    <li><a class="btn btn-white btn-desk" href="{% url 'core:home' %}"> Dashboard</a></li>
+    <li><a class="btn btn-white btn-desk" href="{% url 'crm:plan_pending_list' %}"> Plan - PDI</a></li>
+    <li><a class="btn btn-white btn-desk" href="{% url 'masters:stock_list' %}"> Stock Report</a></li>
+    <li><a class="btn btn-white btn-desk" href="{% url 'masters:stock_report_list' %}"> Stock List</a></li>
+    <li><a class="btn btn-white btn-desk" href="{% url 'masters:price_list' %}"> Price List </a></li>
+
+</ul>
+
+{% elif request.user.usertype == "tmga" %}
+
+<ul class="deskbar">
+    <li><a class="btn btn-white btn-desk" href="{% url 'core:home' %}"> Dashboard</a></li>
+    <li><a class="btn btn-white btn-desk" href="{% url 'crm:plan_pending_list' %}"> TMGA/VAS Req Pending</a></li>
+    <li><a class="btn btn-white btn-desk" href="{% url 'masters:price_list' %}"> Price List </a></li>
+
+    
+</ul>
+
+{% elif request.user.usertype == "asm" %}
+
+<ul class="deskbar">
+    <li><a class="btn btn-white btn-desk" href="{% url 'crm:opportunity_list' %}"> My Opportunities </a></li>
+    <li><a class="btn btn-white btn-desk" href="{% url 'crm:booking_tracker_list' %}"> Booking Tracker </a></li>
+    <li><a class="btn btn-white btn-desk" href="{% url 'crm:invoice_rejected_list' %}"> Invoice Requested </a></li>
+    <li><a class="btn btn-white btn-desk" href="{% url 'stock:billing_request_list' %}"> Invoiced </a></li>
+    <li><a class="btn btn-white btn-desk" href="{% url 'crm:plan_pending_list' %}"> Plan-Pending </a></li>
+    <li><a class="btn btn-white btn-desk" href="{% url 'crm:sale_support_list' %}"> Sales Support </a></li>
+    <li><a class="btn btn-white btn-desk" href="{% url 'crm:booking_lost_list' %}"> Cancel Request</a></li>
+    <li><a class="btn btn-white btn-desk" href="{% url 'masters:stock_list' %}"> Stock Report </a></li>  
+    <li><a class="btn btn-white btn-desk" href="{% url 'masters:price_list' %}"> Price List </a></li>
+
+</ul>
+
+{% elif request.user.usertype == "sm" %}
+
+<ul class="deskbar">
+    <li><a class="btn btn-white btn-desk" href="{% url 'crm:opportunity_list' %}"> My Opportunities </a></li>
+    <li><a class="btn btn-white btn-desk" href="{% url 'crm:booking_tracker_list' %}"> Booking Tracker </a></li>
+    <li><a class="btn btn-white btn-desk" href="{% url 'crm:invoice_rejected_list' %}"> Invoice Requested </a></li>
+    <li><a class="btn btn-white btn-desk" href="{% url 'stock:billing_request_list' %}"> Invoiced </a></li>
+    <li><a class="btn btn-white btn-desk" href="{% url 'crm:plan_pending_list' %}"> Plan-Pending </a></li>
+    <li><a class="btn btn-white btn-desk" href="{% url 'crm:sale_support_list' %}"> Sales Support </a></li>
+    <li><a class="btn btn-white btn-desk" href="{% url 'crm:booking_lost_list' %}"> Cancel Request</a></li>
+    <li><a class="btn btn-white btn-desk" href="{% url 'masters:stock_list' %}"> Stock Report </a></li>  
+    <li><a class="btn btn-white btn-desk" href="{% url 'masters:price_list' %}"> Price List </a></li>
+
+</ul>
+
+{% elif request.user.usertype == "gm" %}
+
+<ul class="deskbar">
+    <li><a class="btn btn-white btn-desk" href="{% url 'crm:opportunity_list' %}"> My Opportunities </a></li>
+    <li><a class="btn btn-white btn-desk" href="{% url 'crm:booking_tracker_list' %}"> Booking Tracker </a></li>
+    <li><a class="btn btn-white btn-desk" href="{% url 'crm:invoice_rejected_list' %}"> Invoice Requested </a></li>
+    <li><a class="btn btn-white btn-desk" href="{% url 'stock:billing_request_list' %}"> Invoiced </a></li>
+    <li><a class="btn btn-white btn-desk" href="{% url 'crm:plan_pending_list' %}"> Plan-Pending </a></li>
+    <li><a class="btn btn-white btn-desk" href="{% url 'crm:sale_support_list' %}"> Sales Support </a></li>
+    <li><a class="btn btn-white btn-desk" href="{% url 'crm:booking_lost_list' %}"> Cancel Request</a></li>
+    <li><a class="btn btn-white btn-desk" href="{% url 'masters:stock_list' %}"> Stock Report </a></li>  
+    <li><a class="btn btn-white btn-desk" href="{% url 'masters:price_list' %}"> Price List </a></li>
+
+</ul>
+
+{% elif request.user.usertype == "accounts" %}
+
+<ul class="deskbar">
+    <li><a class="btn btn-white btn-desk" href="{% url 'core:home' %}"> Dashboard</a></li>
+    
+    <li><a class="btn btn-white btn-desk" href="{% url 'crm:plan_accounts' %}"> Plan Accounts </a></li>
+    <li><a class="btn btn-white btn-desk" href="{% url 'crm:delivary_pending_list' %}"> Delivery Pending </a></li>
+    
+    <li><a class="btn btn-white btn-desk" href="{% url 'crm:booking_lost_list' %}"> Booking Cancel Approve </a></li>  
+    <li><a class="btn btn-white btn-desk" href="{% url 'masters:price_list' %}"> Price List </a></li>
+
+</ul>
+
+
+
+{% endif %}

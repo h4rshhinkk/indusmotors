@@ -1,0 +1,64 @@
+{% if request.user.usertype == 'asm' or request.user.usertype == 'sm'%}
+<form action="{% url 'crm:each_discount_status_update' record.pk %}" method="GET" class="each_discount_update_form">
+    <select name="status" id="status" class="form-control niceselect" style="width:auto">
+        <option value="pending" {% if record.discount_status == 'pending' %} selected {% endif %} >Pending</option>
+        <option value="escalate" {% if record.discount_status == 'escalate' %} selected {% endif %} >Escalate</option>
+        <option value="approve" {% if record.discount_status == 'approve' %} selected {% endif %} >Approve</option>
+        <option value="reject" {% if record.discount_status == 'reject' %} selected {% endif %} >Reject</option>
+    </select>
+</form>
+{% elif request.user.usertype == 'gm'  %}
+    <form action="{% url 'crm:each_discount_status_update' record.pk %}" method="GET" class="each_discount_update_form">
+        <select name="status" id="status" class="form-control niceselect" style="width:auto">
+           
+            {% if record.discount_status == 'escalate' %}
+            <option value="escalate" {% if record.discount_status == 'escalate' %} selected {% endif %} >Escalate</option>
+            <option value="approve" {% if record.discount_status == 'approve' %} selected {% endif %} >Approve</option>
+            <option value="reject" {% if record.discount_status == 'reject' %} selected {% endif %} >Reject</option>
+            {% endif %}
+
+            {% if record.discount_status == 'approve' %}
+            <option value="approve" {% if record.discount_status == 'approve' %} selected {% endif %} >Approve</option>
+            <option value="reject" {% if record.discount_status == 'reject' %} selected {% endif %} >Reject</option>
+            {% endif %}
+
+        </select>
+    </form>
+{% else %}
+    {{ record.get_discount_status_display }}
+{% endif %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% comment %} 
+
+{% if request.user.usertype == 'asm' or request.user.usertype == 'sm' or request.user.usertype == 'gm' %}
+<form action="{% url 'crm:each_discount_status_update' record.pk %}" method="GET" class="each_discount_update_form">
+    <select name="status" id="status" class="form-control niceselect" style="width:auto">
+
+        <option value="pending" {% if record.discount_status == 'pending' %} selected {% endif %} >Pending</option>
+        <option value="escalate" {% if record.discount_status == 'escalate' %} selected {% endif %} >Escalate</option>
+        
+        <option value="approve" {% if record.discount_status == 'approve' %} selected {% endif %} >Approve</option>
+        <option value="reject" {% if record.discount_status == 'reject' %} selected {% endif %} >Reject</option>
+
+        
+
+    </select>
+</form>
+{% else %}
+    {{ record.get_discount_status_display }}
+{% endif %} {% endcomment %}
+

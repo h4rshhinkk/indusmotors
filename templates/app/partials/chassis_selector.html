@@ -1,0 +1,14 @@
+<script>
+    var chassis_url = "{% url 'crm:get_chassis' %}";
+    var variantSelect = $("#id_variant");
+    
+    variantSelect.change(function () {
+        let variant = variantSelect.val();
+        let data = { variant_id: variant };
+        makeAjaxCall(chassis_url, data, function (data) {
+            updateSelectOptions("#id_chassis", data.stocks, "id", "chassis_number");
+            
+        });
+    });
+
+</script>

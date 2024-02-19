@@ -1,0 +1,35 @@
+<ul>
+    
+    {% if request.user.usertype == 'team_lead' %}
+        
+        <li>
+            <button type="button"  class=" signed_invoice-add-btn btn btn-primary mb-1 document-upload" data-bs-toggle="modal" data-bs-target="#consolidated-modal" data-invoice-id="{{record.pk}}" data-document-name="Upload signed Invoice" data-form-type='signed_invoice_upload'>
+                Upload signed Invoice
+            </button>
+        </li>
+        <li>
+            <button type="button"  class="signed_settlement-add-btn btn btn-primary mb-1 document-upload" data-bs-toggle="modal" data-bs-target="#consolidated-modal" data-invoice-id="{{record.pk}}" data-document-name="Upload signed Settlement" data-form-type='signed_settlement_upload'>
+                Upload signed Settlement
+            </button>
+        </li>
+        <li>
+            <button type="button"  class="delivary_photo-add-btn btn btn-primary mb-1 document-upload" data-bs-toggle="modal" data-bs-target="#consolidated-modal" data-invoice-id="{{record.pk}}" data-document-name="Upload Delivary Photo" data-form-type='delivary_photo_upload'>
+                Upload Delivary Photo
+            </button>
+        </li>
+        <li>
+            <button type="button"  class="signed_gate_pass-add-btn btn btn-primary mb-1 document-upload" data-bs-toggle="modal" data-bs-target="#consolidated-modal" data-invoice-id="{{record.pk}}" data-document-name="Upload signed Gate Pass" data-form-type='signed_gate_pass_upload'>
+                Upload signed Gate Pass
+            </button>
+        </li>
+        
+    {% endif %}
+
+    {% if request.user.usertype == 'cre' %}
+        <li><a class="btn btn-sm btn-primary mb-1" href="{% url 'crm:delivered_followup_create' record.pk %}">Update Follow Up</a></li>        
+    {% endif %}
+
+
+
+
+</ul>
